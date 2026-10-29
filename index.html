@@ -1,7 +1,7 @@
-<!doctype html><html lang="ms"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-title" content="Umrah Isteri"><meta name="theme-color" content="#a4466e"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"><link rel="manifest" href="manifest.webmanifest"><link rel="apple-touch-icon" href="apple-touch-icon.png"><link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png"><style>:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);color-scheme:light}body{margin:0;font:14px system-ui,sans-serif}img{max-width:100%}[hidden]{display:none!important}</style><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css"><script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script><script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script><script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
+<!doctype html><html lang="ms"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-title" content="Umrah Isteri"><meta name="theme-color" content="#a4466e"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"><link rel="manifest" href="manifest.webmanifest"><link rel="apple-touch-icon" href="apple-touch-icon.png"><link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png"><style>:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);color-scheme:light}body{margin:0;font:14px system-ui,sans-serif}img{max-width:100%}[hidden]{display:none!important}</style><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css" crossorigin="anonymous"><script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js" crossorigin="anonymous"></script><script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js" crossorigin="anonymous"></script><script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js" crossorigin="anonymous"></script>
 <title>Diari Umrah Isteriku</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Marcellus&family=Nunito+Sans:opsz,wght@6..12,400;6..12,600;6..12,700&family=Amiri:wght@400;700&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Marcellus&family=Nunito+Sans:opsz,wght@6..12,400;6..12,600;6..12,700&family=Amiri:wght@400;700&display=swap" crossorigin="anonymous">
 <style>
 /* Layout: sticky dual-clock header + chip tabs; one column of soft panels below, mobile first */
 :root{
@@ -24,7 +24,8 @@
 body{background:var(--bg);color:var(--fg);font-family:var(--body);font-size:15px;line-height:1.6}
 body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:10;background:var(--surface)}
 .wrap{max-width:760px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
-header{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:var(--surface);border-bottom:1px solid var(--line)}
+header{background:var(--surface)}
+.tabbar{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:var(--surface);border-bottom:1px solid var(--line);padding-top:8px}
 .hd{padding-block:12px 8px;display:flex;flex-direction:column;gap:10px}
 .brand{display:flex;align-items:baseline;justify-content:space-between;gap:8px;flex-wrap:wrap}
 .brand h1{font-family:var(--display);font-weight:400;font-size:1.45rem;margin:0;color:var(--accent);letter-spacing:.01em}
@@ -280,7 +281,7 @@ details.zar .ar{font-size:1.45rem;line-height:2.2;margin-top:4px}
 #mini.sleep .m-zone,#mini.sleep .m-lbl,#mini.sleep .m-sub{color:#3a3236}
 #mini.sleep .m-hint{color:#2e282b}
 #mini.sleep .m-dot{opacity:.4}
-body.sleeping>header,body.sleeping>main{display:none}
+body.sleeping>header,body.sleeping>.tabbar,body.sleeping>main{display:none}
 @media (prefers-reduced-motion:reduce){.dcard.jumaat,.blinkbox,.tag.blink,.tdot{animation:none}.dot{animation:none}.bar i{transition:none}.tap .in{transition:none}}
 @media (max-width:380px){.flag{font-size:1rem;line-height:1;letter-spacing:0}
 .sky{margin-left:auto;display:inline-flex;align-items:center;gap:3px;text-transform:none;letter-spacing:0;font-weight:600}
@@ -297,9 +298,9 @@ body.sleeping>header,body.sleeping>main{display:none}
       <div class="clock sa"><div class="lbl"><span class="flag" role="img" aria-label="Bendera Arab Saudi">🇸🇦</span>Saudi<span class="sky" id="skySA"></span></div><div class="t" id="cSA">--:--</div><div class="d" id="dSA"></div><div class="wxl" id="wxLine"></div></div>
     </div>
     <div class="cdbar" id="cdBar" aria-live="off"></div>
-    <nav class="tabs" role="tablist" id="tabs"></nav>
   </div>
 </header>
+<div class="tabbar"><div class="wrap"><nav class="tabs" role="tablist" id="tabs" aria-label="Bahagian"></nav></div></div>
 
 <main class="wrap" id="main"></main>
 
@@ -514,7 +515,7 @@ function tick(){if(typeof SLEEP!=="undefined"&&SLEEP)return;
  setD('dMY',dateMs('Asia/Kuala_Lumpur'),hijriMs('Asia/Kuala_Lumpur'));
  setD('dSA',dateMs('Asia/Riyadh')+' · −5 jam',hijriMs('Asia/Riyadh'));
  
- if(current==='utama') liveUpdate();
+ if(current==='utama'&&sa.s===0) liveUpdate();
 }
 
 /* ---------- views ---------- */
@@ -606,7 +607,7 @@ function liveUpdate(){
 /* ---------- daily store helpers ---------- */
 const pad=n=>String(n).padStart(2,'0');
 const dkey=d=>d.getFullYear()+'-'+pad(d.getMonth()+1)+'-'+pad(d.getDate());
-const todayKey=()=>dkey(new Date());
+const todayKey=()=>{try{const k=saKey();if(k>=TRIP[0].d&&k<=TRIP[TRIP.length-1].d)return k}catch(e){}return dkey(new Date())};
 function fridayDate(){const d=new Date();d.setDate(d.getDate()+((5-d.getDay()+7)%7));return d}
 function day(k){S.daily=S.daily||{};return S.daily[k]||(S.daily[k]={checks:{},counts:{}})}
 function prune(){const lim=Date.now()-400*864e5;Object.keys(S.daily||{}).forEach(k=>{const [y,m,d]=k.split('-').map(Number);if(new Date(y,m-1,d).getTime()<lim)delete S.daily[k]})}
@@ -786,10 +787,10 @@ const KEY_PLACES=[
  ['Jabal Rahmah, Arafah','Jabal al-Rahmah Arafat'],['Jabal Nur (Gua Hira\')','Jabal al-Nour Makkah'],
  ['Masjid Nabawi','Masjid an-Nabawi Madinah'],['Masjid Al-Ghamamah','Masjid Al Ghamama Madinah'],['Masjid Quba','Masjid Quba Madinah'],['Masjid Qiblatain','Masjid al-Qiblatayn Madinah'],['Jabal Uhud & makam syuhada','Uhud Martyrs Cemetery Madinah'],["Perkuburan Baqi'","Jannat al-Baqi Madinah"]];
 const mapUrl=q=>'https://www.google.com/maps/search/?api=1&query='+encodeURIComponent(q);
-const mapLL=(a,b)=>`https://www.google.com/maps/search/?api=1&query=${a},${b}`;
+const mapLL=(a,b)=>`https://www.google.com/maps/search/?api=1&query=${+a},${+b}`;
 const esc=s=>String(s==null?'':s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const saKey=()=>{const p=partsIn('Asia/Riyadh');return p.y+'-'+pad(p.m)+'-'+pad(p.d)};
-const fmtAt=(ms,tz)=>new Intl.DateTimeFormat('ms-MY',{timeZone:tz,hour:'2-digit',minute:'2-digit',hour12:false}).format(new Date(ms));
+const fmtAt=(ms,tz)=>!isFinite(ms)?'--:--':new Intl.DateTimeFormat('ms-MY',{timeZone:tz,hour:'2-digit',minute:'2-digit',hour12:false}).format(new Date(ms));
 function ago(ms){const m=Math.max(0,Math.round((Date.now()-ms)/60000));if(m<1)return 'baru sahaja';if(m<60)return m+' minit lalu';const h=Math.floor(m/60);return h<24?h+' jam '+(m%60)+' minit lalu':Math.floor(h/24)+' hari lalu'}
 function lsGet(k){try{return localStorage.getItem(k)}catch(e){return null}}
 function lsSet(k,v){try{v==null?localStorage.removeItem(k):localStorage.setItem(k,v)}catch(e){}}
@@ -896,26 +897,26 @@ function statusCard(compact){
  let h='';
  if(pos){const on=tr.on&&Date.now()<tr.until, stale=on&&Date.now()-pos.ts>10*60e3;
   h+=`<div class="live"><div class="dot ${on&&!stale?'':'stale'}"></div><div style="min-width:0"><div class="where">${esc(pos.label)}</div>
-  <div class="muted" style="font-size:.82rem">${fmtAt(pos.ts,'Asia/Riyadh')} Saudi · ${fmtAt(pos.ts,'Asia/Kuala_Lumpur')} Malaysia · <span data-ago="${pos.ts}">${ago(pos.ts)}</span> · ±${pos.acc} m</div>
+  <div class="muted" style="font-size:.82rem">${fmtAt(pos.ts,'Asia/Riyadh')} Saudi · ${fmtAt(pos.ts,'Asia/Kuala_Lumpur')} Malaysia · <span data-ago="${(+pos.ts||0)}">${ago(pos.ts)}</span> · ±${(+pos.acc|0)} m</div>
   <div style="font-size:.8rem;margin-top:2px" class="${on?'':'muted'}">${on?`GPS auto aktif hingga ${fmtAt(tr.until,'Asia/Riyadh')} Saudi / ${fmtAt(tr.until,'Asia/Kuala_Lumpur')} Malaysia`:'GPS auto tidak aktif'}</div>
   ${stale?`<div style="font-size:.8rem;color:var(--warn);margin-top:2px">Tiada kemas kini lebih 10 minit — skrin telefon mungkin terkunci atau tiada internet.</div>`:''}
   ${compact?'':`<a class="maplink" href="${mapLL(pos.lat,pos.lng)}" target="_blank" rel="noopener">Buka di Google Maps</a>`}</div></div>`}
  if(man&&(!pos||man.ts>=pos.ts-6*3600e3)){const p=PL(man.place);
-  h+=`<div class="live ${p.alert?'alert':''}" style="margin-top:${pos?'12px':'0'}"><div class="dot stale" style="${p.alert?'':'background:var(--accent);box-shadow:0 0 0 4px var(--accent-soft)'}"></div><div style="min-width:0"><div class="glbl" style="margin:0">Status ibadah (ditekan isteri)</div><div class="where" style="font-size:1.15rem">${esc(p.n)}${man.round?` <span class="tag w">Pusingan ${man.round}/7</span>`:''}</div>${man.note?`<div class="mk">“${esc(man.note)}”</div>`:''}<div class="muted" style="font-size:.8rem"><span data-ago="${man.ts}">${ago(man.ts)}</span></div></div></div>`}
+  h+=`<div class="live ${p.alert?'alert':''}" style="margin-top:${pos?'12px':'0'}"><div class="dot stale" style="${p.alert?'':'background:var(--accent);box-shadow:0 0 0 4px var(--accent-soft)'}"></div><div style="min-width:0"><div class="glbl" style="margin:0">Status ibadah (ditekan isteri)</div><div class="where" style="font-size:1.15rem">${esc(p.n)}${man.round?` <span class="tag w">Pusingan ${(+man.round|0)}/7</span>`:''}</div>${man.note?`<div class="mk">“${esc(man.note)}”</div>`:''}<div class="muted" style="font-size:.8rem"><span data-ago="${(+man.ts||0)}">${ago(man.ts)}</span></div></div></div>`}
  return h||`<p class="muted" style="margin:0">Belum ada lokasi dikongsi. Bila isteri tekan "Mula kongsi lokasi auto", lokasinya akan muncul di sini.</p>`;
 }
 function logHTML(){
  if(LIVE.off||!LIVE.ready)return '';
  const pts=LIVE.pts||[];if(!pts.length)return `<p class="muted" style="margin:0">Tiada pergerakan direkod hari ini (tarikh Saudi).</p>`;
  const ch=[];pts.forEach(p=>{if(!ch.length||ch[ch.length-1].zone!==p.zone)ch.push(p)});
- return `<div class="berkat">`+ch.slice().reverse().map(e=>`<div class="bk"><div class="when">${fmtAt(e.ts,'Asia/Riyadh')}<span>MY ${fmtAt(e.ts,'Asia/Kuala_Lumpur')}</span></div><b>${esc(e.label)}</b><p>±${e.acc} m</p></div>`).join('')+`</div>`;
+ return `<div class="berkat">`+ch.slice().reverse().map(e=>`<div class="bk"><div class="when">${fmtAt(e.ts,'Asia/Riyadh')}<span>MY ${fmtAt(e.ts,'Asia/Kuala_Lumpur')}</span></div><b>${esc(e.label)}</b><p>±${(+e.acc|0)} m</p></div>`).join('')+`</div>`;
 }
 let MAP=null, MK=null, CIR=null, LINE=null;
 function initMap(){
  const el=document.getElementById('map');if(!el||typeof L==='undefined'){return}
  if(MAP){try{MAP.remove()}catch(e){}MAP=null}
  MAP=L.map(el,{zoomControl:true,attributionControl:true}).setView(KAABA,16);
- L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{maxZoom:19,attribution:'© OpenStreetMap'}).addTo(MAP);
+ L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png',{crossOrigin:true,maxZoom:19,attribution:'© OpenStreetMap'}).addTo(MAP);
  MK=null;CIR=null;LINE=null;drawMap(true);
 }
 function drawMap(fit){
@@ -1069,8 +1070,8 @@ main.addEventListener('change',e=>{if(e.target.id==='autoSleep'){autoSleep=e.tar
 
 /* ---------- jadual (Umrah4Ladies 4–15 Nov 2026) ---------- */
 const FRI_BLOCK=`<div class="fri"><b>Amalan hari Jumaat</b><ul><li>Surah Al-Kahfi (boleh mula selepas Maghrib Khamis) — <a class="qlink" href="https://quran.com/18" target="_blank" rel="noopener">Baca Surah Al-Kahfi (teks Arab) di Quran.com</a></li><li>Selawat 1000 kali</li><li>Mandi sunat Jumaat</li><li>Solat Jumaat / Zohor di masjid — datang awal</li><li>Doa saat mustajab: Asar hingga Maghrib</li><li>Sedekah</li></ul><div class="row"><button class="btn pri" data-go="berkat">Buka checklist Jumaat</button><button class="btn" data-go="zikir">Kira selawat</button></div></div>`;
-function isFriNow(){const d=new Date();return d.getDay()===5||(d.getDay()===4&&d.getHours()>=18)}
-function friBanner(){if(!isFriNow())return '';const fri=new Date().getDay()===5;
+function isFriNow(){let D,H;try{const k=saKey();if(k>=TRIP[0].d&&k<=TRIP[TRIP.length-1].d){const p=partsIn('Asia/Riyadh');D=new Date(Date.UTC(p.y,p.m-1,p.d)).getUTCDay();H=p.h}}catch(e){}if(D==null){const d=new Date();D=d.getDay();H=d.getHours()}isFriNow.D=D;return D===5||(D===4&&H>=18)}
+function friBanner(){if(!isFriNow())return '';const fri=isFriNow.D===5;
  return `<div class="panel blinkbox fri-alert" role="alert"><h3>${fri?'Hari ini hari Jumaat':'Malam ini malam Jumaat'}</h3><p style="margin:0 0 10px">${fri?'Penghulu segala hari. Baca Al-Kahfi, perbanyak selawat dan rebut saat mustajab antara Asar dan Maghrib.':'Mulakan Surah Al-Kahfi selepas Maghrib dan perbanyak selawat malam ini.'}</p><div class="row"><button class="btn pri" data-go="berkat">Checklist Jumaat</button><button class="btn" data-go="zikir">Selawat 1000</button></div></div>`}
 function hijriMs(tz,dt){const f=new Intl.DateTimeFormat('en-u-ca-islamic-umalqura-nu-latn',{timeZone:tz||'Asia/Riyadh',day:'numeric',month:'numeric',year:'numeric'});const o={};f.formatToParts(dt||new Date()).forEach(p=>o[p.type]=p.value);
  const y=parseInt(o.year),m=parseInt(o.month),d=parseInt(o.day);if(!(y>1300&&y<1600))return '';
@@ -1177,7 +1178,7 @@ main.addEventListener('click',e=>{
  const c=t.closest('[data-bcat]');if(c){bsel.cat=c.dataset.bcat;document.querySelectorAll('[data-bcat]').forEach(x=>x.setAttribute('aria-pressed',x===c));return}
  const u=t.closest('[data-bcur]');if(u){bsel.cur=u.dataset.bcur;document.querySelectorAll('[data-bcur]').forEach(x=>x.setAttribute('aria-pressed',x===u));return}
  const p=t.closest('[data-bpay]');if(p){bsel.pay=p.dataset.bpay;document.querySelectorAll('[data-bpay]').forEach(x=>x.setAttribute('aria-pressed',x===p));return}
- if(t.closest('#bAdd')){const msg=document.getElementById('bMsg'),inp=document.getElementById('bAmt'),v=parseFloat(inp.value);
+ if(t.closest('#bAdd')){const msg=document.getElementById('bMsg'),inp=document.getElementById('bAmt'),v=parseFloat(String(inp.value).replace(',','.'));
   if(!(v>0)){msg.textContent='Masukkan jumlah dahulu.';inp.focus();return}
   const b=BUD(),sar=bsel.cur==='RM'?v/(b.rate||1):v;
   b.items.push({id:Date.now().toString(36)+Math.random().toString(36).slice(2,6),ts:Date.now(),day:saKey(),sar:Math.round(sar*100)/100,orig:v,cur:bsel.cur,cat:bsel.cat,pay:bsel.pay,note:(document.getElementById('bNote').value||'').trim().slice(0,80)});
@@ -1194,7 +1195,7 @@ main.addEventListener('change',e=>{const t=e.target;
 /* ---------- gambar → Google Drive (melalui Google Apps Script) ---------- */
 const GCATS=[['kenangan','Kenangan'],['resit','Resit'],['dokumen','Dokumen']];
 let gsel={cat:'kenangan'}, gfilter='semua', GITEMS=null, GERR='', GQ=[];
-function UP(){const i=(typeof INFO==='function'?INFO():{})||{};return {url:i.uploadUrl||lsGet('upUrl')||'',token:i.uploadToken||lsGet('upTok')||''}}
+function UP(){const i=(typeof INFO==='function'?INFO():{})||{};const okU=u=>typeof u==='string'&&/^https:\/\/script\.google\.com\//.test(u);return {url:(okU(i.uploadUrl)?i.uploadUrl:'')||(okU(lsGet('upUrl'))?lsGet('upUrl'):''),token:String(i.uploadToken||lsGet('upTok')||'')}}
 function gThumb(id){return 'https://drive.google.com/thumbnail?id='+encodeURIComponent(id)+'&sz=w480'}
 function gView(id){return 'https://drive.google.com/file/d/'+encodeURIComponent(id)+'/view'}
 function compressImg(file){return new Promise((res,rej)=>{const img=new Image(),u=URL.createObjectURL(file);
@@ -1205,7 +1206,8 @@ function compressImg(file){return new Promise((res,rej)=>{const img=new Image(),
 async function gLoad(){const up=UP();if(!up.url||!up.token){GITEMS=null;gRender();return}
  GERR='';try{const r=await fetch(up.url+(up.url.includes('?')?'&':'?')+'action=list&token='+encodeURIComponent(up.token));const j=await r.json();
   if(!j.ok)throw new Error(j.error||'Gagal');GITEMS=j.items||[]}catch(e){GERR='Tidak dapat memuatkan galeri: '+(e.message||e)}gRender()}
-async function gUpload(q){const up=UP();q.st='Memampatkan…';gRender();
+async function gUpload(q){if(q.busy||q.st==='ok')return;q.busy=true;try{await gUpload_(q)}finally{q.busy=false}}
+async function gUpload_(q){const up=UP();q.st='Memampatkan…';gRender();
  try{if(!q.data){const c=await compressImg(q.file);q.data=c.data;q.preview=c.preview}
   if(!q.id){q.id=Date.now().toString(36)+Math.random().toString(36).slice(2,7);IDB.put('uploads',{id:q.id,name:q.name,caption:q.caption,cat:q.cat,ts:q.ts,day:q.day,data:q.data,preview:q.preview}).catch(()=>{})}
   q.st='Memuat naik…';gRender();
@@ -1271,15 +1273,16 @@ function rsDayStats(k){const d=(S.daily&&S.daily[k])||{checks:{},counts:{}},c=d.
  return {selawat:c.selawat||0,istighfar:c.istighfar||0,tasbih:(c.tasbih||0)+(c.tahmid||0)+(c.takbir||0),tahlil:(c.tahlil||0)+(c.wabihamdihi||0)+(c.hauqalah||0),
   tahajjud:!!ch['malam-2'],malam:has('malam'),dhuha:!!ch['dhuha-0'],pagi:n('pagi'),petang:n('petang'),wirid:n('wirid'),doa:n('doa'),jumaat:n('jumaat'),checks:Object.keys(ch).length}}
 async function rsPlaces(days){const out={};
- try{if(typeof tripRef!=='undefined'&&tripRef){await Promise.all(days.map(async d=>{const s=await tripRef.collection('days').doc(d).get();const pts=(s.exists&&s.data().pts)||[];const seq=[];pts.forEach(p=>{if(!seq.length||seq[seq.length-1]!==p.zone)seq.push(p.zone)});out[d]=seq}));return {src:'GPS auto',out}}}catch(e){}
+ try{if(typeof tripRef!=='undefined'&&tripRef){await Promise.all(days.map(async d=>{const s=await Promise.race([tripRef.collection('days').doc(d).get(),new Promise((_,rj)=>setTimeout(()=>rj(new Error('t')),4000))]).catch(()=>null);const pts=(s&&s.exists&&s.data().pts)||[];const seq=[];pts.forEach(p=>{if(!seq.length||seq[seq.length-1]!==p.zone)seq.push(p.zone)});out[d]=seq}));return {src:'GPS auto',out}}}catch(e){}
  try{if(typeof DB!=='undefined'&&DB){await Promise.all(days.map(async d=>{const s=await DB.doc('log/'+d).get();const it=(s.exists&&s.data().items)||[];const seq=[];it.forEach(p=>{if(!seq.length||seq[seq.length-1]!==p.place)seq.push(p.place)});out[d]=seq}));return {src:'status dikongsi',out}}}catch(e){}
  return {src:'',out}}
 function rsChecklist(k){const {t,c}=count(k);return {t,c,p:t?Math.round(c/t*100):0}}
 function rsMissed(k){const res=[];DATA[k].groups.forEach((g,gi)=>g.items.forEach((it,ii)=>{if(!S.checks[`${k}-${gi}-${ii}`])res.push(it[0])}));return res}
 function rsTile(v,l,s){return `<div class="rtile"><b>${v}</b><span>${l}</span>${s?`<em>${s}</em>`:''}</div>`}
 function rsBar(l,p,x){return `<div class="rbar"><span>${l}</span><div class="bar"><i style="width:${p}%"></i></div><b>${x}</b></div>`}
-async function rsBuild(){
- if(RS_BUSY)return;RS_BUSY=true;const out=document.getElementById('rsOut');if(!out){RS_BUSY=false;return}
+async function rsBuild(){if(RS_BUSY)return;RS_BUSY=true;try{await rsBuild_()}catch(e){const o=document.getElementById('rsOut');if(o)o.innerHTML='<p class="muted" style="margin:0">Ringkasan gagal dijana. Tekan "Jana ringkasan" sekali lagi.</p>'}finally{RS_BUSY=false}}
+async function rsBuild_(){
+ const out=document.getElementById('rsOut');if(!out)return;
  out.innerHTML=`<p class="muted" style="margin:0">Sedang menyusun ringkasan…</p>`;
  const mode=RS_MODE||(saKey()>=TRIP[0].d?'umrah':'semua');RS_MODE=mode;
  const days=rsDays(mode), st={}, tot={selawat:0,istighfar:0,tasbih:0,tahlil:0,tahajjud:0,dhuha:0,pagi:0,petang:0,doa:0,checks:0,aktif:0};
@@ -1295,7 +1298,7 @@ async function rsBuild(){
  const missed=rsMissed('makkah').concat(rsMissed('madinah'));
  const top=Object.entries(zc).filter(([z])=>ZONE_LBL[z]||PLACES_LBL(z)).sort((a,b)=>b[1]-a[1]).slice(0,8);
  const refl=(S.reflect||'');
- out.innerHTML=`
+ (document.getElementById('rsOut')||out).innerHTML=`
  <div class="panel rhero"><div class="glbl">${esc(phase)}</div><div class="rtitle">Umrah 4–15 November 2026</div>
   <div class="muted">${hijriOfDay(TRIP[0].d)} – ${hijriOfDay(TRIP[TRIP.length-1].d)} · Jeddah · Makkah · Madinah · 3 kali umrah</div>
   <div class="muted" style="font-size:.78rem;margin-top:4px">${mode==='umrah'?'Data 4–15 Nov 2026':'Semua rekod dalam telefon ini'} · dijana ${fmtAt(Date.now(),'Asia/Riyadh')} Saudi</div></div>
@@ -1322,7 +1325,7 @@ async function rsBuild(){
    <div class="rmeta"><span>Selawat <b>${s.selawat}</b></span><span>Tick <b>${s.checks}</b></span><span>Belanja <b>SAR ${f2(spendDay[t.d]||0)}</b></span>${photos!==null?`<span>Gambar <b>${photoDay[t.d]||0}</b></span>`:''}</div>
    ${z.length?`<div class="muted" style="font-size:.78rem">${[...new Set(z)].slice(0,5).join(' → ')}</div>`:''}</div></div>`}).join('')}</div></div>
  <div class="panel"><h3>Catatan kenangan & muhasabah</h3><textarea id="rsReflect" class="txt" rows="5" maxlength="2000" placeholder="Apa yang paling menyentuh hati sepanjang umrah ini? Doa yang paling diharapkan? Azam selepas pulang?">${esc(refl)}</textarea><p class="muted" id="rsRefMsg" style="font-size:.78rem;margin:6px 0 0">Disimpan automatik dalam telefon ini.</p></div>`;
- RS_LAST={mode,tot,spend,photos,umr,mk,md,top,refl,b,phase};RS_BUSY=false;
+ RS_LAST={mode,tot,spend,photos,umr,mk,md,top,refl,b,phase};
 }
 let RS_LAST=null;
 function PLACES_LBL(k){try{return (typeof PL==='function'?PL(k).n:'')}catch(e){return ''}}
@@ -1420,7 +1423,7 @@ IDB.all('uploads').then(list=>{if(!list||!list.length)return;list.sort((a,b)=>b.
 window.addEventListener('online',()=>{gRetryAll();if(typeof wxLoad==='function')wxLoad()});
 
 /* --- muat keadaan dari IndexedDB (jika lebih baharu daripada localStorage) --- */
-IDB.get('state').then(v=>{if(v&&(!LS_HAD||(v.savedAt||0)>LS_SAVED_AT)){S=Object.assign(S,v);try{localStorage.setItem(KEY,JSON.stringify(S))}catch(e){}render()}else if(!v){IDB.set('state',JSON.parse(JSON.stringify(S))).catch(()=>{})}}).catch(()=>{});
+IDB.get('state').then(v=>{if(v&&(!LS_HAD||(v.savedAt||0)>LS_SAVED_AT)){S=Object.assign(S,v);save();render()}else if(!v){IDB.set('state',JSON.parse(JSON.stringify(S))).catch(()=>{})}}).catch(()=>{});
 try{navigator.storage&&navigator.storage.persist&&navigator.storage.persist()}catch(e){}
 
 /* --- service worker --- */
@@ -1434,7 +1437,8 @@ function render(){
  updateCounts();fillInfo();if(current==='ringkasan')rsBuild();afterRender();
 }
 function go(k){current=k;try{history.replaceState(null,'','#'+k)}catch(_){}drawTabs();render();window.scrollTo({top:0});
- const b=document.getElementById('tab-'+k);if(b)tabsEl.scrollLeft=b.offsetLeft-tabsEl.offsetLeft-16;}
+ tabScroll();}
+function tabScroll(){const b=document.getElementById('tab-'+current);if(!b)return;const L=b.offsetLeft-tabsEl.offsetLeft-(tabsEl.clientWidth-b.offsetWidth)/2;try{tabsEl.scrollTo({left:Math.max(0,L)})}catch(e){tabsEl.scrollLeft=Math.max(0,L)}}
 function buzz(){try{navigator.vibrate&&navigator.vibrate(8)}catch(e){}}
 function arm(btn,fn){if(btn.dataset.armed){delete btn.dataset.armed;btn.textContent=btn.dataset.label;fn();return}
  btn.dataset.armed='1';btn.dataset.label=btn.textContent;btn.textContent='Tekan sekali lagi untuk sahkan';
@@ -1460,7 +1464,7 @@ window.addEventListener('hashchange',()=>{const h=location.hash.slice(1);if(TABS
 let lastDay=todayKey();
 setInterval(()=>{if(todayKey()!==lastDay){lastDay=todayKey();render()}},30000);
 prune();save();
-drawTabs();render();tick();setInterval(tick,1000);setInterval(tickAgo,30000);
+drawTabs();render();tick();setTimeout(tabScroll,50);setInterval(tick,1000);setInterval(tickAgo,30000);
 </script>
 
 </body></html>

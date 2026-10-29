@@ -1,5 +1,5 @@
 /* Diari Umrah Isteriku — service worker (offline) */
-const V = 'umrah-v1';
+const V = 'umrah-v2';
 const CORE = ['./', './index.html', './manifest.webmanifest', './icon-192.png', './icon-512.png', './icon-maskable-512.png', './apple-touch-icon.png', './favicon-32.png'];
 const LIBS = ['cdnjs.cloudflare.com', 'www.gstatic.com', 'fonts.googleapis.com', 'fonts.gstatic.com'];
 const TILE_MAX = 400;
@@ -17,7 +17,7 @@ async function networkFirstPage(req) {
   const cache = await caches.open(V);
   try {
     const res = await Promise.race([fetch(req), timeout(5000)]);
-    if (res && res.ok) cache.put('./index.html', res.clone());
+    if (res && res.ok && /\/(index\.html)?$/.test(new URL(req.url).pathname)) cache.put('./index.html', res.clone());
     return res;
   } catch (e) {
     return (await cache.match('./index.html')) || (await cache.match('./')) || Response.error();
@@ -29,7 +29,7 @@ async function cacheFirst(req, name, max) {
   if (hit) return hit;
   try {
     const res = await fetch(req);
-    if (res && (res.ok || res.type === 'opaque')) {
+    if (res && res.ok) {
       cache.put(req, res.clone());
       if (max) cache.keys().then(k => { if (k.length > max) cache.delete(k[0]); });
     }
