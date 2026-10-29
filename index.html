@@ -1,0 +1,1364 @@
+<!doctype html><html lang="ms"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-title" content="Umrah Isteri"><meta name="theme-color" content="#a4466e"><style>:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);color-scheme:light}body{margin:0;font:14px system-ui,sans-serif}img{max-width:100%}[hidden]{display:none!important}</style><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css"><script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script><script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script><script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
+<title>Diari Umrah Isteriku</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Marcellus&family=Nunito+Sans:opsz,wght@6..12,400;6..12,600;6..12,700&family=Amiri:wght@400;700&display=swap">
+<style>
+/* Layout: sticky dual-clock header + chip tabs; one column of soft panels below, mobile first */
+:root{
+  --bg:#fbf6f7; --surface:#ffffff; --tint:#f5e8ec; --line:#ecd9df;
+  --fg:#3a2731; --muted:#7c6470; --accent:#a4466e; --accent-soft:#f1d4e0;
+  --gold:#a77a2c; --moon:#6b5a8a; --sage:#4f7a63; --sage-soft:#dcebe2; --warn:#a8552e; --warn-soft:#f7e2d6;
+  --display:"Marcellus", "Cormorant Garamond", Georgia, serif;
+  --body:"Nunito Sans", "Segoe UI", system-ui, sans-serif;
+  --arab:"Amiri", "Traditional Arabic", "Scheherazade New", serif;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#1d1519; --surface:#271c22; --tint:#33232c; --line:#45313b;
+  --fg:#f3e6ec; --muted:#bba3ae; --accent:#e58bb2; --accent-soft:#4a2a3a;
+  --gold:#dcb46a; --moon:#efe2b2; --sage:#8cc2a3; --sage-soft:#22382c; --warn:#eaa27e; --warn-soft:#3f2a20; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#1d1519; --surface:#271c22; --tint:#33232c; --line:#45313b;
+  --fg:#f3e6ec; --muted:#bba3ae; --accent:#e58bb2; --accent-soft:#4a2a3a;
+  --gold:#dcb46a; --moon:#efe2b2; --sage:#8cc2a3; --sage-soft:#22382c; --warn:#eaa27e; --warn-soft:#3f2a20; color-scheme:dark}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--fg);font-family:var(--body);font-size:15px;line-height:1.6}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:10;background:var(--surface)}
+.wrap{max-width:760px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+header{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:var(--surface);border-bottom:1px solid var(--line)}
+.hd{padding-block:12px 8px;display:flex;flex-direction:column;gap:10px}
+.brand{display:flex;align-items:baseline;justify-content:space-between;gap:8px;flex-wrap:wrap}
+.brand h1{font-family:var(--display);font-weight:400;font-size:1.45rem;margin:0;color:var(--accent);letter-spacing:.01em}
+.brand .hijri{font-size:.8rem;color:var(--muted)}
+.clocks{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.clock{background:var(--tint);border-radius:14px;padding:8px 12px;min-width:0}
+.clock .lbl{display:flex;align-items:center;gap:5px;font-size:.68rem;letter-spacing:.09em;text-transform:uppercase;color:var(--muted);font-weight:700}
+.flag{font-size:1rem;line-height:1;letter-spacing:0}
+.sky{margin-left:auto;display:inline-flex;align-items:center;gap:3px;text-transform:none;letter-spacing:0;font-weight:600}
+.sky svg{flex:none}
+.clock .t{font-family:var(--display);font-size:1.7rem;line-height:1.15;font-variant-numeric:tabular-nums}
+.clock .d .hj{display:block;color:var(--gold);font-weight:700}
+.hjd{display:block;font-weight:600;font-size:.82rem;color:var(--gold)}
+.clock .d{font-size:.75rem;color:var(--muted)}
+.clock.sa{background:var(--accent-soft)}
+nav.tabs{display:flex;gap:6px;overflow-x:auto;padding-block:4px 10px;scrollbar-width:none}
+nav.tabs::-webkit-scrollbar{display:none}
+.tab{flex:none;border:1px solid var(--line);background:var(--surface);color:var(--fg);font:600 .85rem var(--body);padding:7px 14px;border-radius:999px;cursor:pointer}
+.tab[aria-selected="true"]{background:var(--accent);border-color:var(--accent);color:var(--surface)}
+.tab:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible{outline:2px solid var(--gold);outline-offset:2px}
+main{padding-block:18px 60px}
+section.view{display:flex;flex-direction:column;gap:16px}
+h2{font-family:var(--display);font-weight:400;font-size:1.5rem;margin:0;text-wrap:balance}
+h3{font-size:.78rem;letter-spacing:.1em;text-transform:uppercase;color:var(--accent);margin:0 0 6px;font-weight:700}
+.lead{color:var(--muted);margin:0}
+.panel{background:var(--surface);border:1px solid var(--line);border-radius:18px;padding:14px 16px;min-width:0}
+.panel.soft{background:var(--tint);border-color:transparent}
+.panel.note{background:var(--warn-soft);border-color:transparent}
+.panel.note h3{color:var(--warn)}
+.panel.good{background:var(--sage-soft);border-color:transparent}
+.panel.good h3{color:var(--sage)}
+.row{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+.prog{display:flex;align-items:center;gap:10px}
+.bar{flex:1;height:8px;background:var(--tint);border-radius:99px;overflow:hidden}
+.bar i{display:block;height:100%;background:linear-gradient(90deg,var(--accent),var(--gold));border-radius:99px;transition:width .3s}
+.pct{font-size:.8rem;color:var(--muted);font-variant-numeric:tabular-nums;min-width:3.2em;text-align:right}
+ul.check{list-style:none;margin:0;padding:0;display:flex;flex-direction:column}
+ul.check li{border-top:1px solid var(--line)}
+ul.check li:first-child{border-top:0}
+ul.check label{display:flex;gap:12px;padding:10px 0;cursor:pointer;align-items:flex-start}
+ul.check input{appearance:none;flex:none;width:22px;height:22px;border:2px solid var(--accent);border-radius:7px;margin-top:1px;display:grid;place-items:center;cursor:pointer;background:var(--surface)}
+ul.check input:checked{background:var(--accent)}
+ul.check input:checked::after{content:"";width:6px;height:11px;border:solid var(--surface);border-width:0 2.5px 2.5px 0;transform:rotate(45deg) translate(-1px,-1px)}
+ul.check .tx{min-width:0}
+ul.check input:checked + .tx b{color:var(--muted);text-decoration:line-through;text-decoration-color:var(--accent)}
+ul.check b{font-weight:600}
+ul.check small{display:block;color:var(--muted);font-size:.82rem;line-height:1.45;margin-top:2px}
+.tag{display:inline-block;font-size:.66rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;padding:1px 7px;border-radius:99px;margin-left:6px;vertical-align:2px}
+.tag.w{background:var(--accent-soft);color:var(--accent)}
+.tag.r{background:var(--warn-soft);color:var(--warn)}
+.tag.s{background:var(--sage-soft);color:var(--sage)}
+.tbl-wrap{overflow-x:auto}
+table{width:100%;border-collapse:collapse;font-variant-numeric:tabular-nums;font-size:.9rem}
+th,td{text-align:left;padding:7px 6px;border-bottom:1px solid var(--line);white-space:nowrap}
+th{font-size:.7rem;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);font-weight:700}
+tr.next td{background:var(--accent-soft);font-weight:700}
+td.sa{color:var(--fg)} td.my{color:var(--muted)}
+.seg{display:inline-flex;background:var(--tint);border-radius:99px;padding:3px}
+.seg button{border:0;background:transparent;color:var(--fg);font:600 .82rem var(--body);padding:6px 14px;border-radius:99px;cursor:pointer}
+.seg button[aria-pressed="true"]{background:var(--surface);color:var(--accent);box-shadow:0 1px 3px rgba(0,0,0,.08)}
+.big{font-family:var(--display);font-size:2rem;line-height:1.1;font-variant-numeric:tabular-nums}
+.muted{color:var(--muted)}
+input[type=date],select{font:600 .9rem var(--body);color:var(--fg);background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:7px 10px}
+.berkat{display:flex;flex-direction:column;gap:0}
+.bk{display:grid;grid-template-columns:auto 1fr;gap:4px 12px;padding:11px 0;border-top:1px solid var(--line)}
+.bk:first-child{border-top:0}
+.bk .when{grid-row:span 2;min-width:92px;font-variant-numeric:tabular-nums;font-size:.82rem;font-weight:700;color:var(--accent);line-height:1.35}
+.bk .when span{display:block;font-weight:400;color:var(--muted)}
+.bk b{font-weight:600}
+.bk p{margin:0;font-size:.85rem;color:var(--muted)}
+.bk.live{background:var(--accent-soft);border-radius:12px;padding-inline:10px;border-top-color:transparent}
+.steps{counter-reset:s;display:flex;flex-direction:column;gap:12px}
+.step{display:grid;grid-template-columns:34px 1fr;gap:12px}
+.step::before{counter-increment:s;content:counter(s);width:34px;height:34px;border-radius:50%;background:var(--accent-soft);color:var(--accent);display:grid;place-items:center;font-family:var(--display);font-size:1.05rem}
+.step b{display:block}
+.step p{margin:2px 0 0;font-size:.88rem;color:var(--muted)}
+.doa{display:flex;flex-direction:column;gap:6px}
+.ar{font-family:var(--arab);font-size:1.45rem;line-height:2;direction:rtl;text-align:right;color:var(--fg)}
+.rumi{font-style:italic;color:var(--accent);font-size:.9rem}
+.mk{font-size:.88rem;color:var(--muted)}
+.grid2{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,220px),1fr));gap:12px}
+.mini{display:flex;flex-direction:column;gap:6px}
+.reset{border:1px solid var(--line);background:transparent;color:var(--muted);font:600 .78rem var(--body);padding:6px 12px;border-radius:99px;cursor:pointer}
+.foot{font-size:.78rem;color:var(--muted);text-align:center;padding-top:8px}
+
+.counter{display:flex;flex-direction:column;align-items:center;gap:12px}
+.tap{width:min(220px,64vw);aspect-ratio:1;max-width:100%;border-radius:50%;border:0;cursor:pointer;background:conic-gradient(var(--accent) calc(var(--p)*1%),var(--tint) 0);display:grid;place-items:center;padding:12px;touch-action:manipulation;-webkit-tap-highlight-color:transparent}
+.tap .in{width:100%;height:100%;border-radius:50%;background:var(--surface);display:flex;flex-direction:column;align-items:center;justify-content:center;transition:transform .08s}
+.tap:active .in{transform:scale(.96)}
+.tap .n{font-family:var(--display);font-size:3rem;line-height:1;font-variant-numeric:tabular-nums;color:var(--fg)}
+.tap .of{font-size:.78rem;color:var(--muted);margin-top:4px}
+.btns{display:flex;gap:8px;flex-wrap:wrap;justify-content:center}
+.btn{border:1px solid var(--line);background:var(--surface);color:var(--fg);font:600 .85rem var(--body);padding:8px 16px;border-radius:99px;cursor:pointer;min-height:42px;touch-action:manipulation}
+.btn.ghost{color:var(--muted)}
+.cdbar{display:flex;align-items:center;justify-content:space-between;gap:4px 10px;flex-wrap:wrap;background:var(--tint);border-radius:14px;padding:7px 12px;font-variant-numeric:tabular-nums}
+.cdbar .cl{font-size:.68rem;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);font-weight:700;flex-basis:100%}
+.cdbar .cus{display:flex;gap:10px;align-items:baseline}
+.cdbar .cu{display:inline-flex;align-items:baseline;gap:3px}
+.cdbar .cu b{font-family:var(--display);font-size:1.45rem;font-weight:400;color:var(--accent);line-height:1}
+.cdbar .cu i{font-style:normal;font-size:.72rem;color:var(--muted)}
+.cdbar .cs{font-size:.72rem;color:var(--muted)}
+.cdbar .cdone{font-family:var(--display);color:var(--accent);font-size:1.05rem}
+.rsout{display:flex;flex-direction:column;gap:16px}
+.rhero .rtitle{font-family:var(--display);font-size:1.6rem;line-height:1.2;color:var(--accent);margin:2px 0}
+.rtiles{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
+.rtile{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:12px;display:flex;flex-direction:column;gap:2px;min-width:0}
+.rtile b{font-family:var(--display);font-weight:400;font-size:1.7rem;line-height:1.1;color:var(--accent);font-variant-numeric:tabular-nums;overflow-wrap:anywhere}
+.rtile span{font-size:.8rem;font-weight:600}.rtile em{font-style:normal;font-size:.72rem;color:var(--muted)}
+.rbar{display:grid;grid-template-columns:minmax(0,9.5em) 1fr auto;gap:10px;align-items:center;padding:5px 0;font-size:.86rem}
+.rbar b{font-size:.8rem;font-variant-numeric:tabular-nums;white-space:nowrap}
+.rdays{display:flex;flex-direction:column}
+.rday{display:grid;grid-template-columns:auto 1fr;gap:12px;padding:10px 0;border-top:1px solid var(--line)}.rday:first-child{border-top:0}
+.rday.today .dnum{background:var(--accent);color:var(--surface)}
+.rmeta{display:flex;flex-wrap:wrap;gap:4px 12px;font-size:.78rem;color:var(--muted);margin:4px 0 2px}.rmeta b{color:var(--fg)}
+textarea.txt{resize:vertical;line-height:1.5;font-weight:400}
+@media print{header,nav,.noprint,body::before,#mini{display:none!important}body{background:#fff}.panel,.rtile,.rday{break-inside:avoid}.dcard.jumaat,.blinkbox,.tag.blink,.tdot{animation:none}}
+p,.lead,.mk,.dtip,.plist li,.fri li,ul.check small,.bk p,.ol li{text-align:justify;-webkit-hyphens:auto;hyphens:auto}
+.gpick{display:flex;flex-direction:column;align-items:center;gap:2px;padding:18px;border:2px dashed var(--accent);border-radius:14px;background:var(--accent-soft);cursor:pointer;text-align:center}
+.gpick{position:relative;overflow:hidden}.gpick.off{border-color:var(--line);background:var(--tint)}.gpick.off b{color:var(--muted)}
+.gfile{position:absolute;inset:0;width:100%;height:100%;opacity:0;cursor:pointer;font-size:0}
+.gpick b{color:var(--accent);font-size:1rem}.gpick span{font-size:.8rem;color:var(--muted)}
+.gq{display:flex;flex-direction:column;gap:8px;margin-top:12px}
+.gqi{display:grid;grid-template-columns:48px 1fr auto;gap:10px;align-items:center}
+.gqi img,.gph{width:48px;height:48px;border-radius:8px;object-fit:cover;background:var(--tint)}
+.ggrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(105px,1fr));gap:8px}
+.gcell{display:flex;flex-direction:column;text-decoration:none;color:var(--fg);min-width:0}
+.gcell img{width:100%;aspect-ratio:1;object-fit:cover;border-radius:10px;background:var(--tint)}
+.gcell span{font-size:.75rem;line-height:1.3;margin-top:3px;overflow-wrap:anywhere}
+.gcell em{display:block;font-style:normal;color:var(--muted);font-size:.68rem}
+.sc.wide{grid-column:1/-1}
+.bsum{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap}
+.bbig{font-family:var(--display);font-size:1.6rem;line-height:1.15;font-variant-numeric:tabular-nums}
+.bbig.neg{color:var(--warn)}
+.bamtrow{display:flex;gap:8px;align-items:center}
+.bin{font-size:1.4rem!important;font-weight:700!important;flex:1;min-width:0;font-variant-numeric:tabular-nums}
+.bcat{display:grid;grid-template-columns:minmax(0,9em) 1fr auto;gap:10px;align-items:center;padding:5px 0;font-size:.88rem}
+.bcat b{font-variant-numeric:tabular-nums;font-size:.85rem}
+.bday{padding:8px 0;border-top:1px solid var(--line)}.bday:first-child{border-top:0}
+.bdh{display:flex;justify-content:space-between;gap:8px;font-size:.88rem;margin-bottom:4px}.bdh span{color:var(--accent);font-weight:700;font-variant-numeric:tabular-nums}
+.bit{display:flex;justify-content:space-between;gap:10px;padding:6px 0 6px 10px;align-items:flex-start}
+.bit b{font-weight:600;font-size:.92rem}
+.bamt{text-align:right;font-weight:700;font-variant-numeric:tabular-nums;white-space:nowrap;display:flex;flex-direction:column;align-items:flex-end}
+details.zar{margin:-4px 0 12px 34px}
+details.zar summary{font-size:.78rem;color:var(--accent);cursor:pointer;font-weight:700;padding:2px 0}
+details.zar .ar{font-size:1.45rem;line-height:2.2;margin-top:4px}
+.ar .sura{display:block;text-align:center;font-size:1rem;color:var(--gold);margin:10px 0 2px}
+.wirid-ar{font-size:1.35rem;line-height:2;text-align:center}
+.qlink{color:var(--accent);font-weight:700}
+.dcard.jumaat{border:2px solid var(--gold);animation:friGlow 1.6s ease-in-out infinite}
+.blinkbox{border:2px solid var(--gold);animation:friGlow 1.6s ease-in-out infinite}
+@keyframes friGlow{0%,100%{box-shadow:0 0 0 0 rgba(200,150,60,0);border-color:var(--gold)}50%{box-shadow:0 0 20px 3px rgba(200,150,60,.55);border-color:var(--accent)}}
+.tag.blink{background:var(--gold);color:var(--surface);animation:tagBlink 1.1s ease-in-out infinite}
+@keyframes tagBlink{50%{opacity:.25}}
+.fri{margin-top:12px;padding:12px 14px;border-radius:12px;background:var(--tint)}
+.fri b{color:var(--gold)}
+.fri ul{margin:6px 0 10px;padding-left:18px;font-size:.9rem;display:flex;flex-direction:column;gap:2px}
+.fri-alert h3{color:var(--gold);font-size:.85rem}
+.tdot{display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--gold);margin-left:6px;vertical-align:1px;animation:tagBlink 1s ease-in-out infinite}
+
+.map{height:280px;border-radius:14px;margin-top:12px;position:relative;z-index:0;isolation:isolate;background:var(--tint)}
+.dcard{background:var(--surface);border:1px solid var(--line);border-radius:18px;padding:14px 16px;min-width:0}
+.dcard.today{border:2px solid var(--accent);box-shadow:0 4px 18px -8px var(--accent)}
+.panel .dcard{border:0;padding:0;box-shadow:none}
+.dhead{display:grid;grid-template-columns:auto 1fr;gap:12px;align-items:start}
+.dnum{width:52px;height:52px;border-radius:14px;background:var(--accent-soft);color:var(--accent);display:flex;flex-direction:column;align-items:center;justify-content:center;font-size:.62rem;letter-spacing:.08em;text-transform:uppercase;font-weight:700}
+.dnum b{font-family:var(--display);font-size:1.4rem;font-weight:400;line-height:1;letter-spacing:0}
+.ddate{font-weight:700;margin-bottom:2px}
+.umr{font-family:var(--display);color:var(--accent);font-size:1.05rem;margin-top:3px}
+.plist{margin:10px 0 0;padding-left:18px;display:flex;flex-direction:column;gap:3px;font-size:.92rem}
+.dtip{margin:10px 0 0;padding:8px 12px;background:var(--tint);border-radius:10px;font-size:.84rem;color:var(--muted)}
+.flights{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,230px),1fr));gap:10px}
+.flt{background:var(--tint);border-radius:14px;padding:12px;display:flex;flex-direction:column;gap:6px;min-width:0}
+.fno{font-family:var(--display);font-size:1.2rem;color:var(--accent)}
+.ftimes{display:flex;gap:18px}
+.ftimes b{display:block;font-family:var(--display);font-weight:400;font-size:1.6rem;font-variant-numeric:tabular-nums;line-height:1.1}
+.ftimes span{font-size:.72rem;color:var(--muted)}
+.sumrow{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;text-align:center}
+.sumrow b{display:block;font-family:var(--display);font-size:1.7rem;font-weight:400;color:var(--accent);line-height:1.1}
+.sumrow span{font-size:.72rem;color:var(--muted)}
+.sel{user-select:all;font-weight:700}
+.btn.pri{background:var(--accent);border-color:var(--accent);color:var(--surface)}
+.btn:disabled{opacity:.6}
+.live{display:grid;grid-template-columns:auto 1fr;gap:12px;align-items:start}
+.live .where{font-family:var(--display);font-size:1.4rem;line-height:1.25}
+.dot{width:14px;height:14px;border-radius:50%;background:var(--sage);margin-top:8px;box-shadow:0 0 0 4px var(--sage-soft);animation:pulse 2s infinite}
+.dot.stale{background:var(--muted);box-shadow:0 0 0 4px var(--tint);animation:none}
+.live.alert .where{color:var(--warn)} .live.alert .dot{background:var(--warn);box-shadow:0 0 0 4px var(--warn-soft)}
+@keyframes pulse{50%{box-shadow:0 0 0 8px var(--sage-soft)}}
+.maplink{display:inline-block;margin-top:8px;color:var(--accent);font-weight:700;font-size:.88rem}
+.pgrp{margin-bottom:8px}
+.glbl{font-size:.7rem;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);font-weight:700;margin-bottom:5px}
+.chips{display:flex;flex-wrap:wrap;gap:6px}
+.chip{border:1px solid var(--line);background:var(--surface);color:var(--fg);font:600 .85rem var(--body);padding:8px 12px;border-radius:12px;cursor:pointer;touch-action:manipulation;text-align:left}
+.chip[aria-pressed="true"]{background:var(--accent);border-color:var(--accent);color:var(--surface)}
+.chip.rnd{min-width:44px;text-align:center}
+.chip.alertc{border-color:var(--warn);color:var(--warn)}
+.chip.alertc[aria-pressed="true"]{background:var(--warn);color:var(--surface)}
+.txt{width:100%;font:500 .95rem var(--body);color:var(--fg);background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:9px 12px}
+.form{display:flex;flex-direction:column;gap:4px}
+.form label{font-size:.8rem;color:var(--muted);font-weight:600;margin-top:6px}
+.ol{margin:0 0 10px;padding-left:20px;display:flex;flex-direction:column;gap:4px;font-size:.9rem}
+.links{display:flex;flex-direction:column}
+.links a{color:var(--accent);font-weight:600;padding:9px 0;border-top:1px solid var(--line);text-decoration:none}
+.links a:first-child{border-top:0}
+.links a::after{content:" ↗";color:var(--muted)}
+.btn[data-armed],.reset[data-armed]{background:var(--warn-soft);color:var(--warn);border-color:var(--warn)}
+.week{display:grid;grid-template-columns:repeat(7,1fr);gap:6px;align-items:end}
+.week .col{display:flex;flex-direction:column;align-items:center;gap:4px;justify-content:flex-end;min-width:0;height:96px}
+.week .b{width:100%;max-width:28px;background:var(--accent-soft);border-radius:6px 6px 2px 2px}
+.week .b.full{background:var(--accent)}
+.week span{font-size:.66rem;color:var(--muted);font-variant-numeric:tabular-nums;white-space:nowrap;overflow:hidden;max-width:100%}
+.zk{display:grid;grid-template-columns:1fr auto;gap:8px 14px;padding:12px 0;border-top:1px solid var(--line);align-items:center}
+.zk:first-child{border-top:0}
+.zk .ar{font-size:1.3rem;line-height:1.7}
+.zk .ctl{display:flex;flex-direction:column;align-items:center;gap:2px}
+.plus{width:66px;height:66px;border-radius:50%;border:2px solid var(--accent);background:var(--surface);color:var(--accent);font:700 1.15rem var(--body);cursor:pointer;font-variant-numeric:tabular-nums;touch-action:manipulation}
+.plus:active{transform:scale(.95)}
+.plus.done{background:var(--accent);color:var(--surface)}
+.sub{display:flex;gap:2px}
+.tiny{border:0;background:transparent;color:var(--muted);font:600 .75rem var(--body);cursor:pointer;padding:6px 8px;text-decoration:underline}
+.window{display:flex;gap:8px;flex-wrap:wrap;margin:4px 0 10px}
+.win{background:var(--tint);border-radius:12px;padding:8px 12px;font-variant-numeric:tabular-nums}
+.win .lbl{font-size:.66rem;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);font-weight:700}
+.win b{font-size:1.1rem}
+.shortcuts{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.sc{border:1px solid var(--line);background:var(--surface);border-radius:14px;padding:12px;text-align:left;cursor:pointer;color:var(--fg);font:inherit;min-width:0}
+.sc b{display:block;font-family:var(--display);font-weight:400;font-size:1.1rem;color:var(--accent)}
+.sc span{font-size:.8rem;color:var(--muted)}
+
+#mini{position:fixed;inset:0;z-index:1000;background:#000;color:#b9a9b1;display:flex;align-items:center;justify-content:center;padding:env(safe-area-inset-top,0px) max(16px,env(safe-area-inset-right,0px)) env(safe-area-inset-bottom,0px) max(16px,env(safe-area-inset-left,0px));touch-action:manipulation;user-select:none;-webkit-user-select:none}
+.m-in{display:flex;flex-direction:column;align-items:center;gap:10px;text-align:center;max-width:340px}
+.m-lbl{font-size:.72rem;letter-spacing:.12em;text-transform:uppercase;color:#7d6c75}
+.m-time{font-family:var(--display);font-size:4.2rem;line-height:1;color:#e9dde3;font-variant-numeric:tabular-nums}
+.m-sub{font-size:.85rem;color:#7d6c75}
+.m-zone{display:flex;align-items:center;gap:8px;font-size:1.05rem;color:#e9dde3;margin-top:8px}
+.m-dot{flex:none;width:10px;height:10px;border-radius:50%;background:#555}.m-dot.ok{background:#5fae84}.m-dot.warn{background:#d48a5c}
+.m-rows{font-size:.82rem;color:#8d7c85;display:flex;flex-direction:column;gap:3px}
+.m-btns{display:flex;gap:8px;flex-wrap:wrap;justify-content:center;margin-top:10px}
+.m-btn{border:1px solid #4a3a43;background:#1a1216;color:#e9dde3;font:600 .9rem var(--body);padding:12px 18px;border-radius:99px;cursor:pointer}
+.m-btn.ghost{background:transparent;color:#a8979f}
+.m-hint{font-size:.72rem;color:#5d4f56}
+#mini.sleep .m-btns,#mini.sleep .m-rows{display:none}
+#mini.sleep .m-time{color:#3d3539;font-size:3rem}
+#mini.sleep .m-zone,#mini.sleep .m-lbl,#mini.sleep .m-sub{color:#3a3236}
+#mini.sleep .m-hint{color:#2e282b}
+#mini.sleep .m-dot{opacity:.4}
+body.sleeping>header,body.sleeping>main{display:none}
+@media (prefers-reduced-motion:reduce){.dcard.jumaat,.blinkbox,.tag.blink,.tdot{animation:none}.dot{animation:none}.bar i{transition:none}.tap .in{transition:none}}
+@media (max-width:380px){.flag{font-size:1rem;line-height:1;letter-spacing:0}
+.sky{margin-left:auto;display:inline-flex;align-items:center;gap:3px;text-transform:none;letter-spacing:0;font-weight:600}
+.sky svg{flex:none}
+.clock .t{font-size:1.4rem}}
+</style>
+
+</head><body>
+<header>
+  <div class="wrap hd">
+    <div class="brand"><h1>Diari Umrah Isteriku</h1><span class="hijri" id="hijri">Umrah4Ladies · 4–15 Nov 2026</span></div>
+    <div class="clocks">
+      <div class="clock"><div class="lbl"><span class="flag" role="img" aria-label="Bendera Malaysia">🇲🇾</span>Malaysia<span class="sky" id="skyMY"></span></div><div class="t" id="cMY">--:--</div><div class="d" id="dMY"></div></div>
+      <div class="clock sa"><div class="lbl"><span class="flag" role="img" aria-label="Bendera Arab Saudi">🇸🇦</span>Saudi<span class="sky" id="skySA"></span></div><div class="t" id="cSA">--:--</div><div class="d" id="dSA"></div></div>
+    </div>
+    <div class="cdbar" id="cdBar" aria-live="off"></div>
+    <nav class="tabs" role="tablist" id="tabs"></nav>
+  </div>
+</header>
+
+<main class="wrap" id="main"></main>
+
+<script>
+/* ---------- storage (per viewer) ---------- */
+const KEY='umrahIsteri.v1';
+let S={checks:{},depart:'',city:'makkah',daily:{}};
+try{const r=localStorage.getItem(KEY); if(r) S=Object.assign(S,JSON.parse(r));}catch(e){}
+if(!S.depart) S.depart='2026-11-04';
+function save(){try{localStorage.setItem(KEY,JSON.stringify(S));}catch(e){}}
+
+/* ---------- content ---------- */
+const W='<span class="tag w">Wanita</span>', R='<span class="tag r">Penting</span>', SN='<span class="tag s">Sunat</span>';
+const DATA={
+persediaan:{title:'Persediaan sebelum berangkat',lead:'Mulakan 2–3 bulan awal. Tandakan setiap perkara bila siap.',groups:[
+ {h:'3 bulan sebelum',items:[
+  ['Pasport sah sekurang-kurangnya 6 bulan dari tarikh pulang',R,'Semak juga ada 2 muka surat kosong.'],
+  ['Daftar & bayar dengan agensi umrah berlesen MOTAC','','Semak senarai agensi berlesen di laman MOTAC sebelum bayar.'],
+  ['Hadir kursus umrah / manasik','','Fahami rukun, wajib, larangan ihram dan dam.'],
+  ['Mula latihan berjalan 30–60 minit sehari','','Tawaf + sa\'ie ≈ 7 km. Biasakan kaki dengan kasut yang akan dibawa.'],
+  ['Pemeriksaan kesihatan umum','','Tekanan darah, gula, dan ubat harian yang cukup untuk seluruh perjalanan.']]},
+ {h:'1–2 bulan sebelum',items:[
+  ['Suntikan meningitis (ACYW) — wajib',R,'Ambil sekurang-kurangnya 10 hari sebelum tiba di Saudi. Simpan sijil kuning (ICV).'],
+  ['Suntikan influenza (digalakkan)','',''],
+  ['Rancang kitaran haid bersama doktor',W,'Bincang jika mahu ambil ubat penangguh haid. Mulakan awal mengikut nasihat doktor, bukan saat akhir.'],
+  ['Visa umrah & tiket disahkan oleh agensi','',''],
+  ['Pasang aplikasi Nusuk & daftar akaun','','Untuk permit Raudhah (Madinah) dan semakan permit umrah.'],
+  ['Insurans perjalanan / takaful','','Selalunya disediakan agensi — semak liputan perubatan.']]},
+ {h:'Persediaan rohani',items:[
+  ['Taubat nasuha & perbetulkan niat kerana Allah','',''],
+  ['Minta maaf kepada ibu bapa, keluarga, sahabat','',''],
+  ['Langsaikan hutang atau maklumkan kepada pemiutang','',''],
+  ['Tulis senarai doa & hajat (diri, suami, anak, ibu bapa, kenalan)','','Bawa dalam buku kecil — mudah dibaca di Multazam & Raudhah.'],
+  ['Hafal doa-doa ringkas (lihat tab Doa)','',''],
+  ['Solat sunat musafir 2 rakaat sebelum keluar rumah',SN,'']]},
+ {h:'Minggu terakhir',items:[
+  ['Potong kuku & kemaskan diri sebelum berihram','','Semasa ihram tidak boleh potong kuku / rambut.'],
+  ['Salin pasport, visa, tiket — simpan dalam telefon & bercetak','',''],
+  ['Tukar wang Riyal (SAR) secukupnya','','Bawa sedikit wang tunai untuk sedekah dan belian kecil.'],
+  ['Aktifkan roaming atau beli kad SIM / eSIM Saudi','',''],
+  ['Kongsi itinerari & nombor mutawwif dengan keluarga','',''],
+  ['Timbang bagasi mengikut had syarikat penerbangan','','Tinggalkan ruang untuk air zamzam dan kurma.']]}
+]},
+bawa:{title:'Barang untuk dibawa',lead:'Senarai khusus untuk wanita. Pilih kain yang ringan, longgar dan tidak jarang.',groups:[
+ {h:'Dokumen (beg sandang kecil)',items:[
+  ['Pasport + salinan',R,''],['Sijil vaksin meningitis (kuning)',R,''],['Visa & tiket (cetak + digital)','',''],
+  ['Kad pengenalan, kad tag jemaah & kad hotel','','Kad hotel penting jika terpisah daripada kumpulan.'],
+  ['Kad bank / kad kredit + sedikit tunai SAR','','']]},
+ {h:'Pakaian wanita',items:[
+  ['4–6 helai jubah / baju kurung longgar warna lembut',W,'Putih atau warna lembut; tidak ketat dan tidak jarang.'],
+  ['3–4 tudung labuh menutup dada',W,'Pilih kain yang tidak licin agar tidak mudah teralih semasa bersesak.'],
+  ['2 pasang telekung ringan (satu untuk dibawa ke masjid)',W,''],
+  ['Anak tudung / inner',W,''],
+  ['Stokin 6–8 pasang',W,'Wanita boleh memakai stokin semasa ihram.'],
+  ['Pakaian dalam secukupnya + seluar panjang dalam jubah',W,''],
+  ['Baju sejuk nipis / cardigan','','Dalam masjid dan bas sejuk (penghawa dingin kuat).'],
+  ['Pakaian tidur','','']]},
+ {h:'Kasut & beg',items:[
+  ['Sandal / kasut selesa yang sudah biasa dipakai','','Jangan beli baru sehari sebelum terbang.'],
+  ['Beg kasut kecil bertali','','Kasut dibawa masuk ke masjid — elak hilang di rak.'],
+  ['Beg sandang ringan / beg pinggang','','Muat telefon, pasport, botol semburan, buku doa.'],
+  ['Mangga kecil untuk bagasi','','']]},
+ {h:'Ibadah',items:[
+  ['Buku panduan & doa umrah','',''],['Al-Quran kecil / aplikasi Quran','',''],
+  ['Tasbih / kaunter digital','','Membantu kira pusingan tawaf dan sa\'ie.'],
+  ['Sejadah lipat ringan','',''],['Senarai doa & hajat bertulis','','']]},
+ {h:'Kesihatan & penjagaan diri',items:[
+  ['Ubat harian (bawa preskripsi doktor)',R,''],
+  ['Ubat selesema, batuk, demam, sakit kepala, cirit-birit','',''],
+  ['Pelitup muka (mask) — banyak','','Selesema jemaah biasa berlaku kerana sesak.'],
+  ['Losyen / pelembap & lip balm TANPA BAU',W,'Wangian dilarang semasa ihram. Kulit cepat kering di Saudi.'],
+  ['Sabun, syampu & deodoran tanpa wangian','',''],
+  ['Krim lecet kaki / plaster','','Untuk celah peha & tapak kaki selepas banyak berjalan.'],
+  ['Tuala wanita / pad & beg plastik kecil',W,''],
+  ['Gunting kecil (untuk tahallul)',W,'Simpan dalam bagasi daftar masuk, bukan beg tangan.'],
+  ['Botol semburan air','','Menyejukkan muka ketika panas.'],
+  ['Payung kecil / topi untuk ziarah luar','','']]},
+ {h:'Elektronik',items:[
+  ['Telefon + pengecas','',''],['Power bank (dalam beg tangan, bukan bagasi)','',''],
+  ['Adapter plag 3-pin jenis G','','Saudi guna plag sama seperti Malaysia, tapi bawa satu ganti.'],
+  ['Earphone untuk dengar bacaan / tazkirah','','']]},
+ {h:'Lain-lain',items:[
+  ['Botol air boleh guna semula','','Untuk isi zamzam di masjid.'],
+  ['Snek ringan (kurma, biskut)','',''],
+  ['Gantung baju / penyepit & tali ampaian kecil','',''],
+  ['Beg lipat tambahan untuk ole-ole','','']]}
+]},
+umrah:{title:'Langkah ibadah umrah',lead:'Ikut tertib ini. Rukun tidak boleh ditinggalkan; wajib yang tertinggal dikenakan dam.',groups:[
+ {h:'Sebelum miqat',items:[
+  ['Mandi sunat ihram, bersihkan diri, potong kuku',SN,'Boleh dilakukan di hotel sebelum bertolak.'],
+  ['Pakai pakaian ihram wanita',W,'Pakaian biasa yang menutup aurat. Muka dan kedua tapak tangan mesti terbuka.'],
+  ['Solat sunat ihram 2 rakaat',SN,'Jika bukan waktu yang dilarang.']]},
+ {h:'Rukun & wajib',items:[
+  ['Niat ihram umrah di miqat',R,'Program ini: umrah pertama di Qarnul Manazil (5/11), kedua di Hudaibiyah (7/11), ketiga di Ji\'ranah (8/11). Ikut arahan mutawwif.'],
+  ['Baca talbiah (perlahan bagi wanita)',W,'Teruskan sehingga mula tawaf.'],
+  ['Tawaf 7 pusingan',R,'Mula & tamat setentang Hajar Aswad, Kaabah di sebelah kiri. Wanita tidak perlu berlari-lari anak (ramal).'],
+  ['Solat sunat tawaf 2 rakaat',SN,'Di mana-mana dalam masjid jika di belakang Maqam Ibrahim terlalu sesak.'],
+  ['Minum air zamzam & berdoa',SN,''],
+  ['Sa\'ie 7 kali antara Safa dan Marwah',R,'Mula di Safa, tamat di Marwah. Wanita berjalan biasa di antara lampu hijau.'],
+  ['Tahallul — gunting sekurang-kurangnya 3 helai rambut',R,'Wanita gunting hujung rambut kira-kira satu ruas jari, di tempat tertutup.'],
+  ['Tertib — semua dibuat mengikut susunan',R,'']]},
+ {h:'Larangan ihram wanita',items:[
+  ['Tidak memakai wangian (badan, pakaian, sabun berbau)',R,''],
+  ['Tidak menutup muka (niqab/purdah) & tidak memakai sarung tangan',W,'Boleh labuhkan kain tudung tanpa menyentuh muka jika perlu.'],
+  ['Tidak memotong kuku, mencabut atau memotong rambut/bulu','',''],
+  ['Tidak bersetubuh, bercumbu atau akad nikah','',''],
+  ['Tidak memburu & tidak memotong tumbuhan Tanah Haram','',''],
+  ['Jaga lidah — tidak bertengkar, mengumpat atau berkata kesat','','']]}
+]},
+makkah:{title:'Checklist ibadah di Makkah',lead:'Pahala solat di Masjidil Haram 100,000 kali ganda. Tandakan setiap peluang yang sudah direbut.',groups:[
+ {h:'Ibadah utama',items:[
+  ['Doa ketika pertama kali melihat Kaabah',R,'Antara waktu mustajab. Sediakan doa terbaik sebelum tiba.'],
+  ['Selesaikan umrah wajib (tab Umrah)',R,''],
+  ['Solat fardu 5 waktu berjemaah di Masjidil Haram',W,'Wanita ikut saf/ruang wanita yang ditetapkan petugas.'],
+  ['Tawaf sunat sebanyak mungkin',SN,'Untuk jemaah luar Makkah, tawaf sunat lebih afdal daripada solat sunat di masjid.'],
+  ['Berdoa di Multazam (antara Hajar Aswad & pintu Kaabah)',SN,'Jika terlalu sesak, berdoa menghadap Multazam dari jauh sudah memadai.'],
+  ['Solat sunat di Hijr Ismail',SN,'Kawasan ini sebahagian Kaabah. Pergi ketika kurang sesak, elak bercampur dengan lelaki.'],
+  ['Minum zamzam dengan niat & doa','',''],
+  ['Khatam / tambah bacaan al-Quran','',''],
+  ['Solat tahajjud sebelum Subuh','','Waktu sepertiga malam — lihat tab Utama.'],
+  ['Solat Dhuha & sedekah setiap hari',SN,''],
+  ['Umrah sunat dari Tan\'im (Masjid Aisyah) atau Ji\'ranah',SN,'Masjid Aisyah — miqat yang dikaitkan dengan umrah Saidatina Aisyah.']]},
+ {h:'Ziarah (ikut program agensi)',items:[
+  ['Jabal Rahmah & Padang Arafah','',''],['Muzdalifah & Mina','',''],
+  ['Jabal Thur (dari luar)','',''],['Jabal Nur — Gua Hira\' (dari luar)','',''],
+  ['Jannatul Ma\'la (makam Saidatina Khadijah)',W,'Wanita biasanya hanya melihat dari luar pagar.'],
+  ['Muzium Dua Masjid Suci / Kiswah (jika ada)','','']]},
+ {h:'Sebelum meninggalkan Makkah',items:[
+  ['Tawaf Wada\' (selamat tinggal)',R,'Wanita yang haid atau nifas dikecualikan dan tidak dikenakan dam.'],
+  ['Doa terakhir & isi botol zamzam','','']]}
+]},
+madinah:{title:'Checklist ibadah di Madinah',lead:'Pahala solat di Masjid Nabawi 1,000 kali ganda. Madinah ialah kota yang tenang — perbanyak selawat.',groups:[
+ {h:'Masjid Nabawi',items:[
+  ['Masuk dengan kaki kanan & doa masuk masjid','',''],
+  ['Solat fardu berjemaah di Masjid Nabawi',W,'Wanita masuk melalui pintu khas wanita — ikut papan tanda.'],
+  ['Raudhah — tempah permit dalam aplikasi Nusuk',R,'Wanita ada slot waktu tersendiri. Biasanya dibenarkan sekali dalam tempoh setahun; masa di dalam terhad. Datang awal ikut masa slot.'],
+  ['Solat sunat 2 rakaat & berdoa di Raudhah',W,'Taman dari taman-taman syurga. Sediakan senarai doa yang ringkas.'],
+  ['Ucap salam kepada Rasulullah ﷺ, Abu Bakar & Umar',W,'Wanita memberi salam dari ruang wanita / ketika di Raudhah.'],
+  ['Perbanyak selawat ke atas Nabi ﷺ','',''],
+  ['Solat 40 waktu (Arbain) — jika mampu',SN,'Amalan yang diamalkan ramai; hadisnya diperselisihkan ulama. Jangan risau jika terlepas kerana uzur.']]},
+ {h:'Ziarah sekitar Madinah',items:[
+  ['Masjid Quba — solat 2 rakaat',SN,'Berwuduk dari rumah/hotel; pahala seperti satu umrah (hadis riwayat Ibnu Majah).'],
+  ['Jabal Uhud & makam syuhada (Saidina Hamzah)','',''],
+  ['Masjid Qiblatain','',''],
+  ['Perkuburan Baqi\' (dari luar)',W,'Wanita biasanya tidak dibenarkan masuk; doakan dari luar.'],
+  ['Kebun kurma & pasar kurma','',''],
+  ['Muzium Al-Quran / pameran Asma\' ul-Husna (jika ada)','','']]},
+ {h:'Sebelum meninggalkan Madinah',items:[
+  ['Solat 2 rakaat & ucap salam selamat tinggal','',''],
+  ['Jika ke Makkah: mandi sunat ihram & bersiap untuk miqat Bir Ali',R,'']]}
+]}
+};
+
+/* ---------- prayer time calculation (Umm al-Qura style, approximate) ---------- */
+const CITY={makkah:{n:'Makkah',lat:21.4225,lng:39.8262},madinah:{n:'Madinah',lat:24.4672,lng:39.6111}};
+const rad=d=>d*Math.PI/180, deg=r=>r*180/Math.PI;
+const fix=(a,b)=>{a=a-b*Math.floor(a/b);return a<0?a+b:a};
+function julian(y,m,d){if(m<=2){y--;m+=12}const A=Math.floor(y/100),B=2-A+Math.floor(A/4);return Math.floor(365.25*(y+4716))+Math.floor(30.6001*(m+1))+d+B-1524.5}
+function sun(jd){const D=jd-2451545,g=fix(357.529+0.98560028*D,360),q=fix(280.459+0.98564736*D,360),
+ L=fix(q+1.915*Math.sin(rad(g))+0.020*Math.sin(rad(2*g)),360),e=23.439-0.00000036*D,
+ RA=deg(Math.atan2(Math.cos(rad(e))*Math.sin(rad(L)),Math.cos(rad(L))))/15,
+ decl=deg(Math.asin(Math.sin(rad(e))*Math.sin(rad(L)))),eqt=q/15-fix(RA,24);return{decl,eqt}}
+function times(y,m,d,c){
+ const jd=julian(y,m,d)-c.lng/(15*24), tz=c.tz||3, {decl,eqt}=sun(jd+0.5);
+ const noon=12+tz-c.lng/15-eqt;
+ const T=a=>deg(Math.acos((-Math.sin(rad(a))-Math.sin(rad(decl))*Math.sin(rad(c.lat)))/(Math.cos(rad(decl))*Math.cos(rad(c.lat)))))/15;
+ const asrAlt=-deg(Math.atan(1/(1+Math.tan(rad(Math.abs(c.lat-decl))))));
+ const fajr=noon-T(18.5), sunrise=noon-T(0.833), sunset=noon+T(0.833), asr=noon+T(asrAlt);
+ return{fajr,sunrise,dhuhr:noon+2/60,asr,maghrib:sunset+1/60,isha:sunset+1/60+1.5};
+}
+const hm=h=>{h=fix(h,24);let H=Math.floor(h),M=Math.round((h-H)*60);if(M===60){H=(H+1)%24;M=0}return String(H).padStart(2,'0')+':'+String(M).padStart(2,'0')};
+
+/* ---------- kiraan detik di header ---------- */
+const CD_STEPS=[
+ {t:Date.UTC(2026,10,4,11,0),l:'Berlepas MH156 KUL → JED',s:'4 Nov · 7:00 malam MYT'},
+ {t:Date.UTC(2026,10,14,18,30),l:'Pulang MH159 MED → KUL',s:'14 Nov · 9:30 malam Saudi'},
+ {t:Date.UTC(2026,10,15,3,15),l:'Tiba di KLIA',s:'15 Nov · 11:15 pagi MYT'}];
+let cdLast='';
+function cdUpdate(){const el=document.getElementById('cdBar');if(!el)return;const now=Date.now();const st=CD_STEPS.find(s=>s.t>now);let h;
+ if(!st){h='<span class="cl">Umrah selesai</span><span class="cdone">Alhamdulillah, semoga mabrur</span>'}
+ else{let d=Math.floor((st.t-now)/1000);const D=Math.floor(d/86400);d%=86400;const H=Math.floor(d/3600);d%=3600;const M=Math.floor(d/60),Sx=d%60;
+  const u=(v,l)=>`<span class="cu"><b>${String(v).padStart(2,'0')}</b><i>${l}</i></span>`;
+  h=`<span class="cl">${st.l}</span><span class="cus">${D>0?`<span class="cu"><b>${D}</b><i>hari</i></span>`:''}${u(H,'jam')}${u(M,'min')}${u(Sx,'saat')}</span><span class="cs">${st.s}</span>`}
+ if(h!==cdLast){el.innerHTML=h;cdLast=h}}
+/* ---------- clocks ---------- */
+const SUN='<svg viewBox="0 0 24 24" width="15" height="15" aria-hidden="true"><circle cx="12" cy="12" r="4.5" fill="var(--gold)"/><path d="M12 2v2.5M12 19.5V22M2 12h2.5M19.5 12H22M4.9 4.9l1.8 1.8M17.3 17.3l1.8 1.8M4.9 19.1l1.8-1.8M17.3 6.7l1.8-1.8" stroke="var(--gold)" stroke-width="2" stroke-linecap="round" fill="none"/></svg>', MOON='<svg viewBox="0 0 24 24" width="15" height="15" aria-hidden="true"><path d="M20 14.5A8.5 8.5 0 0 1 9.5 4a8.5 8.5 0 1 0 10.5 10.5z" fill="var(--moon)"/><circle cx="17.5" cy="5" r="1.1" fill="var(--moon)"/><circle cx="21" cy="9" r=".8" fill="var(--moon)"/></svg>', SKY={};
+function skyUpdate(my,sa){
+ const isDay=(pt,c)=>{const t=times(pt.y,pt.m,pt.d,c),h=pt.h+pt.mi/60;return h>=t.sunrise&&h<t.maghrib};
+ [['skyMY',isDay(my,{lat:5.30,lng:100.37,tz:8})],['skySA',isDay(sa,CITY[S.city])]].forEach(([id,d])=>{
+  if(SKY[id]===d)return;SKY[id]=d;const el=document.getElementById(id);if(!el)return;
+  el.innerHTML=(d?SUN:MOON)+'<span class="skyt">'+(d?'Siang':'Malam')+'</span>';el.title=d?'Siang':'Malam';});
+}
+function partsIn(tz){const f=new Intl.DateTimeFormat('en-GB',{timeZone:tz,year:'numeric',month:'2-digit',day:'2-digit',hour:'2-digit',minute:'2-digit',second:'2-digit',hour12:false});
+ const o={};f.formatToParts(new Date()).forEach(p=>o[p.type]=p.value);return{y:+o.year,m:+o.month,d:+o.day,h:+o.hour%24,mi:+o.minute,s:+o.second}}
+const dateMs=tz=>new Intl.DateTimeFormat('ms-MY',{timeZone:tz,weekday:'long',day:'numeric',month:'short'}).format(new Date());
+function setD(id,a,b){const el=document.getElementById(id);if(!el)return;const v=a+'|'+b;if(el.dataset.v===v)return;el.dataset.v=v;el.textContent=a;if(b){const s=document.createElement('span');s.className='hj';s.textContent=b;el.appendChild(s)}}
+function hijriOfDay(d){const [y,m,dd]=d.split('-').map(Number);try{return hijriMs('UTC',new Date(Date.UTC(y,m-1,dd,12)))}catch(e){return ''}}
+function tick(){if(typeof SLEEP!=="undefined"&&SLEEP)return;
+ const my=partsIn('Asia/Kuala_Lumpur'), sa=partsIn('Asia/Riyadh'), p=n=>String(n).padStart(2,'0');
+ document.getElementById('cMY').textContent=p(my.h)+':'+p(my.mi);
+ document.getElementById('cSA').textContent=p(sa.h)+':'+p(sa.mi);
+ skyUpdate(my,sa);cdUpdate();
+ setD('dMY',dateMs('Asia/Kuala_Lumpur'),hijriMs('Asia/Kuala_Lumpur'));
+ setD('dSA',dateMs('Asia/Riyadh')+' · −5 jam',hijriMs('Asia/Riyadh'));
+ 
+ if(current==='utama') liveUpdate();
+}
+
+/* ---------- views ---------- */
+const TABS=[['utama','Utama'],['ringkasan','Ringkasan'],['jadual','Jadual'],['lokasi','Lokasi'],['bajet','Bajet'],['gambar','Gambar'],['berkat','Waktu Berkat'],['zikir','Zikir & Selawat'],['persediaan','Persediaan'],['bawa','Barang'],['umrah','Umrah'],['makkah','Makkah'],['madinah','Madinah'],['doa','Doa']];
+let current='utama';
+try{const h=location.hash.slice(1); if(TABS.some(t=>t[0]===h)) current=h;}catch(e){}
+const tabsEl=document.getElementById('tabs'), main=document.getElementById('main');
+function drawTabs(){tabsEl.innerHTML=TABS.map(([k,l])=>`<button class="tab" role="tab" id="tab-${k}" aria-selected="${k===current}" data-k="${k}">${l}${k==='berkat'&&isFriNow()?'<i class="tdot" aria-label="Hari Jumaat"></i>':''}</button>`).join('');}
+tabsEl.addEventListener('click',e=>{const b=e.target.closest('.tab');if(!b)return;go(b.dataset.k);});
+
+function count(k){let t=0,c=0;DATA[k].groups.forEach((g,gi)=>g.items.forEach((_,ii)=>{t++;if(S.checks[`${k}-${gi}-${ii}`])c++}));return{t,c}}
+function progHTML(k){const {t,c}=count(k),p=Math.round(c/t*100);return `<div class="prog"><div class="bar"><i style="width:${p}%"></i></div><span class="pct">${c}/${t}</span></div>`}
+
+function listView(k){
+ const d=DATA[k];
+ let h=`<div><h2>${d.title}</h2><p class="lead">${d.lead}</p></div><div class="panel soft" id="pg-${k}">${progHTML(k)}</div>`;
+ if(k==='umrah') h+=haidPanel();
+ d.groups.forEach((g,gi)=>{
+  h+=`<div class="panel"><h3>${g.h}</h3><ul class="check">`+g.items.map((it,ii)=>{const id=`${k}-${gi}-${ii}`;
+   return `<li><label for="c-${id}"><input type="checkbox" id="c-${id}" data-id="${id}" ${S.checks[id]?'checked':''}><span class="tx"><b>${it[0]}</b>${it[1]}${it[2]?`<small>${it[2]}</small>`:''}</span></label></li>`}).join('')+`</ul></div>`;
+ });
+ if(k==='makkah'||k==='madinah') h+=`<div class="panel good"><h3>Tip untuk isteri</h3><p style="margin:0">${k==='makkah'?'Waktu tawaf paling lapang biasanya selepas Dhuha hingga sebelum Zohor, dan lewat malam selepas Isyak. Tawaf di tingkat atas lebih jauh tetapi kurang bersesak dengan lelaki.':'Tempah slot Raudhah dalam Nusuk sebaik tiba di Madinah (atau lebih awal). Tunggu di pintu wanita 20–30 minit sebelum slot dan bawa telefon yang dicas penuh untuk tunjuk permit.'}</p></div>`;
+ h+=`<div class="row" style="justify-content:flex-end"><button class="reset" id="reset-${k}">Kosongkan tanda di halaman ini</button></div>`;
+ return h;
+}
+function haidPanel(){return `<div class="panel note"><h3>Jika datang haid</h3>
+ <p style="margin:0 0 6px">Tetap mandi sunat dan berniat ihram di miqat — ihram sah walaupun haid. Jaga larangan ihram seperti biasa.</p>
+ <p style="margin:0 0 6px">Tunggu sehingga suci dan mandi wajib, kemudian barulah tawaf, sa'ie dan tahallul. Sementara menunggu, perbanyak zikir, doa, selawat dan istighfar di hotel atau dataran luar masjid.</p>
+ <p style="margin:0" class="muted">Jika tarikh pulang hampir tetapi masih belum suci, segera rujuk mutawwif atau ustazah agensi tentang pilihan yang dibenarkan.</p></div>`}
+
+/* utama */
+function utamaView(){
+ const c=CITY[S.city];
+ return `<div><h2>Assalamualaikum, sayang</h2><p class="lead">Semoga umrahmu mabrur. Semua masa di bawah ditunjukkan dalam waktu Saudi dan Malaysia.</p></div>
+ ${friBanner()}
+ <div class="shortcuts"><button class="sc" data-go="berkat"><b>Waktu Berkat</b><span>1/3 malam · Dhuha · Jumaat</span></button><button class="sc" data-go="zikir"><b>Selawat 1000</b><span id="home-sel">0 / 1000 hari ini</span></button><button class="sc" data-go="zikir"><b>Zikir harian</b><span>Tasbih, pagi & petang</span></button><button class="sc" data-go="doa"><b>Doa pilihan</b><span>Kesihatan & rumah tangga</span></button><button class="sc wide" data-go="ringkasan"><b>Ringkasan umrah</b><span>Dashboard semua ibadah, tempat, belanja & gambar</span></button><button class="sc wide" data-go="bajet"><b>Bajet</b><span id="home-bajet">SAR ${f2(bTotals().all)} dibelanjakan</span></button></div>
+ <div class="panel"><div class="row" style="justify-content:space-between;margin-bottom:6px"><h3 style="margin:0">Program hari ini</h3><button class="btn" data-go="jadual">Jadual penuh</button></div>${todayProgram()}</div>
+ <div class="panel"><div class="row" style="justify-content:space-between;margin-bottom:6px"><h3 style="margin:0">Lokasi semasa isteri</h3><button class="btn" data-go="lokasi">Kemas kini / lihat</button></div><div id="homeLive">${statusCard(true)}</div></div>
+ <div class="panel"><div class="row" style="justify-content:space-between;margin-bottom:8px"><h3 style="margin:0">Waktu solat hari ini</h3>
+  <div class="seg" role="group" aria-label="Pilih bandar"><button data-city="makkah" aria-pressed="${S.city==='makkah'}">Makkah</button><button data-city="madinah" aria-pressed="${S.city==='madinah'}">Madinah</button></div></div>
+  <div class="muted" style="font-size:.85rem;margin-bottom:6px" id="nextp"></div>
+  <div class="tbl-wrap"><table><thead><tr><th>Waktu</th><th>Saudi</th><th>Malaysia</th></tr></thead><tbody id="ptbody"></tbody></table></div>
+  <p class="muted" style="font-size:.75rem;margin:8px 0 0">Anggaran kaedah Umm al-Qura untuk ${c.n}. Ikut azan masjid sebagai rujukan muktamad.</p></div>
+ <div class="panel"><h3>Waktu berkat & mustajab doa</h3><p class="muted" style="font-size:.85rem;margin:0 0 6px">Yang sedang berlaku sekarang akan diserlahkan.</p><div class="berkat" id="berkat"></div></div>
+ <div class="panel"><h3>Jadual harian cadangan di ${c.n}</h3><div class="berkat" id="routine"></div></div>
+ <div class="panel"><h3>Kemajuan persediaan</h3><div class="mini" id="allprog">${['persediaan','bawa','umrah','makkah','madinah'].map(k=>`<div><div style="font-size:.85rem;font-weight:600">${TABS.find(t=>t[0]===k)[1]}</div>${progHTML(k)}</div>`).join('')}</div></div>`;
+}
+function todayTimes(){const sa=partsIn('Asia/Riyadh');return{sa,t:times(sa.y,sa.m,sa.d,CITY[S.city])}}
+function liveUpdate(){
+ const {sa,t}=todayTimes(), now=sa.h+sa.mi/60+sa.s/3600, MY=h=>hm(h+5);
+ const rows=[['Subuh',t.fajr],['Syuruk',t.sunrise],['Zohor',t.dhuhr],['Asar',t.asr],['Maghrib',t.maghrib],['Isyak',t.isha]];
+ let nextIdx=rows.findIndex(r=>r[0]!=='Syuruk'&&r[1]>now);
+ const tb=document.getElementById('ptbody');
+ if(tb) tb.innerHTML=rows.map((r,i)=>`<tr class="${i===nextIdx?'next':''}"><td>${r[0]}</td><td class="sa">${hm(r[1])}</td><td class="my">${MY(r[1])}</td></tr>`).join('');
+ const np=document.getElementById('nextp');
+ if(np){if(nextIdx<0){np.textContent='Seterusnya: Subuh esok, kira-kira '+hm(t.fajr)+' waktu Saudi.'}else{const diff=rows[nextIdx][1]-now,H=Math.floor(diff),M=Math.floor((diff-H)*60);np.textContent=`Seterusnya: ${rows[nextIdx][0]} dalam ${H?H+' jam ':''}${M} minit`;}}
+ const night=(t.fajr+24)-t.maghrib, third=fix(t.maghrib+night*2/3,24), mid=fix(t.maghrib+night/2,24);
+ const jumaat=new Date(Date.UTC(sa.y,sa.m-1,sa.d)).getUTCDay()===5;
+ const inR=(a,b)=>a<=b?(now>=a&&now<b):(now>=a||now<b);
+ const B=[
+  [third,t.fajr,'Sepertiga malam terakhir','Allah turun ke langit dunia dan bertanya siapa yang berdoa. Waktu terbaik untuk tahajjud, istighfar dan doa hajat.'],
+  [t.fajr-0.5,t.fajr,'Waktu sahur / sebelum Subuh','Waktu istighfar (Ali Imran: 17).'],
+  [t.sunrise+0.33,t.dhuhr-0.17,'Waktu Dhuha','Solat Dhuha 2–8 rakaat. Waktu sesuai untuk tawaf sunat bagi wanita kerana lebih lapang.'],
+  ...[['Subuh',t.fajr],['Zohor',t.dhuhr],['Asar',t.asr],['Maghrib',t.maghrib],['Isyak',t.isha]].map(([n,x])=>[x,x+(n==='Maghrib'?0.12:0.25),'Antara azan & iqamah '+n,'Doa antara azan dan iqamah tidak ditolak (Abu Daud, Tirmizi). Juga berdoa selepas salam solat fardu.']),
+  [t.asr,t.maghrib,jumaat?'Jumaat: saat terakhir selepas Asar':'Petang Jumaat (selepas Asar)',jumaat?'Hari ini Jumaat — ada satu saat mustajab, ramai ulama berpendapat menjelang Maghrib.':'Hanya pada hari Jumaat. Perbanyak doa dan selawat.'],
+ ].sort((a,b)=>fix(a[0]-t.fajr+1,24)-fix(b[0]-t.fajr+1,24));
+ const bk=document.getElementById('berkat');
+ if(bk){bk.innerHTML=B.map(b=>{const live=inR(fix(b[0],24),fix(b[1],24))&&(!b[2].startsWith('Petang Jumaat'));return `<div class="bk ${live?'live':''}"><div class="when">${hm(b[0])}–${hm(b[1])}<span>MY ${MY(b[0])}–${MY(b[1])}</span></div><b>${b[2]}${live?' <span class="tag w">Sekarang</span>':''}</b><p>${b[3]}</p></div>`}).join('')+
+  `<div class="bk"><div class="when">Bila-bila<span>sepanjang hari</span></div><b>Mustajab pada keadaan tertentu</b><p>Ketika pertama melihat Kaabah · ketika sujud · ketika minum zamzam · di Multazam · di Safa & Marwah · di Raudhah · ketika hujan · ketika musafir · selepas khatam Quran.</p></div>`;}
+ const rt=document.getElementById('routine');
+ if(rt){const R2=[
+  [t.fajr-1.25,'Bangun, wuduk, ke masjid','Tahajjud, witir & doa sepertiga malam terakhir.'],
+  [t.fajr,'Solat Subuh berjemaah','Kekal berzikir hingga syuruk jika mampu.'],
+  [t.sunrise+0.5,'Sarapan & rehat','Tidur sebentar — tenaga untuk hari panjang.'],
+  [t.sunrise+2,'Dhuha + tawaf sunat / ziarah',S.city==='makkah'?'Waktu tawaf lebih lapang untuk wanita.':'Ziarah Quba (Sabtu ialah sunnah) atau tadarus di masjid.'],
+  [t.dhuhr-0.5,'Ke masjid untuk Zohor','Masuk awal untuk dapat ruang wanita.'],
+  [t.dhuhr+0.75,'Makan tengah hari & qailulah','Tidur sebentar ketika matahari paling panas.'],
+  [t.asr-0.33,'Asar di masjid','Kekal hingga Maghrib: tilawah, zikir petang, doa.'],
+  [t.maghrib,'Maghrib & Isyak','Antara keduanya: tadarus atau kuliah.'],
+  [t.isha+1,'Makan malam & tidur awal','Pasang penggera untuk tahajjud.']];
+  rt.innerHTML=R2.map(r=>`<div class="bk"><div class="when">${hm(r[0])}<span>MY ${MY(r[0])}</span></div><b>${r[1]}</b><p>${r[2]}</p></div>`).join('');}
+ const cd=document.getElementById('cd'),cdx=document.getElementById('cdx');
+ if(cd&&S.depart){const my=partsIn('Asia/Kuala_Lumpur');const a=Date.UTC(my.y,my.m-1,my.d),[y,m,d]=S.depart.split('-').map(Number),b=Date.UTC(y,m-1,d);const n=Math.round((b-a)/864e5);
+  if(n>0){cd.textContent=n+' hari';cdx.textContent='lagi sebelum berlepas';}else if(n===0){cd.textContent='Hari ini';cdx.textContent='Bismillah, selamat berangkat';}else{cd.textContent='Hari ke-'+(1-n);cdx.textContent='di Tanah Suci (sejak berlepas)';}}
+}
+
+/* ---------- daily store helpers ---------- */
+const pad=n=>String(n).padStart(2,'0');
+const dkey=d=>d.getFullYear()+'-'+pad(d.getMonth()+1)+'-'+pad(d.getDate());
+const todayKey=()=>dkey(new Date());
+function fridayDate(){const d=new Date();d.setDate(d.getDate()+((5-d.getDay()+7)%7));return d}
+function day(k){S.daily=S.daily||{};return S.daily[k]||(S.daily[k]={checks:{},counts:{}})}
+function prune(){const lim=Date.now()-400*864e5;Object.keys(S.daily||{}).forEach(k=>{const [y,m,d]=k.split('-').map(Number);if(new Date(y,m-1,d).getTime()<lim)delete S.daily[k]})}
+function dailyList(grp,key,items){const d=day(key);
+ return `<ul class="check">`+items.map((it,i)=>{const id=grp+'-'+i,uid=`dc-${key}-${id}`;
+  return `<li><label for="${uid}"><input type="checkbox" id="${uid}" data-day="${key}" data-id="${id}" data-grp="${grp}" ${d.checks[id]?'checked':''}><span class="tx"><b>${it[0]}</b>${it[1]||''}${it[2]?`<small>${it[2]}</small>`:''}</span></label>${it[3]?`<details class="zar" open><summary>Teks Arab</summary><div class="ar" lang="ar">${it[3]}</div></details>`:''}</li>`}).join('')+`</ul>`}
+function dailyProg(grp,key,n){const d=day(key);let c=0;for(let i=0;i<n;i++)if(d.checks[grp+'-'+i])c++;
+ return `<div class="prog" id="dp-${grp}" data-n="${n}" data-key="${key}"><div class="bar"><i style="width:${Math.round(c/n*100)}%"></i></div><span class="pct">${c}/${n}</span></div>`}
+const MYh=h=>hm(h+5);
+const winHTML=(a,b,l='Saudi')=>`<div class="window"><div class="win"><div class="lbl">${l}</div><b>${hm(a)} – ${hm(b)}</b></div><div class="win"><div class="lbl">Malaysia</div><b>${MYh(a)} – ${MYh(b)}</b></div></div>`;
+const segHTML=()=>`<div class="seg" role="group" aria-label="Pilih bandar"><button data-city="makkah" aria-pressed="${S.city==='makkah'}">Makkah</button><button data-city="madinah" aria-pressed="${S.city==='madinah'}">Madinah</button></div>`;
+
+/* ---------- waktu berkat ---------- */
+const BK_MALAM=[
+ ['Pasang penggera & bangun sebelum waktu bermula','',''],
+ ['Wuduk & solat sunat taubat 2 rakaat',SN,''],
+ ['Solat tahajjud sekurang-kurangnya 2 rakaat',SN,''],
+ ['Solat hajat 2 rakaat',SN,'Hajat untuk diri, suami, anak-anak dan keluarga.'],
+ ['Istighfar 100 kali','','Kira dalam tab Zikir & Selawat.'],
+ ['Doa kesihatan & rahmat rumah tangga','','Teks dalam tab Doa.'],
+ ['Solat witir (jika belum selepas Isyak)',SN,''],
+ ['Baca al-Quran sementara menunggu Subuh','','']];
+const BK_DHUHA=[
+ ['Solat Dhuha 2–8 rakaat',SN,''],
+ ['Baca doa Dhuha','','Teks di bawah.'],
+ ['Zikir pagi','','Checklist dalam tab Zikir & Selawat.'],
+ ['Sedekah pagi','','Setiap pagi dua malaikat turun; seorang berdoa: "Ya Allah, gantikanlah untuk orang yang berinfak." (Bukhari & Muslim)']];
+const BK_JUMAAT=[
+ ['Baca Surah Al-Kahfi','','Dari Maghrib Khamis hingga Maghrib Jumaat — cahaya antara dua Jumaat (al-Hakim). <a class="qlink" href="https://quran.com/18" target="_blank" rel="noopener">Baca Surah Al-Kahfi (teks Arab) di Quran.com</a>'],
+ ['Perbanyak selawat — sasaran 1000 kali','','"Perbanyakkanlah selawat kepadaku pada hari Jumaat." (Abu Daud)'],
+ ['Mandi sunat Jumaat & berpakaian bersih',SN,'Wanita tidak memakai wangian ke masjid, dan sama sekali tidak semasa ihram.'],
+ ['Solat Jumaat di masjid atau solat Zohor',W,'Jumaat tidak wajib bagi wanita. Jika hadir, ia menggantikan Zohor. Datang awal kerana masjid cepat penuh.'],
+ ['Dengar khutbah dengan tenang','',''],
+ ['Sedekah hari Jumaat',SN,''],
+ ['Doa saat mustajab: Asar hingga Maghrib',R,'Duduk di masjid atau hotel, berzikir dan berdoa hingga matahari terbenam.'],
+ ['Doa untuk suami, anak-anak & ibu bapa','','']];
+const DHUHA_AR='اللّٰهُمَّ إِنَّ الضُّحَاءَ ضُحَاؤُكَ، وَالْبَهَاءَ بَهَاؤُكَ، وَالْجَمَالَ جَمَالُكَ، وَالْقُوَّةَ قُوَّتُكَ، وَالْقُدْرَةَ قُدْرَتُكَ، وَالْعِصْمَةَ عِصْمَتُكَ. اللّٰهُمَّ إِنْ كَانَ رِزْقِيْ فِي السَّمَاءِ فَأَنْزِلْهُ، وَإِنْ كَانَ فِي الْأَرْضِ فَأَخْرِجْهُ، وَإِنْ كَانَ مُعَسَّرًا فَيَسِّرْهُ، وَإِنْ كَانَ حَرَامًا فَطَهِّرْهُ، وَإِنْ كَانَ بَعِيْدًا فَقَرِّبْهُ، بِحَقِّ ضُحَائِكَ وَبَهَائِكَ وَجَمَالِكَ وَقُوَّتِكَ وَقُدْرَتِكَ، آتِنِيْ مَا آتَيْتَ عِبَادَكَ الصَّالِحِيْنَ';
+const DHUHA_RUMI="Allaahumma innad dhuhaa'a dhuhaa'uka, wal bahaa'a bahaa'uka, wal jamaala jamaaluka, wal quwwata quwwatuka, wal qudrata qudratuka, wal 'ishmata 'ishmatuka. Allaahumma in kaana rizqii fis samaa'i fa anzilhu, wa in kaana fil ardhi fa akhrijhu, wa in kaana mu'assaran fa yassirhu, wa in kaana haraaman fa thahhirhu, wa in kaana ba'iidan fa qarribhu, bihaqqi dhuhaa'ika wa bahaa'ika wa jamaalika wa quwwatika wa qudratika, aatinii maa aataita 'ibaadakas shaalihiin.";
+const DHUHA_MK='Ya Allah, waktu dhuha ialah waktu-Mu, keagungan ialah keagungan-Mu, keindahan ialah keindahan-Mu, kekuatan ialah kekuatan-Mu, kekuasaan ialah kekuasaan-Mu dan pemeliharaan ialah pemeliharaan-Mu. Ya Allah, jika rezekiku di langit turunkanlah, jika di bumi keluarkanlah, jika sukar mudahkanlah, jika haram sucikanlah, jika jauh dekatkanlah. Kurniakanlah kepadaku apa yang Engkau kurniakan kepada hamba-hamba-Mu yang soleh.';
+
+function berkatView(){
+ const {t}=todayTimes();
+ const night=(t.fajr+24)-t.maghrib, third=fix(t.maghrib+night*2/3,24), dS=t.sunrise+20/60, dE=t.dhuhr-10/60, dAf=t.sunrise+(t.dhuhr-t.sunrise)*0.5;
+ const tk=todayKey(), fr=fridayDate(), fk=dkey(fr), isFri=new Date().getDay()===5;
+ const frLbl=new Intl.DateTimeFormat('ms-MY',{weekday:'long',day:'numeric',month:'long'}).format(fr);
+ const now=new Date(), days=Math.round((new Date(fr.getFullYear(),fr.getMonth(),fr.getDate())-new Date(now.getFullYear(),now.getMonth(),now.getDate()))/864e5);
+ return `<div><h2>Waktu Berkat</h2><p class="lead">Tiga waktu emas untuk dirancang. Checklist malam & Dhuha bermula semula setiap hari; checklist Jumaat untuk Jumaat yang akan datang.</p></div>
+ <div class="row" style="justify-content:space-between"><span class="muted" style="font-size:.85rem">Masa untuk bandar:</span>${segHTML()}</div>
+ <div class="panel"><h3>Sepertiga malam terakhir</h3>${winHTML(third,t.fajr)}
+  <p class="mk" style="margin:0 0 8px">"Tuhan kita turun ke langit dunia pada sepertiga malam terakhir lalu berfirman: Siapa yang berdoa kepada-Ku, Aku kabulkan; siapa yang meminta, Aku beri; siapa yang memohon ampun, Aku ampunkan." (Bukhari & Muslim)</p>
+  ${dailyProg('malam',tk,BK_MALAM.length)}${dailyList('malam',tk,BK_MALAM)}</div>
+ <div class="panel"><h3>Waktu Dhuha</h3>${winHTML(dS,dE)}
+  <p class="mk" style="margin:0 0 8px">Paling afdal sekitar <b>${hm(dAf)}</b> Saudi (<b>${MYh(dAf)}</b> Malaysia), ketika matahari mula terasa panas.</p>
+  ${dailyProg('dhuha',tk,BK_DHUHA.length)}${dailyList('dhuha',tk,BK_DHUHA)}
+  <div class="doa" style="margin-top:10px;padding-top:12px;border-top:1px solid var(--line)"><h3>Doa Dhuha</h3><div class="ar" lang="ar">${DHUHA_AR}</div><div class="rumi">${DHUHA_RUMI}</div><div class="mk">${DHUHA_MK}</div></div></div>
+ <div class="panel ${isFriNow()?'blinkbox':''}"><h3>Hari Jumaat ${isFri?'<span class="tag w">Hari ini</span>':''}</h3>
+  <p style="margin:0 0 6px"><b>${frLbl}</b> <span class="muted">${isFri?'':'· '+days+' hari lagi'}</span></p>
+  ${winHTML(t.asr,t.maghrib,'Saat mustajab · Saudi')}
+  <p class="mk" style="margin:0 0 8px">"Pada hari Jumaat ada satu saat, tidaklah seorang Muslim berdoa memohon kebaikan bertepatan dengannya melainkan Allah memperkenankannya." (Bukhari & Muslim). Surah Al-Kahfi boleh dimulakan selepas Maghrib Khamis, sekitar ${hm(t.maghrib)} Saudi / ${MYh(t.maghrib)} Malaysia.</p>
+  ${dailyProg('jumaat',fk,BK_JUMAAT.length)}${dailyList('jumaat',fk,BK_JUMAAT)}</div>
+ <p class="muted" style="font-size:.75rem;margin:0">Masa ialah anggaran untuk ${CITY[S.city].n} hari ini. Ikut azan masjid.</p>`;
+}
+
+/* ---------- zikir & selawat ---------- */
+const SEL_AR='اللّٰهُمَّ صَلِّ عَلَى سَيِّدِنَا مُحَمَّدٍ وَعَلَى آلِ سَيِّدِنَا مُحَمَّدٍ';
+const SEL_RUMI="Allaahumma shalli 'alaa sayyidinaa Muhammad wa 'alaa aali sayyidinaa Muhammad";
+const SEL_TARGET=1000;
+const ZK=[
+ {id:'istighfar',t:100,ar:'أَسْتَغْفِرُ اللّٰهَ الْعَظِيْمَ',r:"Astaghfirullaahal 'azhiim",m:'Aku memohon ampun kepada Allah Yang Maha Agung.'},
+ {id:'tasbih',t:33,ar:'سُبْحَانَ اللّٰهِ',r:'Subhaanallaah',m:'Maha Suci Allah.'},
+ {id:'tahmid',t:33,ar:'الْحَمْدُ لِلّٰهِ',r:'Alhamdulillaah',m:'Segala puji bagi Allah.'},
+ {id:'takbir',t:34,ar:'اللّٰهُ أَكْبَرُ',r:'Allaahu akbar',m:'Allah Maha Besar.'},
+ {id:'tahlil',t:100,ar:'لَا إِلٰهَ إِلَّا اللّٰهُ',r:'Laa ilaaha illallaah',m:'Tiada tuhan selain Allah. Zikir yang paling utama.'},
+ {id:'wabihamdihi',t:100,ar:'سُبْحَانَ اللّٰهِ وَبِحَمْدِهِ',r:'Subhaanallaahi wa bihamdih',m:'Dibaca 100 kali sehari, diampunkan dosa walaupun sebanyak buih di lautan. (Bukhari & Muslim)'},
+ {id:'hauqalah',t:100,ar:'لَا حَوْلَ وَلَا قُوَّةَ إِلَّا بِاللّٰهِ',r:'Laa hawla wa laa quwwata illaa billaah',m:'Tiada daya dan kekuatan melainkan dengan Allah — perbendaharaan syurga.'}];
+const ZP=[
+ ['Ayatul Kursi — 1 kali','','Dipelihara Allah hingga waktu berikutnya. (Al-Baqarah: 255)','اللّٰهُ لَا إِلٰهَ إِلَّا هُوَ الْحَيُّ الْقَيُّوْمُ ۚ لَا تَأْخُذُهُ سِنَةٌ وَّلَا نَوْمٌ ۚ لَهُ مَا فِي السَّمٰوٰتِ وَمَا فِي الْأَرْضِ ۗ مَنْ ذَا الَّذِيْ يَشْفَعُ عِنْدَهُ إِلَّا بِإِذْنِهِ ۚ يَعْلَمُ مَا بَيْنَ أَيْدِيْهِمْ وَمَا خَلْفَهُمْ ۚ وَلَا يُحِيْطُوْنَ بِشَيْءٍ مِّنْ عِلْمِهِ إِلَّا بِمَا شَاءَ ۚ وَسِعَ كُرْسِيُّهُ السَّمٰوٰتِ وَالْأَرْضَ ۚ وَلَا يَئُوْدُهُ حِفْظُهُمَا ۚ وَهُوَ الْعَلِيُّ الْعَظِيْمُ'],
+ ['Al-Ikhlas, Al-Falaq & An-Nas — 3 kali','','Mencukupi daripada segala sesuatu. (Abu Daud, Tirmizi)','<span class="sura">سُوْرَةُ الْإِخْلَاص</span>بِسْمِ اللّٰهِ الرَّحْمٰنِ الرَّحِيْمِ<br>قُلْ هُوَ اللّٰهُ أَحَدٌ ﴿١﴾ اللّٰهُ الصَّمَدُ ﴿٢﴾ لَمْ يَلِدْ وَلَمْ يُوْلَدْ ﴿٣﴾ وَلَمْ يَكُنْ لَّهُ كُفُوًا أَحَدٌ ﴿٤﴾<span class="sura">سُوْرَةُ الْفَلَق</span>بِسْمِ اللّٰهِ الرَّحْمٰنِ الرَّحِيْمِ<br>قُلْ أَعُوْذُ بِرَبِّ الْفَلَقِ ﴿١﴾ مِنْ شَرِّ مَا خَلَقَ ﴿٢﴾ وَمِنْ شَرِّ غَاسِقٍ إِذَا وَقَبَ ﴿٣﴾ وَمِنْ شَرِّ النَّفّٰثٰتِ فِي الْعُقَدِ ﴿٤﴾ وَمِنْ شَرِّ حَاسِدٍ إِذَا حَسَدَ ﴿٥﴾<span class="sura">سُوْرَةُ النَّاس</span>بِسْمِ اللّٰهِ الرَّحْمٰنِ الرَّحِيْمِ<br>قُلْ أَعُوْذُ بِرَبِّ النَّاسِ ﴿١﴾ مَلِكِ النَّاسِ ﴿٢﴾ إِلٰهِ النَّاسِ ﴿٣﴾ مِنْ شَرِّ الْوَسْوَاسِ الْخَنَّاسِ ﴿٤﴾ الَّذِيْ يُوَسْوِسُ فِيْ صُدُوْرِ النَّاسِ ﴿٥﴾ مِنَ الْجِنَّةِ وَالنَّاسِ ﴿٦﴾'],
+ ['Bismillaahil-ladzii laa yadhurru… — 3 kali','','Tidak akan dimudaratkan oleh sesuatu. (Abu Daud, Tirmizi)','بِسْمِ اللّٰهِ الَّذِيْ لَا يَضُرُّ مَعَ اسْمِهِ شَيْءٌ فِي الْأَرْضِ وَلَا فِي السَّمَاءِ وَهُوَ السَّمِيْعُ الْعَلِيْمُ'],
+ ['Sayyidul Istighfar — 1 kali','','Penghulu istighfar. (Bukhari)','اللّٰهُمَّ أَنْتَ رَبِّيْ لَا إِلٰهَ إِلَّا أَنْتَ، خَلَقْتَنِيْ وَأَنَا عَبْدُكَ، وَأَنَا عَلَى عَهْدِكَ وَوَعْدِكَ مَا اسْتَطَعْتُ، أَعُوْذُ بِكَ مِنْ شَرِّ مَا صَنَعْتُ، أَبُوْءُ لَكَ بِنِعْمَتِكَ عَلَيَّ، وَأَبُوْءُ بِذَنْبِيْ، فَاغْفِرْ لِيْ فَإِنَّهُ لَا يَغْفِرُ الذُّنُوْبَ إِلَّا أَنْتَ'],
+ ['Doa kesihatan — 3 kali','','Allaahumma \'aafinii fii badanii… (Abu Daud)','اللّٰهُمَّ عَافِنِيْ فِيْ بَدَنِيْ، اللّٰهُمَّ عَافِنِيْ فِيْ سَمْعِيْ، اللّٰهُمَّ عَافِنِيْ فِيْ بَصَرِيْ، لَا إِلٰهَ إِلَّا أَنْتَ'],
+ ['Hasbiyallaah — 7 kali','','Allah mencukupkan urusan dunia & akhirat. (At-Taubah: 129)','حَسْبِيَ اللّٰهُ لَا إِلٰهَ إِلَّا هُوَ ۖ عَلَيْهِ تَوَكَّلْتُ ۖ وَهُوَ رَبُّ الْعَرْشِ الْعَظِيْمِ'],
+ ['Selawat — 10 kali','','"Sesiapa berselawat kepadaku 10 kali pagi dan petang, dia mendapat syafaatku." (at-Thabarani)','اللّٰهُمَّ صَلِّ عَلَى سَيِّدِنَا مُحَمَّدٍ وَعَلَى آلِ سَيِّدِنَا مُحَمَّدٍ']];
+const WIRID=[
+ ['Selepas Subuh — istighfar 3x, tasbih 33/33/34, Ayatul Kursi','',''],
+ ['Selepas Zohor — istighfar 3x, tasbih 33/33/34, Ayatul Kursi','',''],
+ ['Selepas Asar — istighfar 3x, tasbih 33/33/34, Ayatul Kursi','',''],
+ ['Selepas Maghrib — istighfar 3x, tasbih 33/33/34, Ayatul Kursi','',''],
+ ['Selepas Isyak — istighfar 3x, tasbih 33/33/34, Ayatul Kursi','','']];
+
+function zikirView(){const tk=todayKey();
+ return `<div><h2>Zikir & Selawat</h2><p class="lead">Tekan bulatan untuk mengira. Kiraan disimpan untuk hari ini dan bermula semula esok.</p></div>
+ <div class="panel"><h3>Selawat 1000 kali sehari</h3>
+  <div class="ar" lang="ar" style="text-align:center">${SEL_AR}</div><div class="rumi" style="text-align:center">${SEL_RUMI}</div>
+  <p class="mk" style="text-align:center;margin:4px 0 14px">"Sesiapa berselawat ke atasku sekali, Allah berselawat ke atasnya sepuluh kali." (Muslim)</p>
+  <div class="counter"><button class="tap" id="tapSel" data-act="inc" data-z="selawat" data-n="1" aria-label="Tambah satu selawat" style="--p:0"><span class="in"><span class="n" id="n-selawat">0</span><span class="of">daripada ${SEL_TARGET} · tekan</span></span></button>
+   <div class="btns"><button class="btn" data-act="inc" data-z="selawat" data-n="10">+10</button><button class="btn" data-act="inc" data-z="selawat" data-n="100">+100</button><button class="btn ghost" data-act="inc" data-z="selawat" data-n="-1">Tolak 1</button><button class="btn ghost" data-act="reset" data-z="selawat">Set semula</button></div>
+   <p class="muted" id="sel-msg" style="font-size:.85rem;margin:0;text-align:center"></p></div></div>
+ <div class="panel soft"><h3>Pecahan mudah 1000</h3><p style="margin:0">200 kali selepas setiap solat fardu = 1000 sehari. Boleh juga dibaca ketika menunggu solat, dalam bas ziarah, atau sebelum tidur.</p></div>
+ <div class="panel"><h3>Selawat 7 hari terakhir</h3><div class="week" id="week"></div></div>
+ <div class="panel"><h3>Tasbih & zikir harian</h3><div>${ZK.map(z=>`<div class="zk"><div style="min-width:0"><div class="ar" lang="ar">${z.ar}</div><div class="rumi">${z.r}</div><div class="mk">${z.m}</div></div><div class="ctl"><button class="plus" id="p-${z.id}" data-act="inc" data-z="${z.id}" data-n="1" aria-label="Tambah ${z.r}">0</button><span class="muted" style="font-size:.75rem">sasaran ${z.t}</span><div class="sub"><button class="tiny" data-act="inc" data-z="${z.id}" data-n="-1">−1</button><button class="tiny" data-act="reset" data-z="${z.id}">Sifar</button></div></div></div>`).join('')}</div></div>
+ <div class="panel"><h3>Zikir pagi (selepas Subuh)</h3>${dailyProg('pagi',tk,ZP.length)}${dailyList('pagi',tk,ZP)}</div>
+ <div class="panel"><h3>Zikir petang (selepas Asar)</h3>${dailyProg('petang',tk,ZP.length)}${dailyList('petang',tk,ZP)}</div>
+ <div class="panel"><h3>Wirid selepas solat fardu</h3><div class="ar wirid-ar" lang="ar">أَسْتَغْفِرُ اللّٰهَ ×٣ · سُبْحَانَ اللّٰهِ ×٣٣ · الْحَمْدُ لِلّٰهِ ×٣٣ · اللّٰهُ أَكْبَرُ ×٣٤</div>${dailyProg('wirid',tk,WIRID.length)}${dailyList('wirid',tk,WIRID)}</div>`}
+
+function updateCounts(){
+ const d=day(todayKey()), s=d.counts.selawat||0;
+ const n=document.getElementById('n-selawat');
+ if(n){n.textContent=s;document.getElementById('tapSel').style.setProperty('--p',Math.min(100,s/SEL_TARGET*100));
+  document.getElementById('sel-msg').textContent=s>=SEL_TARGET?'Alhamdulillah, sasaran 1000 hari ini tercapai.':`Baki ${SEL_TARGET-s} lagi untuk hari ini`;}
+ ZK.forEach(z=>{const b=document.getElementById('p-'+z.id);if(b){const c=d.counts[z.id]||0;b.textContent=c;b.classList.toggle('done',c>=z.t)}});
+ const w=document.getElementById('week');
+ if(w){let h='';for(let i=6;i>=0;i--){const dt=new Date();dt.setDate(dt.getDate()-i);const k=dkey(dt);const c=(S.daily&&S.daily[k]&&S.daily[k].counts.selawat)||0;
+  h+=`<div class="col"><span>${c}</span><div class="b ${c>=SEL_TARGET?'full':''}" style="height:${Math.max(3,Math.min(1,c/SEL_TARGET)*56)}px"></div><span>${i===0?'Hari ini':new Intl.DateTimeFormat('ms-MY',{weekday:'short'}).format(dt)}</span></div>`}
+  w.innerHTML=h}
+ const hs=document.getElementById('home-sel');if(hs)hs.textContent=s+' / 1000 hari ini';
+}
+
+/* ---------- doa ---------- */
+const DOA=[
+ {g:'Doa ibadah umrah',list:[
+ ['Niat umrah','نَوَيْتُ الْعُمْرَةَ وَأَحْرَمْتُ بِهَا لِلّٰهِ تَعَالَى','Nawaitul \'umrata wa ahramtu bihaa lillaahi ta\'aalaa','Sahaja aku berniat umrah dan berihram dengannya kerana Allah Taala.'],
+ ['Talbiah','لَبَّيْكَ اللّٰهُمَّ لَبَّيْكَ، لَبَّيْكَ لَا شَرِيْكَ لَكَ لَبَّيْكَ، إِنَّ الْحَمْدَ وَالنِّعْمَةَ لَكَ وَالْمُلْكَ، لَا شَرِيْكَ لَكَ','Labbaikallaahumma labbaik, labbaika laa syariika laka labbaik, innal hamda wan ni\'mata laka wal mulk, laa syariika lak','Hamba-Mu datang menyahut panggilan-Mu ya Allah. Tiada sekutu bagi-Mu. Segala puji, nikmat dan kerajaan adalah milik-Mu.'],
+ ['Ketika pertama kali melihat Kaabah','اللّٰهُمَّ زِدْ هٰذَا الْبَيْتَ تَشْرِيْفًا وَتَعْظِيْمًا وَتَكْرِيْمًا وَمَهَابَةً، وَزِدْ مَنْ شَرَّفَهُ وَكَرَّمَهُ مِمَّنْ حَجَّهُ أَوِ اعْتَمَرَهُ تَشْرِيْفًا وَتَكْرِيْمًا وَتَعْظِيْمًا وَبِرًّا','Allaahumma zid haadzal baita tasyriifan wa ta\'zhiiman wa takriiman wa mahaabah, wa zid man syarrafahu wa karramahu mimman hajjahu awi\'tamarahu tasyriifan wa takriiman wa ta\'zhiiman wa birraa','Ya Allah, tambahkanlah kemuliaan, keagungan, kehormatan dan kehebatan rumah ini. Dan tambahkanlah kemuliaan, kehormatan, keagungan dan kebaikan kepada sesiapa yang memuliakannya daripada kalangan yang menunaikan haji atau umrah. (al-Baihaqi; diamalkan Imam asy-Syafie) — Ini antara waktu mustajab: angkat tangan dan sambung dengan doa hajat sendiri untuk diri, suami, anak-anak dan ibu bapa.'],
+ ['Doa salam ketika melihat Kaabah','اللّٰهُمَّ أَنْتَ السَّلَامُ وَمِنْكَ السَّلَامُ، فَحَيِّنَا رَبَّنَا بِالسَّلَامِ','Allaahumma antas salaam wa minkas salaam, fa hayyinaa rabbanaa bis salaam','Ya Allah, Engkaulah sumber kesejahteraan dan daripada-Mu datang kesejahteraan. Hidupkanlah kami, wahai Tuhan kami, dengan kesejahteraan. (diriwayatkan daripada Umar r.a.)'],
+ ['Doa masuk masjid','بِسْمِ اللّٰهِ، اللّٰهُمَّ صَلِّ عَلَى مُحَمَّدٍ، اللّٰهُمَّ افْتَحْ لِيْ أَبْوَابَ رَحْمَتِكَ','Bismillaah, allaahumma shalli \'alaa Muhammad, allaahummaftah lii abwaaba rahmatik','Dengan nama Allah. Ya Allah, rahmatilah Muhammad. Ya Allah, bukakanlah untukku pintu-pintu rahmat-Mu.'],
+ ['Setentang Hajar Aswad (setiap pusingan)','بِسْمِ اللّٰهِ وَاللّٰهُ أَكْبَرُ','Bismillaahi wallaahu akbar','Dengan nama Allah, Allah Maha Besar. Angkat tangan kanan ke arah Hajar Aswad dari jauh (istilam).'],
+ ['Antara Rukun Yamani & Hajar Aswad','رَبَّنَا آتِنَا فِي الدُّنْيَا حَسَنَةً وَفِي الْآخِرَةِ حَسَنَةً وَقِنَا عَذَابَ النَّارِ','Rabbanaa aatinaa fid dunyaa hasanah, wa fil aakhirati hasanah, wa qinaa \'adzaaban naar','Wahai Tuhan kami, kurniakanlah kami kebaikan di dunia dan kebaikan di akhirat, dan peliharalah kami daripada azab neraka.'],
+ ['Ketika minum zamzam','اللّٰهُمَّ إِنِّيْ أَسْأَلُكَ عِلْمًا نَافِعًا، وَرِزْقًا وَاسِعًا، وَشِفَاءً مِنْ كُلِّ دَاءٍ','Allaahumma innii as\'aluka \'ilman naafi\'an, wa rizqan waasi\'an, wa syifaa\'an min kulli daa\'','Ya Allah, aku memohon ilmu yang bermanfaat, rezeki yang luas, dan penyembuhan daripada segala penyakit.'],
+ ['Mula sa\'ie di Bukit Safa','إِنَّ الصَّفَا وَالْمَرْوَةَ مِنْ شَعَائِرِ اللّٰهِ','Innash shafaa wal marwata min sya\'aa\'irillaah','Sesungguhnya Safa dan Marwah adalah sebahagian syiar Allah. (Al-Baqarah: 158) — kemudian menghadap Kaabah, bertakbir dan berdoa.'],
+ ['Doa keluar masjid','بِسْمِ اللّٰهِ، اللّٰهُمَّ إِنِّيْ أَسْأَلُكَ مِنْ فَضْلِكَ','Bismillaah, allaahumma innii as\'aluka min fadhlik','Dengan nama Allah. Ya Allah, aku memohon kurniaan-Mu.']]},
+ {g:'Doa kesihatan',list:[
+ ['Kesihatan tubuh, pendengaran & penglihatan (3 kali pagi & petang)','اللّٰهُمَّ عَافِنِيْ فِيْ بَدَنِيْ، اللّٰهُمَّ عَافِنِيْ فِيْ سَمْعِيْ، اللّٰهُمَّ عَافِنِيْ فِيْ بَصَرِيْ، لَا إِلٰهَ إِلَّا أَنْتَ','Allaahumma \'aafinii fii badanii, allaahumma \'aafinii fii sam\'ii, allaahumma \'aafinii fii basharii, laa ilaaha illaa anta','Ya Allah, sihatkanlah tubuhku, pendengaranku dan penglihatanku. Tiada tuhan selain Engkau. (Abu Daud)'],
+ ['Memohon kemaafan & afiat','اللّٰهُمَّ إِنِّيْ أَسْأَلُكَ الْعَفْوَ وَالْعَافِيَةَ فِي الدُّنْيَا وَالْآخِرَةِ','Allaahumma innii as\'alukal \'afwa wal \'aafiyata fid dunyaa wal aakhirah','Ya Allah, aku memohon kemaafan dan kesejahteraan di dunia dan akhirat. (Ibnu Majah)'],
+ ['Doa Nabi Ayyub ketika sakit','أَنِّيْ مَسَّنِيَ الضُّرُّ وَأَنْتَ أَرْحَمُ الرَّاحِمِيْنَ','Annii massaniyadh dhurru wa anta arhamur raahimiin','Sesungguhnya aku ditimpa kesusahan, dan Engkau Maha Penyayang daripada segala yang penyayang. (Al-Anbiya: 83)'],
+ ['Doa untuk diri / ahli keluarga yang sakit','اللّٰهُمَّ رَبَّ النَّاسِ، أَذْهِبِ الْبَأْسَ، اشْفِ أَنْتَ الشَّافِيْ، لَا شِفَاءَ إِلَّا شِفَاؤُكَ، شِفَاءً لَا يُغَادِرُ سَقَمًا','Allaahumma rabban naas, adzhibil ba\'s, isyfi antasy syaafii, laa syifaa\'a illaa syifaa\'uk, syifaa\'an laa yughaadiru saqamaa','Ya Allah Tuhan manusia, hilangkanlah penyakit, sembuhkanlah, Engkaulah Penyembuh. Tiada kesembuhan melainkan kesembuhan-Mu, kesembuhan yang tidak meninggalkan sakit. (Bukhari)']]},
+ {g:'Doa rahmat rumah tangga',list:[
+ ['Pasangan & zuriat penyejuk mata','رَبَّنَا هَبْ لَنَا مِنْ أَزْوَاجِنَا وَذُرِّيَّاتِنَا قُرَّةَ أَعْيُنٍ وَاجْعَلْنَا لِلْمُتَّقِيْنَ إِمَامًا','Rabbanaa hab lanaa min azwaajinaa wa dzurriyyaatinaa qurrata a\'yun, waj\'alnaa lil muttaqiina imaamaa','Wahai Tuhan kami, kurniakanlah kepada kami pasangan dan zuriat yang menyejukkan mata, dan jadikanlah kami pemimpin bagi orang yang bertakwa. (Al-Furqan: 74)'],
+ ['Satukan hati suami isteri','اللّٰهُمَّ أَلِّفْ بَيْنَ قُلُوْبِنَا، وَأَصْلِحْ ذَاتَ بَيْنِنَا، وَاهْدِنَا سُبُلَ السَّلَامِ','Allaahumma allif baina quluubinaa, wa ashlih dzaata bainina, wahdinaa subulas salaam','Ya Allah, satukanlah hati kami, perbaikilah hubungan antara kami, dan tunjukkanlah kami jalan-jalan kesejahteraan. (Abu Daud)'],
+ ['Rahmat & petunjuk dalam urusan keluarga','رَبَّنَا آتِنَا مِنْ لَدُنْكَ رَحْمَةً وَهَيِّئْ لَنَا مِنْ أَمْرِنَا رَشَدًا','Rabbanaa aatinaa min ladunka rahmah, wa hayyi\' lanaa min amrinaa rasyadaa','Wahai Tuhan kami, kurniakanlah kami rahmat dari sisi-Mu dan sempurnakanlah petunjuk dalam urusan kami. (Al-Kahfi: 10)'],
+ ['Diri & anak-anak menjaga solat','رَبِّ اجْعَلْنِيْ مُقِيْمَ الصَّلَاةِ وَمِنْ ذُرِّيَّتِيْ، رَبَّنَا وَتَقَبَّلْ دُعَاءِ','Rabbij\'alnii muqiimash shalaati wa min dzurriyyatii, rabbanaa wa taqabbal du\'aa\'','Wahai Tuhanku, jadikanlah aku dan zuriatku orang yang mendirikan solat. Wahai Tuhan kami, perkenankanlah doaku. (Ibrahim: 40)'],
+ ['Keampunan untuk diri, ibu bapa & mukminin','رَبَّنَا اغْفِرْ لِيْ وَلِوَالِدَيَّ وَلِلْمُؤْمِنِيْنَ يَوْمَ يَقُوْمُ الْحِسَابُ','Rabbanaghfir lii wa liwaalidayya wa lil mu\'miniina yauma yaquumul hisaab','Wahai Tuhan kami, ampunilah aku, kedua ibu bapaku dan orang beriman pada hari perhitungan. (Ibrahim: 41)']]},
+ {g:'Doa perlindungan (pagi & petang)',list:[
+ ['Bismillaahil-ladzii laa yadhurru (3 kali)','بِسْمِ اللّٰهِ الَّذِيْ لَا يَضُرُّ مَعَ اسْمِهِ شَيْءٌ فِي الْأَرْضِ وَلَا فِي السَّمَاءِ وَهُوَ السَّمِيْعُ الْعَلِيْمُ','Bismillaahil-ladzii laa yadhurru ma\'asmihi syai\'un fil ardhi wa laa fis samaa\', wa huwas samii\'ul \'aliim','Dengan nama Allah yang bersama nama-Nya tiada sesuatu pun di bumi dan di langit dapat memberi mudarat. Dia Maha Mendengar, Maha Mengetahui. (Abu Daud, Tirmizi)'],
+ ['Hasbiyallaah (7 kali)','حَسْبِيَ اللّٰهُ لَا إِلٰهَ إِلَّا هُوَ، عَلَيْهِ تَوَكَّلْتُ وَهُوَ رَبُّ الْعَرْشِ الْعَظِيْمِ','Hasbiyallaahu laa ilaaha illaa huw, \'alaihi tawakkaltu wa huwa rabbul \'arsyil \'azhiim','Cukuplah Allah bagiku, tiada tuhan selain Dia. Kepada-Nya aku bertawakal, dan Dia Tuhan Arasy yang agung. (At-Taubah: 129)'],
+ ['Sayyidul Istighfar','اللّٰهُمَّ أَنْتَ رَبِّيْ لَا إِلٰهَ إِلَّا أَنْتَ، خَلَقْتَنِيْ وَأَنَا عَبْدُكَ، وَأَنَا عَلَى عَهْدِكَ وَوَعْدِكَ مَا اسْتَطَعْتُ، أَعُوْذُ بِكَ مِنْ شَرِّ مَا صَنَعْتُ، أَبُوْءُ لَكَ بِنِعْمَتِكَ عَلَيَّ، وَأَبُوْءُ بِذَنْبِيْ، فَاغْفِرْ لِيْ فَإِنَّهُ لَا يَغْفِرُ الذُّنُوْبَ إِلَّا أَنْتَ','Allaahumma anta rabbii laa ilaaha illaa anta, khalaqtanii wa ana \'abduka, wa ana \'alaa \'ahdika wa wa\'dika mastatha\'tu, a\'uudzu bika min syarri maa shana\'tu, abuu\'u laka bini\'matika \'alayya, wa abuu\'u bidzanbii, faghfir lii fa innahu laa yaghfirudz dzunuuba illaa anta','Ya Allah, Engkau Tuhanku, tiada tuhan selain Engkau. Engkau menciptakanku dan aku hamba-Mu... Ampunilah aku, kerana tiada yang mengampunkan dosa selain Engkau. (Bukhari)']]}
+];
+function doaView(){const tk=todayKey();let n=0;
+ return `<div><h2>Doa-doa pilihan</h2><p class="lead">Tandakan bila sudah dibaca hari ini. Doa dalam bahasa Melayu juga diterima — yang penting hati hadir dan yakin.</p></div>
+ <div class="panel soft">${dailyProg('doa',tk,DOA.reduce((a,g)=>a+g.list.length,0))}</div>`+
+ DOA.map(g=>`<h3 style="margin:8px 0 0">${g.g}</h3>`+g.list.map(d=>{const i=n++,id='doa-'+i,uid=`dc-${tk}-${id}`,ck=day(tk).checks[id];
+  return `<div class="panel doa"><b style="font-weight:700">${d[0]}</b><div class="ar" lang="ar">${d[1]}</div><div class="rumi">${d[2]}</div><div class="mk">${d[3]}</div>
+  <ul class="check" style="border-top:1px solid var(--line);margin-top:4px"><li><label for="${uid}"><input type="checkbox" id="${uid}" data-day="${tk}" data-id="${id}" data-grp="doa" ${ck?'checked':''}><span class="tx"><b>Sudah dibaca hari ini</b></span></label></li></ul></div>`}).join('')).join('')+
+ `<div class="panel good"><h3>Senarai hajat</h3><p style="margin:0">Tulis doa untuk diri, suami, anak-anak, ibu bapa, adik-beradik dan sahabat yang berpesan. Bacakan di Multazam, ketika minum zamzam, di Safa & Marwah, di Raudhah, dan pada sepertiga malam.</p></div>`}
+
+/* ---------- lokasi (GitHub Pages + Firebase, auto GPS) ---------- */
+/* 1) Isi konfigurasi Firebase anda di sini (Firebase console → Project settings → Your apps → Web app) */
+const FIREBASE_CONFIG={
+  apiKey:"",
+  authDomain:"",
+  projectId:"",
+  storageBucket:"",
+  messagingSenderId:"",
+  appId:""
+};
+const TRACK_HOURS=8;
+
+const PLACES=[
+ {k:'haram',n:'Masjidil Haram',g:'Makkah'},{k:'tawaf',n:'Sedang tawaf',g:'Makkah',round:true},{k:'saie',n:"Sedang sa'ie",g:'Makkah',round:true},
+ {k:'nabawi',n:'Masjid Nabawi',g:'Madinah'},{k:'raudhah',n:'Di Raudhah',g:'Madinah'},{k:'quba',n:'Masjid Quba',g:'Madinah'},
+ {k:'miqat',n:'Di miqat / berihram',g:'Perjalanan'},{k:'bas',n:'Dalam bas',g:'Perjalanan'},{k:'ziarah',n:'Ziarah luar',g:'Perjalanan'},
+ {k:'makan',n:'Makan / membeli-belah',g:'Lain-lain'},{k:'rehat',n:'Rehat / tidur',g:'Lain-lain'},{k:'selamat',n:'Saya selamat, alhamdulillah',g:'Lain-lain'},
+ {k:'bantuan',n:'Perlukan bantuan — tolong hubungi',g:'Lain-lain',alert:true}];
+const PL=k=>PLACES.find(p=>p.k===k)||{n:k};
+const KEY_PLACES=[
+ ['Masjidil Haram','Masjid al-Haram Makkah'],['Miqat Qarnul Manazil (As-Sail Al-Kabir)','Miqat Qarn al-Manazil As-Sail Al-Kabir'],['Masjid Hudaibiyah (miqat umrah ke-2)','Masjid Al Hudaybiyah Makkah'],["Masjid Ji'ranah (miqat umrah ke-3)",'Masjid Al Jiranah Makkah'],['Kota Thaif','Taif Saudi Arabia'],
+ ['Jabal Rahmah, Arafah','Jabal al-Rahmah Arafat'],['Jabal Nur (Gua Hira\')','Jabal al-Nour Makkah'],
+ ['Masjid Nabawi','Masjid an-Nabawi Madinah'],['Masjid Al-Ghamamah','Masjid Al Ghamama Madinah'],['Masjid Quba','Masjid Quba Madinah'],['Masjid Qiblatain','Masjid al-Qiblatayn Madinah'],['Jabal Uhud & makam syuhada','Uhud Martyrs Cemetery Madinah'],["Perkuburan Baqi'","Jannat al-Baqi Madinah"]];
+const mapUrl=q=>'https://www.google.com/maps/search/?api=1&query='+encodeURIComponent(q);
+const mapLL=(a,b)=>`https://www.google.com/maps/search/?api=1&query=${a},${b}`;
+const esc=s=>String(s==null?'':s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const saKey=()=>{const p=partsIn('Asia/Riyadh');return p.y+'-'+pad(p.m)+'-'+pad(p.d)};
+const fmtAt=(ms,tz)=>new Intl.DateTimeFormat('ms-MY',{timeZone:tz,hour:'2-digit',minute:'2-digit',hour12:false}).format(new Date(ms));
+function ago(ms){const m=Math.max(0,Math.round((Date.now()-ms)/60000));if(m<1)return 'baru sahaja';if(m<60)return m+' minit lalu';const h=Math.floor(m/60);return h<24?h+' jam '+(m%60)+' minit lalu':Math.floor(h/24)+' hari lalu'}
+function lsGet(k){try{return localStorage.getItem(k)}catch(e){return null}}
+function lsSet(k,v){try{v==null?localStorage.removeItem(k):localStorage.setItem(k,v)}catch(e){}}
+
+/* --- geofence (anggaran) --- */
+const KAABA=[21.422487,39.826206], SAFA=[21.42195,39.82746], MARWAH=[21.42545,39.82742];
+const NABAWI=[24.46723,39.61122], QUBA=[24.43926,39.61722], MADINAH=[24.4686,39.6142], JEDDAH=[21.5433,39.1728], JED_AP=[21.6796,39.1565], MED_AP=[24.5534,39.7051];
+function meters(a,b){const R=6371000,x=(b[1]-a[1])*Math.PI/180*Math.cos((a[0]+b[0])/2*Math.PI/180),y=(b[0]-a[0])*Math.PI/180;return Math.hypot(x,y)*R}
+function segDist(p,a,b){const k=111320,kx=k*Math.cos(p[0]*Math.PI/180);const ax=(a[1]-p[1])*kx,ay=(a[0]-p[0])*k,bx=(b[1]-p[1])*kx,by=(b[0]-p[0])*k;
+ const dx=bx-ax,dy=by-ay;let t=-(ax*dx+ay*dy)/(dx*dx+dy*dy);t=Math.max(0,Math.min(1,t));return Math.hypot(ax+t*dx,ay+t*dy)}
+function detectZone(lat,lng,acc,speed,info){
+ const p=[lat,lng],good=acc<=80,dK=meters(p,KAABA);
+ if(dK<=85&&good) return {k:'tawaf',n:'Kawasan Mataf — kemungkinan sedang tawaf'};
+ if(segDist(p,SAFA,MARWAH)<=30&&good) return {k:'saie',n:"Kawasan Mas'a — kemungkinan sedang sa'ie"};
+ if(info.hotelMkPos&&meters(p,[info.hotelMkPos.lat,info.hotelMkPos.lng])<=60) return {k:'hotel-mk',n:'Di hotel Makkah'+(info.hotelMakkah?' ('+info.hotelMakkah+')':'')};
+ if(info.hotelMdPos&&meters(p,[info.hotelMdPos.lat,info.hotelMdPos.lng])<=60) return {k:'hotel-md',n:'Di hotel Madinah'+(info.hotelMadinah?' ('+info.hotelMadinah+')':'')};
+ if(dK<=420) return {k:'haram',n:'Di Masjidil Haram'};
+ if(meters(p,NABAWI)<=230) return {k:'nabawi',n:'Di Masjid Nabawi'};
+ if(meters(p,QUBA)<=150) return {k:'quba',n:'Di Masjid Quba'};
+ if(meters(p,JED_AP)<=3500) return {k:'jed-ap',n:'Di Lapangan Terbang Jeddah'};
+ if(meters(p,MED_AP)<=2500) return {k:'med-ap',n:'Di Lapangan Terbang Madinah'};
+ if(speed!=null&&speed>4) return {k:'jalan',n:'Dalam perjalanan'};
+ if(dK<=15000) return {k:'makkah',n:'Di sekitar Makkah'};
+ if(meters(p,MADINAH)<=15000) return {k:'madinah',n:'Di sekitar Madinah'};
+ if(meters(p,JEDDAH)<=25000) return {k:'jeddah',n:'Di sekitar Jeddah'};
+ return {k:'lain',n:'Lokasi lain'};
+}
+
+/* --- trip id & Firebase --- */
+let TRIPID=(new URLSearchParams(location.search).get('trip'))||lsGet('umrahTrip')||'';
+if(TRIPID) lsSet('umrahTrip',TRIPID);
+let ROLE=lsGet('umrahRole')||'';
+const cfgOk=!!(FIREBASE_CONFIG.apiKey&&FIREBASE_CONFIG.projectId);
+let FS=null, tripRef=null, LIVE={ready:false,off:!cfgOk,doc:null,pts:[]}, dayUnsub=null, dayKey='';
+function familyLink(){const u=new URL(location.href);u.search='?trip='+TRIPID;u.hash='';return u.toString()}
+function newTrip(){const a=new Uint8Array(18);crypto.getRandomValues(a);TRIPID=Array.from(a,b=>b.toString(36).padStart(2,'0')).join('').slice(0,26);lsSet('umrahTrip',TRIPID);
+ try{history.replaceState(null,'',familyLink())}catch(e){}connect();render()}
+function subDay(){if(!tripRef)return;if(dayUnsub)dayUnsub();dayKey=saKey();
+ dayUnsub=tripRef.collection('days').doc(dayKey).onSnapshot(s=>{LIVE.pts=(s.exists&&s.data().pts)||[];renderLive()},()=>{})}
+function connect(){
+ if(cfgOk&&TRIPID&&typeof firebase==='undefined'){LIVE.err='Pustaka Firebase gagal dimuatkan. Semak sambungan internet dan muat semula halaman.';renderLive();return}
+ if(!cfgOk||!TRIPID){LIVE.off=!cfgOk;renderLive();return}
+ try{if(!firebase.apps.length)firebase.initializeApp(FIREBASE_CONFIG);FS=firebase.firestore()}catch(e){LIVE.off=true;renderLive();return}
+ tripRef=FS.collection('trips').doc(TRIPID);
+ tripRef.onSnapshot(s=>{LIVE.doc=s.exists?s.data():{};LIVE.ready=true;renderLive();fillInfo()},e=>{LIVE.err='Tidak dapat menyambung ke pangkalan data. Semak peraturan Firestore.';renderLive()});
+ subDay();setInterval(()=>{if(saKey()!==dayKey)subDay()},60000);
+}
+const INFO=()=>(LIVE.doc&&LIVE.doc.info)||{};
+
+/* --- auto tracking (isteri) --- */
+let watchId=null, wake=null, last={ts:0,k:'',lat:0,lng:0}, lastFix=null, trackUntil=+(lsGet('umrahTrackUntil')||0);
+async function reqWake(){try{if('wakeLock' in navigator){wake=await navigator.wakeLock.request('screen');}}catch(e){wake=null}}
+document.addEventListener('visibilitychange',()=>{if(document.visibilityState==='visible'&&watchId!==null)reqWake()});
+function tracking(){return watchId!==null&&Date.now()<trackUntil}
+function startTracking(resume){
+ const m=document.getElementById('trkMsg');
+ if(!tripRef){if(m)m.textContent='Sediakan pautan keluarga dan konfigurasi Firebase dahulu.';return}
+ if(!navigator.geolocation){if(m)m.textContent='Telefon ini tidak menyokong lokasi.';return}
+ if(!resume||Date.now()>=trackUntil){trackUntil=Date.now()+TRACK_HOURS*3600e3;lsSet('umrahTrackUntil',String(trackUntil))}
+ if(watchId!==null)navigator.geolocation.clearWatch(watchId);
+ if(ecoTimer){clearInterval(ecoTimer);ecoTimer=null}
+ watchId=navigator.geolocation.watchPosition(onPos,onPosErr,GPS_OPTS);if(SLEEP===2)gpsEco();
+ reqWake();last.ts=0;
+ tripRef.set({track:{on:true,until:trackUntil,startedAt:Date.now()}},{merge:true}).catch(()=>{});
+ updateTrkUI();
+}
+function stopTracking(auto){
+ if(ecoTimer){clearInterval(ecoTimer);ecoTimer=null}
+ if(watchId!==null&&watchId!=='eco')navigator.geolocation.clearWatch(watchId);watchId=null;
+ try{wake&&wake.release()}catch(e){}wake=null;trackUntil=0;lsSet('umrahTrackUntil',null);
+ if(tripRef)tripRef.set({track:{on:false,until:0,stoppedAt:Date.now(),auto:!!auto}},{merge:true}).catch(()=>{});
+ updateTrkUI();
+}
+function onPosErr(e){const m=document.getElementById('trkMsg');if(m)m.textContent=e.code===1?'Izin lokasi ditolak. Benarkan lokasi untuk Safari: Settings → Privacy & Security → Location Services → Safari Websites → While Using.':'Isyarat GPS lemah — sedang mencuba lagi…'}
+function onPos(p){
+ if(Date.now()>=trackUntil){stopTracking(true);return}
+ const c=p.coords, z=detectZone(c.latitude,c.longitude,c.accuracy,c.speed,INFO()), now=Date.now();
+ lastFix={lat:c.latitude,lng:c.longitude,acc:Math.round(c.accuracy),zone:z,ts:now};updateTrkUI();
+ const moved=last.ts?meters([last.lat,last.lng],[c.latitude,c.longitude]):1e9, dt=now-last.ts;
+ const send=(z.k!==last.k&&dt>=20000)||dt>=180000||(moved>=60&&dt>=60000);
+ if(!send||!tripRef)return;
+ last={ts:now,k:z.k,lat:c.latitude,lng:c.longitude};
+ const pos={lat:+c.latitude.toFixed(6),lng:+c.longitude.toFixed(6),acc:Math.round(c.accuracy),zone:z.k,label:z.n,ts:now};
+ pending=true;miniUpdate();
+ tripRef.set({pos,track:{on:true,until:trackUntil}},{merge:true}).then(()=>{pending=false;netOk=Date.now();miniUpdate()}).catch(()=>{pending=false;miniUpdate()});
+ tripRef.collection('days').doc(saKey()).set({pts:firebase.firestore.FieldValue.arrayUnion(pos)},{merge:true}).catch(()=>{});
+}
+setInterval(()=>{if(watchId!==null&&Date.now()>=trackUntil)stopTracking(true);updateTrkUI()},30000);
+function updateTrkUI(){miniUpdate();
+ const b=document.getElementById('trkBtn'),s=document.getElementById('trkState'),m=document.getElementById('trkMsg');if(!b)return;
+ if(tracking()){b.textContent='Henti kongsi lokasi';b.dataset.on='1';
+  s.innerHTML=`<b style="color:var(--sage)">Aktif</b> hingga ${fmtAt(trackUntil,'Asia/Riyadh')} Saudi · ${lastFix?esc(lastFix.zone.n)+' (±'+lastFix.acc+' m)':'menunggu isyarat GPS…'}`;
+  if(m&&!m.dataset.err)m.textContent='Biarkan halaman ini terbuka. Skrin akan kekal hidup; letak telefon dalam beg dengan skrin menghadap ke dalam.';}
+ else{b.textContent=`Mula kongsi lokasi auto (${TRACK_HOURS} jam)`;delete b.dataset.on;s.innerHTML=trackUntil&&Date.now()<trackUntil?'Terhenti — tekan butang untuk sambung semula.':'Tidak aktif.'}
+}
+
+/* --- views --- */
+function statusCard(compact){
+ if(LIVE.off) return `<p class="muted" style="margin:0">Status lokasi belum disambungkan. Isi konfigurasi Firebase dalam fail index.html.</p>`;
+ if(!TRIPID) return `<p class="muted" style="margin:0">Pautan keluarga belum disediakan. Buka tab Lokasi.</p>`;
+ if(LIVE.err) return `<p class="muted" style="margin:0">${LIVE.err}</p>`;
+ if(!LIVE.ready) return `<p class="muted" style="margin:0">Memuatkan status…</p>`;
+ const d=LIVE.doc||{}, pos=d.pos, man=d.manual, tr=d.track||{};
+ let h='';
+ if(pos){const on=tr.on&&Date.now()<tr.until, stale=on&&Date.now()-pos.ts>10*60e3;
+  h+=`<div class="live"><div class="dot ${on&&!stale?'':'stale'}"></div><div style="min-width:0"><div class="where">${esc(pos.label)}</div>
+  <div class="muted" style="font-size:.82rem">${fmtAt(pos.ts,'Asia/Riyadh')} Saudi · ${fmtAt(pos.ts,'Asia/Kuala_Lumpur')} Malaysia · <span data-ago="${pos.ts}">${ago(pos.ts)}</span> · ±${pos.acc} m</div>
+  <div style="font-size:.8rem;margin-top:2px" class="${on?'':'muted'}">${on?`GPS auto aktif hingga ${fmtAt(tr.until,'Asia/Riyadh')} Saudi / ${fmtAt(tr.until,'Asia/Kuala_Lumpur')} Malaysia`:'GPS auto tidak aktif'}</div>
+  ${stale?`<div style="font-size:.8rem;color:var(--warn);margin-top:2px">Tiada kemas kini lebih 10 minit — skrin telefon mungkin terkunci atau tiada internet.</div>`:''}
+  ${compact?'':`<a class="maplink" href="${mapLL(pos.lat,pos.lng)}" target="_blank" rel="noopener">Buka di Google Maps</a>`}</div></div>`}
+ if(man&&(!pos||man.ts>=pos.ts-6*3600e3)){const p=PL(man.place);
+  h+=`<div class="live ${p.alert?'alert':''}" style="margin-top:${pos?'12px':'0'}"><div class="dot stale" style="${p.alert?'':'background:var(--accent);box-shadow:0 0 0 4px var(--accent-soft)'}"></div><div style="min-width:0"><div class="glbl" style="margin:0">Status ibadah (ditekan isteri)</div><div class="where" style="font-size:1.15rem">${esc(p.n)}${man.round?` <span class="tag w">Pusingan ${man.round}/7</span>`:''}</div>${man.note?`<div class="mk">“${esc(man.note)}”</div>`:''}<div class="muted" style="font-size:.8rem"><span data-ago="${man.ts}">${ago(man.ts)}</span></div></div></div>`}
+ return h||`<p class="muted" style="margin:0">Belum ada lokasi dikongsi. Bila isteri tekan "Mula kongsi lokasi auto", lokasinya akan muncul di sini.</p>`;
+}
+function logHTML(){
+ if(LIVE.off||!LIVE.ready)return '';
+ const pts=LIVE.pts||[];if(!pts.length)return `<p class="muted" style="margin:0">Tiada pergerakan direkod hari ini (tarikh Saudi).</p>`;
+ const ch=[];pts.forEach(p=>{if(!ch.length||ch[ch.length-1].zone!==p.zone)ch.push(p)});
+ return `<div class="berkat">`+ch.slice().reverse().map(e=>`<div class="bk"><div class="when">${fmtAt(e.ts,'Asia/Riyadh')}<span>MY ${fmtAt(e.ts,'Asia/Kuala_Lumpur')}</span></div><b>${esc(e.label)}</b><p>±${e.acc} m</p></div>`).join('')+`</div>`;
+}
+let MAP=null, MK=null, CIR=null, LINE=null;
+function initMap(){
+ const el=document.getElementById('map');if(!el||typeof L==='undefined'){return}
+ if(MAP){try{MAP.remove()}catch(e){}MAP=null}
+ MAP=L.map(el,{zoomControl:true,attributionControl:true}).setView(KAABA,16);
+ L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{maxZoom:19,attribution:'© OpenStreetMap'}).addTo(MAP);
+ MK=null;CIR=null;LINE=null;drawMap(true);
+}
+function drawMap(fit){
+ if(!MAP)return;const d=LIVE.doc||{},pos=d.pos;const pts=(LIVE.pts||[]).map(p=>[p.lat,p.lng]);
+ if(LINE)LINE.remove();if(pts.length>1)LINE=L.polyline(pts,{color:getComputedStyle(document.documentElement).getPropertyValue('--accent').trim()||'#a4466e',weight:3,opacity:.7}).addTo(MAP);
+ if(pos){const ll=[pos.lat,pos.lng];
+  if(!MK){MK=L.circleMarker(ll,{radius:9,color:'#fff',weight:3,fillColor:'#a4466e',fillOpacity:1}).addTo(MAP);CIR=L.circle(ll,{radius:pos.acc,color:'#a4466e',weight:1,fillOpacity:.08}).addTo(MAP)}
+  else{MK.setLatLng(ll);CIR.setLatLng(ll).setRadius(pos.acc)}
+  MK.bindTooltip(esc(pos.label));if(fit)MAP.setView(ll,17)}
+}
+function renderLive(){
+ const a=document.getElementById('liveCard');if(a)a.innerHTML=statusCard(false);
+ const h=document.getElementById('homeLive');if(h)h.innerHTML=statusCard(true);
+ const l=document.getElementById('liveLog');if(l)l.innerHTML=logHTML();
+ const firstPos=MAP&&!MK;drawMap(firstPos);
+}
+function tickAgo(){document.querySelectorAll('[data-ago]').forEach(e=>e.textContent=ago(+e.dataset.ago))}
+function fillInfo(){const i=INFO();[['inHotelMk','hotelMakkah'],['inHotelMd','hotelMadinah'],['inMutawwif','mutawwif']].forEach(([id,k])=>{const el=document.getElementById(id);if(el&&document.activeElement!==el)el.value=i[k]||''});
+ const a=document.getElementById('posMk'),b=document.getElementById('posMd');if(a)a.textContent=i.hotelMkPos?'Lokasi ditetapkan':'Belum ditetapkan';if(b)b.textContent=i.hotelMdPos?'Lokasi ditetapkan':'Belum ditetapkan'}
+
+const WA_STEPS=[
+ ['Mula kongsi lokasi auto selepas Subuh (8 jam)','','Tab Lokasi → "Mula kongsi lokasi auto". Biarkan halaman terbuka.'],
+ ['Mula semula selepas Asar (8 jam)','','Supaya suami boleh lihat hingga malam.'],
+ ['WhatsApp Live Location sebagai sandaran','','Berfungsi walaupun skrin dikunci.'],
+ ['Cas telefon & bawa power bank','','Skrin yang sentiasa hidup cepat menghabiskan bateri.']];
+let sel={place:null,round:null};
+function lokasiView(){const tk=todayKey();
+ if(!cfgOk) return `<div><h2>Lokasi semasa</h2></div><div class="panel note"><h3>Perlu disediakan sekali</h3><p style="margin:0">Isi <b>FIREBASE_CONFIG</b> di bahagian atas kod lokasi dalam fail <b>index.html</b>, kemudian muat naik semula ke GitHub. Ikut panduan yang diberi.</p></div>`+placesPanel();
+ if(!TRIPID) return `<div><h2>Lokasi semasa</h2><p class="lead">Sediakan satu pautan keluarga. Isteri dan suami buka pautan yang sama.</p></div>
+  <div class="panel"><h3>Langkah pertama</h3><p style="margin:0 0 10px">Tekan butang di bawah pada telefon isteri. Pautan baharu akan dicipta — hantar pautan itu kepada suami melalui WhatsApp.</p><button class="btn pri" id="newTrip">Cipta pautan keluarga</button></div>`+placesPanel();
+ const isteri=ROLE==='isteri';
+ return `<div><h2>Lokasi semasa</h2><p class="lead">Tekan sekali; lokasi dikemas kini sendiri selama ${TRACK_HOURS} jam dan tempat seperti Mataf, Mas'a atau hotel dikenal pasti secara automatik.</p></div>
+ <div class="row" style="justify-content:space-between"><span class="muted" style="font-size:.85rem">Telefon ini milik:</span><div class="seg" role="group" aria-label="Peranan"><button data-role="isteri" aria-pressed="${ROLE==='isteri'}">Isteri</button><button data-role="suami" aria-pressed="${ROLE==='suami'}">Suami</button></div></div>
+ ${!ROLE?`<div class="panel note"><h3>Pilih peranan</h3><p style="margin:0">Pilih "Isteri" pada telefon isteri dan "Suami" pada telefon suami.</p></div>`:''}
+ <div class="panel"><h3>Di mana sayang sekarang</h3><div id="liveCard">${statusCard(false)}</div><div id="map" class="map" role="img" aria-label="Peta lokasi isteri"></div></div>
+ ${isteri?`<div class="panel"><h3>Kongsi lokasi automatik</h3>
+  <p class="muted" style="font-size:.85rem;margin:0 0 8px" id="trkState">Tidak aktif.</p>
+  <button class="btn pri" id="trkBtn" style="width:100%">Mula kongsi lokasi auto (${TRACK_HOURS} jam)</button>
+  <div class="row" style="margin-top:8px;justify-content:space-between"><label class="muted" for="autoSleep" style="font-size:.82rem;display:flex;gap:6px;align-items:center"><input type="checkbox" id="autoSleep" ${autoSleep?'checked':''}> Mod tidur auto selepas 1 minit</label><button class="btn" id="openMini">Buka skrin mini</button></div>
+  <p class="muted" id="trkMsg" style="font-size:.8rem;margin:8px 0 0"></p></div>
+ <div class="panel"><h3>Status ibadah (pilihan)</h3><p class="muted" style="font-size:.85rem;margin:0 0 8px">GPS tidak dapat mengenal Raudhah atau pusingan tawaf. Tekan di sini jika mahu suami tahu.</p>
+  ${[...new Set(PLACES.map(p=>p.g))].map(g=>`<div class="pgrp"><div class="glbl">${g}</div><div class="chips">${PLACES.filter(p=>p.g===g).map(p=>`<button class="chip ${p.alert?'alertc':''}" data-place="${p.k}" aria-pressed="${sel.place===p.k}">${p.n}</button>`).join('')}</div></div>`).join('')}
+  <div id="roundBox" ${PL(sel.place).round?'':'hidden'}><div class="glbl">Pusingan ke-</div><div class="chips">${[1,2,3,4,5,6,7].map(r=>`<button class="chip rnd" data-round="${r}" aria-pressed="${sel.round===r}">${r}</button>`).join('')}</div></div>
+  <label class="glbl" for="inNote" style="display:block;margin-top:10px">Nota ringkas (pilihan)</label><input type="text" id="inNote" class="txt" maxlength="120" placeholder="cth: Tingkat 1, dekat pintu King Fahd">
+  <div class="row" style="margin-top:10px;justify-content:space-between"><span class="muted" id="sendMsg" style="font-size:.82rem"></span><button class="btn pri" id="sendStatus">Hantar status</button></div></div>`:''}
+ <div class="panel"><h3>Pergerakan hari ini</h3><div id="liveLog">${logHTML()}</div></div>
+ <div class="panel"><h3>Hotel & mutawwif</h3><div class="form">
+  <label for="inHotelMk">Hotel di Makkah</label><input type="text" id="inHotelMk" class="txt" maxlength="80">
+  ${isteri?`<div class="row" style="justify-content:space-between"><span class="muted" id="posMk" style="font-size:.8rem">Belum ditetapkan</span><button class="btn" data-sethotel="Mk">Tetapkan lokasi hotel = lokasi saya</button></div>`:''}
+  <label for="inHotelMd">Hotel di Madinah</label><input type="text" id="inHotelMd" class="txt" maxlength="80">
+  ${isteri?`<div class="row" style="justify-content:space-between"><span class="muted" id="posMd" style="font-size:.8rem">Belum ditetapkan</span><button class="btn" data-sethotel="Md">Tetapkan lokasi hotel = lokasi saya</button></div>`:''}
+  <label for="inMutawwif">Nama & no. telefon mutawwif</label><input type="text" id="inMutawwif" class="txt" maxlength="80"></div>
+  <div class="row" style="margin-top:10px;justify-content:space-between"><span class="muted" id="infoMsg" style="font-size:.82rem"></span><button class="btn" id="saveInfo">Simpan maklumat</button></div>
+  <p class="muted" style="font-size:.78rem;margin:8px 0 0">Tekan "Tetapkan lokasi hotel" ketika berada di lobi hotel supaya halaman dapat mengesan "Di hotel" secara automatik.</p></div>
+ <div class="panel"><h3>Pautan keluarga</h3><p class="mk" style="margin:0 0 6px">Kedua-dua telefon mesti buka pautan ini. Jangan kongsi dengan orang lain.</p><div class="sel" style="word-break:break-all;font-size:.8rem">${esc(familyLink())}</div><div class="row" style="margin-top:8px"><button class="btn" id="copyLink">Salin pautan</button><span class="muted" id="copyMsg" style="font-size:.8rem"></span></div></div>
+ ${isteri?`<div class="panel"><h3>Checklist harian lokasi</h3>${dailyProg('wa',tk,WA_STEPS.length)}${dailyList('wa',tk,WA_STEPS)}</div>`:''}
+ <div class="panel soft"><h3>Perlu tahu</h3><ul class="plist" style="margin:0">
+  <li>Skrin mini: paparan hitam ringkas yang kekalkan sambungan. Mod tidur: skrin hampir gelap sepenuhnya (jimat bateri pada skrin OLED) dan GPS dibaca setiap 2 minit, bukan berterusan. Ketik dua kali untuk bangun.</li>
+  <li>iPhone hanya menghantar lokasi ketika halaman ini terbuka. Skrin dikekalkan hidup secara automatik; jika skrin dikunci atau Safari ditutup, kemas kini berhenti sehingga halaman dibuka semula.</li>
+  <li>Tawaf dan sa'ie dikesan berdasarkan kawasan (anggaran). Di dalam bangunan berbilang tingkat, GPS boleh tersasar 20–100 m.</li>
+  <li>WhatsApp Live Location kekal sebagai sandaran kerana ia berjalan walaupun skrin dikunci.</li></ul></div>
+ ${placesPanel()}`;
+}
+function placesPanel(){return `<div class="panel"><h3>Lokasi penting (Google Maps)</h3><div class="links">${KEY_PLACES.map(([n,q])=>`<a href="${mapUrl(q)}" target="_blank" rel="noopener">${n}</a>`).join('')}</div></div>`}
+
+async function sendManual(btn){
+ const msg=document.getElementById('sendMsg');if(!tripRef){msg.textContent='Belum disambungkan.';return}
+ if(!sel.place){msg.textContent='Pilih tempat atau aktiviti dahulu.';return}
+ const p=PL(sel.place);if(p.round&&!sel.round){msg.textContent='Pilih pusingan ke berapa.';return}
+ const note=(document.getElementById('inNote').value||'').trim().slice(0,120);btn.disabled=true;msg.textContent='Menghantar…';
+ try{await tripRef.set({manual:{place:sel.place,round:p.round?sel.round:null,note,ts:Date.now()}},{merge:true});msg.textContent='Dihantar.';document.getElementById('inNote').value='';
+  if(p.round&&sel.round<7){sel.round++;document.querySelectorAll('[data-round]').forEach(b=>b.setAttribute('aria-pressed',+b.dataset.round===sel.round))}}
+ catch(e){msg.textContent='Gagal dihantar. Semak internet.'}btn.disabled=false;
+}
+async function saveInfo(btn){
+ const m=document.getElementById('infoMsg');if(!tripRef){m.textContent='Belum disambungkan ke Firebase.';return}btn.disabled=true;m.textContent='Menyimpan…';
+ try{await tripRef.set({info:{hotelMakkah:document.getElementById('inHotelMk').value.trim(),hotelMadinah:document.getElementById('inHotelMd').value.trim(),mutawwif:document.getElementById('inMutawwif').value.trim()}},{merge:true});m.textContent='Disimpan.'}
+ catch(e){m.textContent='Gagal disimpan.'}btn.disabled=false;
+}
+function setHotel(which,btn){
+ const m=document.getElementById('infoMsg');if(!tripRef){m.textContent='Belum disambungkan ke Firebase.';return}if(!navigator.geolocation){m.textContent='Telefon ini tidak menyokong lokasi.';return}btn.disabled=true;m.textContent='Mendapatkan lokasi…';
+ navigator.geolocation.getCurrentPosition(p=>{const o={};o['hotel'+which+'Pos']={lat:+p.coords.latitude.toFixed(6),lng:+p.coords.longitude.toFixed(6)};
+  tripRef.set({info:o},{merge:true}).then(()=>{m.textContent='Lokasi hotel disimpan (±'+Math.round(p.coords.accuracy)+' m).'}).catch(()=>{m.textContent='Gagal disimpan.'});btn.disabled=false},
+  e=>{m.textContent='Tidak dapat lokasi. Benarkan akses lokasi untuk Safari.';btn.disabled=false},{enableHighAccuracy:true,timeout:20000});
+}
+main.addEventListener('click',e=>{
+ const t=e.target;
+ if(t.closest('#newTrip')){newTrip();return}
+ const r=t.closest('[data-role]');if(r){ROLE=r.dataset.role;lsSet('umrahRole',ROLE);render();return}
+ const tb=t.closest('#trkBtn');if(tb){if(tb.dataset.on)stopTracking(false);else{startTracking(false);openMini()}return}
+ const pb=t.closest('[data-place]');if(pb){sel.place=pb.dataset.place;sel.round=null;document.querySelectorAll('[data-place]').forEach(b=>b.setAttribute('aria-pressed',b===pb));document.querySelectorAll('[data-round]').forEach(b=>b.setAttribute('aria-pressed','false'));document.getElementById('roundBox').hidden=!PL(sel.place).round;document.getElementById('sendMsg').textContent='';return}
+ const rb=t.closest('[data-round]');if(rb){sel.round=+rb.dataset.round;document.querySelectorAll('[data-round]').forEach(b=>b.setAttribute('aria-pressed',b===rb));return}
+ if(t.closest('#sendStatus')){sendManual(t.closest('#sendStatus'));return}
+ if(t.closest('#saveInfo')){saveInfo(t.closest('#saveInfo'));return}
+ const sh=t.closest('[data-sethotel]');if(sh){setHotel(sh.dataset.sethotel,sh);return}
+ const cl=t.closest('#copyLink');if(cl){const msg=document.getElementById('copyMsg');const link=familyLink();
+  (navigator.clipboard?navigator.clipboard.writeText(link):Promise.reject()).then(()=>msg.textContent='Disalin. Tampal dalam WhatsApp suami.').catch(()=>{msg.textContent='Tekan lama pada pautan di atas untuk salin.'});return}
+});
+function afterRender(){if(current==='gambar'&&GITEMS===null&&!GERR)gLoad();if(current==='lokasi'){initMap();updateTrkUI();fillInfo()}else if(MAP){try{MAP.remove()}catch(e){}MAP=null;MK=null}}
+connect();
+if(ROLE==='isteri'&&trackUntil>Date.now()&&TRIPID&&cfgOk){setTimeout(()=>{startTracking(true);openMini()},800)}
+
+/* ---------- skrin mini & mod tidur (jimat bateri) ---------- */
+var SLEEP=0; /* 0 = halaman biasa, 1 = skrin mini, 2 = mod tidur */
+var ecoTimer=null, miniTimer=null, idleTimer=null, pending=false, netOk=0, autoSleep=lsGet('umrahAutoSleep')!=='0';
+const GPS_OPTS={enableHighAccuracy:true,maximumAge:15000,timeout:30000};
+function gpsLive(){if(watchId===null)return;if(watchId!=='eco')return;if(ecoTimer){clearInterval(ecoTimer);ecoTimer=null}
+ watchId=navigator.geolocation.watchPosition(onPos,onPosErr,GPS_OPTS)}
+function gpsEco(){if(watchId===null||watchId==='eco')return;navigator.geolocation.clearWatch(watchId);watchId='eco';
+ const f=()=>navigator.geolocation.getCurrentPosition(onPos,onPosErr,{enableHighAccuracy:true,maximumAge:30000,timeout:25000});
+ f();ecoTimer=setInterval(f,120000)}
+const miniEl=document.createElement('div');miniEl.id='mini';miniEl.hidden=true;miniEl.setAttribute('role','dialog');miniEl.setAttribute('aria-label','Skrin mini lokasi');
+miniEl.innerHTML=`<div class="m-in" id="mIn"><div class="m-lbl">🇸🇦 Waktu Saudi</div><div class="m-time" id="mTime">--:--</div><div class="m-sub" id="mMy"></div>
+ <div class="m-zone"><span class="m-dot" id="mDot"></span><span id="mZone">Menunggu GPS…</span></div>
+ <div class="m-rows"><div id="mSent"></div><div id="mNet"></div><div id="mUntil"></div><div id="mWake"></div></div>
+ <div class="m-btns"><button id="mSleep" class="m-btn">Mod tidur</button><button id="mExit" class="m-btn ghost">Keluar skrin mini</button></div>
+ <div class="m-hint" id="mHint">Mod tidur bermula sendiri selepas 1 minit tanpa sentuhan</div></div>`;
+document.body.appendChild(miniEl);
+function miniUpdate(){
+ if(miniEl.hidden)return;const $=id=>document.getElementById(id);
+ const p=partsIn('Asia/Riyadh'),m=partsIn('Asia/Kuala_Lumpur');
+ $('mTime').textContent=pad(p.h)+':'+pad(p.mi);$('mMy').textContent='🇲🇾 Malaysia '+pad(m.h)+':'+pad(m.mi);
+ const on=tracking();const z=lastFix?lastFix.zone.n:(LIVE.doc&&LIVE.doc.pos?LIVE.doc.pos.label:'');
+ $('mZone').textContent=on?(z||'Menunggu GPS…'):'Penjejakan tidak aktif';
+ $('mDot').className='m-dot'+(on?(navigator.onLine?' ok':' warn'):'');
+ $('mSent').textContent=last.ts?'Dihantar kepada suami '+ago(last.ts):'Belum dihantar';
+ $('mNet').textContent=!navigator.onLine?'Tiada internet — lokasi akan dihantar bila talian pulih':pending?'Sedang menghantar…':'Talian OK';
+ $('mUntil').textContent=on?'Aktif hingga '+fmtAt(trackUntil,'Asia/Riyadh')+' Saudi'+(SLEEP===2?' · GPS setiap 2 minit':' · GPS langsung'):'Tekan Keluar, kemudian Mula kongsi lokasi';
+ $('mWake').textContent=('wakeLock' in navigator)?(wake&&!wake.released?'Skrin dikekalkan hidup':'Sentuh skrin sekali untuk kekalkan skrin hidup'):'Telefon tidak menyokong kunci skrin — tetapkan Auto-Lock: Never';
+ $('mHint').textContent=SLEEP===2?'Ketik dua kali untuk bangun':(autoSleep?'Mod tidur bermula sendiri selepas 1 minit tanpa sentuhan':'Tekan "Mod tidur" untuk jimat bateri');
+ if(SLEEP===2){const el=$('mIn');el.style.transform=`translate(${Math.round(Math.random()*40-20)}px,${Math.round(Math.random()*60-30)}px)`}
+}
+function setMiniTimer(){if(miniTimer)clearInterval(miniTimer);miniTimer=setInterval(miniUpdate,SLEEP===2?60000:15000)}
+function resetIdle(){if(idleTimer)clearTimeout(idleTimer);if(SLEEP===1&&autoSleep)idleTimer=setTimeout(()=>{if(SLEEP===1&&tracking())enterSleep()},60000)}
+function enterSleep(){SLEEP=2;miniEl.classList.add('sleep');if(idleTimer)clearTimeout(idleTimer);gpsEco();setMiniTimer();miniUpdate()}
+function toMini(){SLEEP=1;miniEl.classList.remove('sleep');document.getElementById('mIn').style.transform='';gpsLive();reqWake();setMiniTimer();resetIdle();miniUpdate()}
+function openMini(){miniEl.hidden=false;document.body.classList.add('sleeping');toMini()}
+function closeMini(){miniEl.hidden=true;SLEEP=0;document.body.classList.remove('sleeping');miniEl.classList.remove('sleep');
+ if(miniTimer)clearInterval(miniTimer);if(idleTimer)clearTimeout(idleTimer);gpsLive();tick();updateTrkUI();if(MAP)setTimeout(()=>MAP.invalidateSize(),60)}
+let lastTap=0;
+miniEl.addEventListener('pointerdown',e=>{
+ if(wake===null||wake.released)reqWake();
+ if(SLEEP===2){const n=Date.now();if(n-lastTap<450){lastTap=0;toMini()}else lastTap=n;e.preventDefault();return}
+ resetIdle();
+});
+miniEl.addEventListener('click',e=>{if(SLEEP===2)return;if(e.target.closest('#mSleep'))enterSleep();else if(e.target.closest('#mExit'))closeMini()});
+window.addEventListener('online',miniUpdate);window.addEventListener('offline',miniUpdate);
+main.addEventListener('click',e=>{if(e.target.closest('#openMini'))openMini()});
+main.addEventListener('change',e=>{if(e.target.id==='autoSleep'){autoSleep=e.target.checked;lsSet('umrahAutoSleep',autoSleep?'1':'0')}});
+
+/* ---------- jadual (Umrah4Ladies 4–15 Nov 2026) ---------- */
+const FRI_BLOCK=`<div class="fri"><b>Amalan hari Jumaat</b><ul><li>Surah Al-Kahfi (boleh mula selepas Maghrib Khamis) — <a class="qlink" href="https://quran.com/18" target="_blank" rel="noopener">Baca Surah Al-Kahfi (teks Arab) di Quran.com</a></li><li>Selawat 1000 kali</li><li>Mandi sunat Jumaat</li><li>Solat Jumaat / Zohor di masjid — datang awal</li><li>Doa saat mustajab: Asar hingga Maghrib</li><li>Sedekah</li></ul><div class="row"><button class="btn pri" data-go="berkat">Buka checklist Jumaat</button><button class="btn" data-go="zikir">Kira selawat</button></div></div>`;
+function isFriNow(){const d=new Date();return d.getDay()===5||(d.getDay()===4&&d.getHours()>=18)}
+function friBanner(){if(!isFriNow())return '';const fri=new Date().getDay()===5;
+ return `<div class="panel blinkbox fri-alert" role="alert"><h3>${fri?'Hari ini hari Jumaat':'Malam ini malam Jumaat'}</h3><p style="margin:0 0 10px">${fri?'Penghulu segala hari. Baca Al-Kahfi, perbanyak selawat dan rebut saat mustajab antara Asar dan Maghrib.':'Mulakan Surah Al-Kahfi selepas Maghrib dan perbanyak selawat malam ini.'}</p><div class="row"><button class="btn pri" data-go="berkat">Checklist Jumaat</button><button class="btn" data-go="zikir">Selawat 1000</button></div></div>`}
+function hijriMs(tz,dt){const f=new Intl.DateTimeFormat('en-u-ca-islamic-umalqura-nu-latn',{timeZone:tz||'Asia/Riyadh',day:'numeric',month:'numeric',year:'numeric'});const o={};f.formatToParts(dt||new Date()).forEach(p=>o[p.type]=p.value);
+ const y=parseInt(o.year),m=parseInt(o.month),d=parseInt(o.day);if(!(y>1300&&y<1600))return '';
+ return d+' '+['Muharam','Safar','Rabiulawal','Rabiulakhir','Jamadilawal','Jamadilakhir','Rejab','Syaaban','Ramadan','Syawal','Zulkaedah','Zulhijah'][m-1]+' '+y+' H'}
+const TRIP=[
+ {d:'2026-11-04',c:'Perjalanan',p:['Berkumpul di KLIA 1, Aras 5 — 2:00 petang','Penerbangan MH156 KUL → JED, berlepas 7:00 malam (MYT)','Tiba di Lapangan Terbang Jeddah, 11:40 malam (waktu Saudi)','Daftar masuk hotel di Jeddah & rehat'],tip:'Bawa pasport, visa bercetak dan sijil vaksin dalam beg tangan. Simpan boarding pass hingga tiba di Jeddah.'},
+ {d:'2026-11-05',c:'Makkah',u:'Umrah pertama · miqat Qarnul Manazil',p:['Sarapan & sesi taaruf','Ziarah Jeddah & bergerak ke Makkah','Miqat di Qarnul Manazil — niat ihram umrah','Daftar masuk hotel Makkah & umrah pertama'],tip:'Mandi sunat ihram dan pakai pakaian ihram di hotel Jeddah. Tiada wangian selepas berniat.'},
+ {d:'2026-11-06',c:'Makkah',p:['Aktiviti bebas','Ziarah tambahan (pilihan) — cth. Jabal Nour SR60'],tip:'Perbanyak tawaf sunat dan solat di Masjidil Haram.'},
+ {d:'2026-11-07',c:'Makkah',u:'Umrah kedua · miqat Hudaibiyah',p:['Ziarah Hudaibiyah — Masjid Hudaibiyah & muzium','Miqat Hudaibiyah — niat ihram umrah','Umrah kedua'],tip:'Mandi sunat ihram sebelum bertolak.'},
+ {d:'2026-11-08',c:'Makkah',u:"Umrah ketiga · miqat Ji'ranah",p:['Ziarah Manasik Haji — Jabal Rahmah, Mina, Muzdalifah',"Miqat Ji'ranah (Jikronah) — niat ihram umrah",'Umrah ketiga'],tip:'Berdoa di Jabal Rahmah untuk keluarga dan rumah tangga.'},
+ {d:'2026-11-09',c:'Makkah',p:['Ziarah Kota Thaif — Masjid Ibn Abbas, Masjid Addas, kilang bunga ros, pasar buah'],tip:'Hari terakhir penuh di Makkah. Isi botol zamzam.'},
+ {d:'2026-11-10',c:'Perjalanan',p:["Tawaf Wada'",'Daftar keluar hotel Makkah','Bertolak ke Madinah','Tiba di Madinah & daftar masuk',"Ziarah dalam Madinah — Saqifah Bani Sa'idah, Masjid Al-Ghamamah, Masjid Saidina Abu Bakar, Masjid Saidina Ali, Perkuburan Baqi' Al-Gharqad, Pintu ke Raudhah"],tip:"Wanita haid dikecualikan daripada Tawaf Wada'. Tempah slot Raudhah dalam Nusuk sebaik tiba di Madinah."},
+ {d:'2026-11-11',c:'Madinah',p:['Aktiviti bebas','Ziarah Badar (pilihan, SR150)'],tip:'Solat fardu berjemaah di Masjid Nabawi.'},
+ {d:'2026-11-12',c:'Madinah',p:["Ziarah luar Madinah — Masjid Quba', ladang kurma, Masjid Qiblatain, Masjid Khandak (Tujuh), Bukit Uhud"],tip:'Berwuduk dari hotel sebelum ke Masjid Quba — pahala seperti umrah.'},
+ {d:'2026-11-13',c:'Madinah',p:['Aktiviti bebas'],tip:'Jumaat terakhir di Tanah Suci: Al-Kahfi, selawat 1000 dan doa Asar–Maghrib.'},
+ {d:'2026-11-14',c:'Perjalanan',p:["Wada' (ucap selamat tinggal) — ikut aturcara mutawwif",'Daftar keluar hotel Madinah','Bertolak ke Lapangan Terbang Madinah','Penerbangan MH159 MED → KUL, berlepas 9:30 malam (waktu Saudi)'],tip:'Solat 2 rakaat dan beri salam terakhir di Masjid Nabawi.'},
+ {d:'2026-11-15',c:'Perjalanan',p:['Tiba di KLIA, 11:15 pagi (MYT)','Bergambar','Bersurai'],tip:'Alhamdulillah. Semoga umrah mabrur.'}];
+DATA.kit={title:'Senarai semak Umrah4Ladies',groups:[{h:'Senarai semak penerbangan',items:[
+ ['Pasport sah lebih 6 bulan',R,'Tampal nama penuh di muka depan pasport.'],
+ ['Visa sah yang telah dicetak','','Disediakan oleh pihak HQ.'],
+ ['Boarding pass (diberi di lapangan terbang)','','Simpan dengan rapi sehingga tiba di Jeddah.'],
+ ['Label bagasi lengkap',R,'Nama, warganegara, no. pasport, kumpulan UMRAH4LADIES, penerbangan Malaysia Airlines MH156 / MH159.'],
+ ['Bagasi daftar masuk maksimum 30 kg, saiz tidak melebihi 28"','',''],
+ ['Hand carry maksimum 7 kg, tiada barang terlarang','','Power bank dalam hand carry; gunting dalam bagasi daftar masuk.'],
+ ['Muat turun aplikasi Nusuk','',''],
+ ['Perjumpaan: 4/11/2026, 2:00 petang, KLIA 1 Aras 5',R,'']]}]};
+const TAMBAHAN=[
+ ['Ziarah tambahan Madinah','SR70',"Masjid Sajadah, Masjid Jumaat, Telaga Ghars, Telaga & kebun Salman Al-Farisi, Bukit Uhud, Masjid Bani Harithah, Masjid Syaikhan, Masjid Ijabah, Gua Thoyyibah dan lain-lain"],
+ ['Ziarah Badar','SR150','Telaga Rauha, Maqam Syuhada Badar, Jabal Malaikah, Masjid Arish, makan tengah hari'],
+ ['Jabal Nour','SR60',"Gua Hira', Jabal Nour, muzium"],
+ ['Ziarah Thaif','SR150','Istana Shourba, Masjid Ibn Abbas, Masjid Addas, Masjid Qantara, kilang bunga ros, pasar buah, makan gaya Arab, miqat Qarnul Manazil']];
+const CITYTAG={Makkah:'w',Madinah:'s',Perjalanan:'r'};
+function tripDay(){const k=saKey();const i=TRIP.findIndex(t=>t.d===k);return i}
+function dayLabel(d){const [y,m,dd]=d.split('-').map(Number);return new Intl.DateTimeFormat('ms-MY',{weekday:'long',day:'numeric',month:'short',timeZone:'UTC'}).format(new Date(Date.UTC(y,m-1,dd)))}
+const isFriD=d=>{const [y,m,dd]=d.split('-').map(Number);return new Date(Date.UTC(y,m-1,dd)).getUTCDay()===5};
+function dayCard(t,i,today){
+ return `<div class="dcard ${today?'today':''} ${isFriD(t.d)?'jumaat':''}" id="hari-${i+1}"><div class="dhead"><div class="dnum">Hari<b>${i+1}</b></div><div style="min-width:0"><div class="ddate">${dayLabel(t.d)}<span class="hjd">${hijriOfDay(t.d)}</span>${today?' <span class="tag w">Hari ini</span>':''}</div>
+  <div><span class="tag ${CITYTAG[t.c]}" style="margin-left:0">${t.c}</span>${isFriD(t.d)?'<span class="tag blink">Jumaat · Hari penting</span>':''}</div>${t.u?`<div class="umr">${t.u}</div>`:''}</div></div>
+  <ul class="plist">${t.p.map(x=>`<li>${x}</li>`).join('')}</ul>${t.tip?`<p class="dtip">${t.tip}</p>`:''}${isFriD(t.d)?FRI_BLOCK:''}</div>`}
+function todayProgram(){
+ const i=tripDay();
+ if(i>=0) return dayCard(TRIP[i],i,true);
+ const k=saKey();
+ if(k<TRIP[0].d){const [y,m,d]=TRIP[0].d.split('-').map(Number);const p=partsIn('Asia/Kuala_Lumpur');const n=Math.round((Date.UTC(y,m-1,d)-Date.UTC(p.y,p.m-1,p.d))/864e5);
+  return `<p style="margin:0">Program bermula <b>Rabu, 4 November 2026</b> — <b>${n} hari lagi</b>. Berkumpul 2:00 petang di KLIA 1, Aras 5.</p>`}
+ return `<p style="margin:0">Program umrah 4–15 November 2026 telah selesai. Alhamdulillah.</p>`}
+function jadualView(){const ti=tripDay();
+ return `<div><h2>Jadual Umrah</h2><p class="lead">Umrah4Ladies · 4–15 November 2026 · 12 hari. Aturcara tertakluk kepada perubahan oleh mutawwif bertugas.</p></div>
+ <div class="panel"><h3>Penerbangan Malaysia Airlines</h3><div class="flights">
+  <div class="flt"><div class="glbl">Pergi · Rabu 4 Nov</div><div class="fno">MH156 · KUL → JED</div><div class="ftimes"><div><b>19:00</b><span>Berlepas (MYT)</span></div><div><b>23:40</b><span>Tiba (Saudi)</span></div></div><div class="mk">Berkumpul 14:00, KLIA 1 Aras 5</div></div>
+  <div class="flt"><div class="glbl">Pulang · Sabtu 14 Nov</div><div class="fno">MH159 · MED → KUL</div><div class="ftimes"><div><b>21:30</b><span>Berlepas (Saudi)</span></div><div><b>11:15</b><span>Tiba 15 Nov (MYT)</span></div></div><div class="mk">Bagasi 30 kg · saiz ≤ 28" · hand carry 7 kg</div></div></div></div>
+ <div class="panel soft"><h3>Ringkasan</h3><div class="sumrow"><div><b>1</b><span>malam Jeddah</span></div><div><b>5</b><span>malam Makkah</span></div><div><b>4</b><span>malam Madinah</span></div><div><b>3</b><span>kali umrah</span></div></div></div>
+ ${TRIP.map((t,i)=>dayCard(t,i,i===ti)).join('')}
+ <div class="panel"><h3>Ziarah tambahan (pilihan, bayar sendiri)</h3><div class="berkat">${TAMBAHAN.map(z=>`<div class="bk"><div class="when">${z[1]}<span>seorang</span></div><b>${z[0]}</b><p>${z[2]}</p></div>`).join('')}</div><p class="muted" style="font-size:.75rem;margin:8px 0 0">Harga tertakluk kepada makluman semasa mutawwif.</p></div>
+ <div class="panel" id="pgwrap-kit"><h3>Senarai semak penerbangan</h3><div id="pg-kit">${progHTML('kit')}</div><ul class="check">${DATA.kit.groups[0].items.map((it,ii)=>{const id=`kit-0-${ii}`;return `<li><label for="c-${id}"><input type="checkbox" id="c-${id}" data-id="${id}" ${S.checks[id]?'checked':''}><span class="tx"><b>${it[0]}</b>${it[1]}${it[2]?`<small>${it[2]}</small>`:''}</span></label></li>`}).join('')}</ul></div>
+ <div class="panel"><h3>Agensi</h3><p style="margin:0"><b>Umrah4Ladies</b><br>Telefon: <span class="sel">+60 11-6844 2291</span><br>Instagram: <span class="sel">@umrah4ladies</span></p></div>`}
+
+/* ---------- bajet perbelanjaan ---------- */
+const BCATS=[['makan','Makan & minum'],['oleh','Ole-ole & kurma'],['ziarah','Ziarah tambahan'],['jalan','Teksi / pengangkutan'],['sedekah','Sedekah & infaq'],['dobi','Dobi & keperluan'],['sihat','Ubat & kesihatan'],['lain','Lain-lain']];
+const BCAT=k=>(BCATS.find(c=>c[0]===k)||['lain','Lain-lain'])[1];
+function BUD(){if(!S.budget)S.budget={limit:3000,rate:1.12,items:[]};return S.budget}
+let bsel={cat:'makan',cur:'SAR',pay:'Tunai'};
+const f2=n=>(Math.round(n*100)/100).toLocaleString('ms-MY',{minimumFractionDigits:2,maximumFractionDigits:2});
+function bTotals(){const b=BUD();const t={all:0,cat:{},day:{}};b.items.forEach(i=>{t.all+=i.sar;t.cat[i.cat]=(t.cat[i.cat]||0)+i.sar;t.day[i.day]=(t.day[i.day]||0)+i.sar});return t}
+function bSummaryHTML(){const b=BUD(),t=bTotals(),left=b.limit-t.all,p=b.limit>0?Math.min(100,t.all/b.limit*100):0,warn=p>=80;
+ return `<div class="bsum"><div><div class="glbl">Dibelanjakan</div><div class="bbig">SAR ${f2(t.all)}</div><div class="muted" style="font-size:.85rem">≈ RM ${f2(t.all*b.rate)}</div></div>
+ <div style="text-align:right"><div class="glbl">Baki bajet</div><div class="bbig ${left<0?'neg':''}">SAR ${f2(left)}</div><div class="muted" style="font-size:.85rem">daripada SAR ${f2(b.limit)}</div></div></div>
+ <div class="prog" style="margin-top:10px"><div class="bar"><i style="width:${p}%;${warn?'background:var(--warn)':''}"></i></div><span class="pct">${Math.round(p)}%</span></div>
+ ${left<0?`<p style="margin:8px 0 0;color:var(--warn);font-size:.85rem">Perbelanjaan melebihi bajet sebanyak SAR ${f2(-left)}.</p>`:warn?`<p style="margin:8px 0 0;color:var(--warn);font-size:.85rem">Sudah guna lebih 80% bajet.</p>`:''}`}
+function bCatsHTML(){const t=bTotals();const rows=BCATS.filter(c=>t.cat[c[0]]).sort((a,b)=>t.cat[b[0]]-t.cat[a[0]]);
+ if(!rows.length)return `<p class="muted" style="margin:0">Belum ada perbelanjaan.</p>`;const max=Math.max(...rows.map(c=>t.cat[c[0]]));
+ return rows.map(c=>`<div class="bcat"><span>${c[1]}</span><div class="bar"><i style="width:${t.cat[c[0]]/max*100}%"></i></div><b>SAR ${f2(t.cat[c[0]])}</b></div>`).join('')}
+function bListHTML(){const b=BUD();if(!b.items.length)return `<p class="muted" style="margin:0">Rekod pertama akan muncul di sini, disusun mengikut hari.</p>`;
+ const t=bTotals();const days=[...new Set(b.items.map(i=>i.day))].sort().reverse();
+ return days.map(d=>{const [y,m,dd]=d.split('-').map(Number);const lbl=new Intl.DateTimeFormat('ms-MY',{weekday:'long',day:'numeric',month:'short',timeZone:'UTC'}).format(new Date(Date.UTC(y,m-1,dd)));
+  const ti=TRIP.findIndex(x=>x.d===d);
+  return `<div class="bday"><div class="bdh"><b>${lbl}${ti>=0?' · Hari '+(ti+1):''}</b><span>SAR ${f2(t.day[d])}</span></div>`+
+  b.items.filter(i=>i.day===d).sort((a,c)=>c.ts-a.ts).map(i=>`<div class="bit"><div style="min-width:0"><b>${esc(i.note||BCAT(i.cat))}</b><div class="muted" style="font-size:.78rem">${fmtAt(i.ts,'Asia/Riyadh')} · ${BCAT(i.cat)} · ${i.pay}${i.cur==='RM'?' · dibayar RM '+f2(i.orig):''}</div></div><div class="bamt">SAR ${f2(i.sar)}<button class="tiny" data-bdel="${i.id}">Padam</button></div></div>`).join('')+`</div>`}).join('')}
+function bajetView(){const b=BUD();
+ return `<div><h2>Bajet perbelanjaan</h2><p class="lead">Rekod setiap belanja di Tanah Suci. Semua jumlah disimpan dalam Riyal (SAR) dengan anggaran Ringgit.</p></div>
+ <div class="panel" id="bSum">${bSummaryHTML()}</div>
+ <div class="panel"><h3>Tambah perbelanjaan</h3>
+  <div class="bamtrow"><input type="number" id="bAmt" class="txt bin" inputmode="decimal" min="0" step="0.01" placeholder="0.00" aria-label="Jumlah">
+   <div class="seg" role="group" aria-label="Mata wang">${['SAR','RM'].map(c=>`<button data-bcur="${c}" aria-pressed="${bsel.cur===c}">${c}</button>`).join('')}</div></div>
+  <div class="glbl" style="margin-top:10px">Kategori</div><div class="chips">${BCATS.map(c=>`<button class="chip" data-bcat="${c[0]}" aria-pressed="${bsel.cat===c[0]}">${c[1]}</button>`).join('')}</div>
+  <div class="glbl" style="margin-top:10px">Bayaran</div><div class="chips">${['Tunai','Kad'].map(p=>`<button class="chip" data-bpay="${p}" aria-pressed="${bsel.pay===p}">${p}</button>`).join('')}</div>
+  <label class="glbl" for="bNote" style="display:block;margin-top:10px">Catatan (pilihan)</label><input type="text" id="bNote" class="txt" maxlength="80" placeholder="cth: Kurma Ajwa 1 kg, Pasar Kurma">
+  <div class="row" style="margin-top:10px;justify-content:space-between"><span class="muted" id="bMsg" style="font-size:.82rem"></span><button class="btn pri" id="bAdd">Simpan perbelanjaan</button></div></div>
+ <div class="panel"><h3>Ikut kategori</h3><div id="bCats">${bCatsHTML()}</div></div>
+ <div class="panel"><h3>Rekod harian</h3><div id="bList">${bListHTML()}</div></div>
+ <div class="panel"><h3>Tetapan</h3><div class="form">
+  <label for="bLimit">Jumlah bajet (SAR)</label><input type="number" id="bLimit" class="txt" inputmode="decimal" min="0" step="10" value="${b.limit}">
+  <label for="bRate">Kadar tukaran: 1 SAR = RM</label><input type="number" id="bRate" class="txt" inputmode="decimal" min="0" step="0.001" value="${b.rate}"></div>
+  <p class="muted" style="font-size:.78rem;margin:8px 0 0">Kemas kini kadar ikut kadar pengurup wang yang digunakan.</p>
+  <div class="row" style="margin-top:10px;justify-content:space-between"><button class="btn" id="bCopy">Salin ringkasan untuk WhatsApp</button><span class="muted" id="bCopyMsg" style="font-size:.8rem"></span></div>
+  <p class="muted" style="font-size:.78rem;margin:8px 0 0">Rekod disimpan dalam telefon ini sahaja.</p></div>
+ <div class="panel soft"><h3>Rujukan harga ziarah tambahan</h3><p style="margin:0;font-size:.9rem">Ziarah Madinah SR70 · Badar SR150 · Jabal Nour SR60 · Thaif SR150</p></div>`}
+function bRefresh(){const a=document.getElementById('bSum');if(a)a.innerHTML=bSummaryHTML();const c=document.getElementById('bCats');if(c)c.innerHTML=bCatsHTML();const l=document.getElementById('bList');if(l)l.innerHTML=bListHTML();
+ const h=document.getElementById('home-bajet');if(h)h.textContent='SAR '+f2(bTotals().all)+' dibelanjakan'}
+function bSummaryText(){const b=BUD(),t=bTotals();let s=`Bajet umrah — SAR ${f2(t.all)} (≈ RM ${f2(t.all*b.rate)}) daripada SAR ${f2(b.limit)}\n`;
+ BCATS.filter(c=>t.cat[c[0]]).forEach(c=>s+=`• ${c[1]}: SAR ${f2(t.cat[c[0]])}\n`);return s+`Baki: SAR ${f2(b.limit-t.all)}`}
+main.addEventListener('click',e=>{
+ const t=e.target;
+ const c=t.closest('[data-bcat]');if(c){bsel.cat=c.dataset.bcat;document.querySelectorAll('[data-bcat]').forEach(x=>x.setAttribute('aria-pressed',x===c));return}
+ const u=t.closest('[data-bcur]');if(u){bsel.cur=u.dataset.bcur;document.querySelectorAll('[data-bcur]').forEach(x=>x.setAttribute('aria-pressed',x===u));return}
+ const p=t.closest('[data-bpay]');if(p){bsel.pay=p.dataset.bpay;document.querySelectorAll('[data-bpay]').forEach(x=>x.setAttribute('aria-pressed',x===p));return}
+ if(t.closest('#bAdd')){const msg=document.getElementById('bMsg'),inp=document.getElementById('bAmt'),v=parseFloat(inp.value);
+  if(!(v>0)){msg.textContent='Masukkan jumlah dahulu.';inp.focus();return}
+  const b=BUD(),sar=bsel.cur==='RM'?v/(b.rate||1):v;
+  b.items.push({id:Date.now().toString(36)+Math.random().toString(36).slice(2,6),ts:Date.now(),day:saKey(),sar:Math.round(sar*100)/100,orig:v,cur:bsel.cur,cat:bsel.cat,pay:bsel.pay,note:(document.getElementById('bNote').value||'').trim().slice(0,80)});
+  save();inp.value='';document.getElementById('bNote').value='';msg.textContent='Disimpan: SAR '+f2(sar)+' · '+BCAT(bsel.cat);bRefresh();return}
+ const d=t.closest('[data-bdel]');if(d){arm(d,()=>{const b=BUD();b.items=b.items.filter(i=>i.id!==d.dataset.bdel);save();bRefresh()});return}
+ if(t.closest('#bCopy')){const m=document.getElementById('bCopyMsg'),txt=bSummaryText();
+  (navigator.clipboard?navigator.clipboard.writeText(txt):Promise.reject()).then(()=>m.textContent='Disalin.').catch(()=>{m.textContent='Tidak dapat menyalin pada telefon ini.'});return}
+});
+main.addEventListener('change',e=>{const t=e.target;
+ if(t.id==='bLimit'){const v=parseFloat(t.value);if(v>=0){BUD().limit=v;save();bRefresh()}}
+ if(t.id==='bRate'){const v=parseFloat(t.value);if(v>0){BUD().rate=v;save();bRefresh()}}
+});
+
+/* ---------- gambar → Google Drive (melalui Google Apps Script) ---------- */
+const GCATS=[['kenangan','Kenangan'],['resit','Resit'],['dokumen','Dokumen']];
+let gsel={cat:'kenangan'}, gfilter='semua', GITEMS=null, GERR='', GQ=[];
+function UP(){const i=(typeof INFO==='function'?INFO():{})||{};return {url:i.uploadUrl||lsGet('upUrl')||'',token:i.uploadToken||lsGet('upTok')||''}}
+function gThumb(id){return 'https://drive.google.com/thumbnail?id='+encodeURIComponent(id)+'&sz=w480'}
+function gView(id){return 'https://drive.google.com/file/d/'+encodeURIComponent(id)+'/view'}
+function compressImg(file){return new Promise((res,rej)=>{const img=new Image(),u=URL.createObjectURL(file);
+ img.onload=()=>{const max=1600;let w=img.naturalWidth,h=img.naturalHeight;const k=Math.min(1,max/Math.max(w,h));w=Math.round(w*k);h=Math.round(h*k);
+  const c=document.createElement('canvas');c.width=w;c.height=h;c.getContext('2d').drawImage(img,0,0,w,h);URL.revokeObjectURL(u);
+  const d=c.toDataURL('image/jpeg',0.82);res({data:d.split(',')[1],preview:c.toDataURL('image/jpeg',0.4)})};
+ img.onerror=()=>{URL.revokeObjectURL(u);rej(new Error('Fail bukan gambar'))};img.src=u})}
+async function gLoad(){const up=UP();if(!up.url||!up.token){GITEMS=null;gRender();return}
+ GERR='';try{const r=await fetch(up.url+(up.url.includes('?')?'&':'?')+'action=list&token='+encodeURIComponent(up.token));const j=await r.json();
+  if(!j.ok)throw new Error(j.error||'Gagal');GITEMS=j.items||[]}catch(e){GERR='Tidak dapat memuatkan galeri: '+(e.message||e)}gRender()}
+async function gUpload(q){const up=UP();q.st='Memampatkan…';gRender();
+ try{if(!q.data){const c=await compressImg(q.file);q.data=c.data;q.preview=c.preview}
+  q.st='Memuat naik…';gRender();
+  const r=await fetch(up.url,{method:'POST',body:JSON.stringify({token:up.token,data:q.data,mime:'image/jpeg',name:q.name,caption:q.caption,cat:q.cat,ts:q.ts,day:q.day})});
+  const j=await r.json();if(!j.ok)throw new Error(j.error||'Gagal');q.st='ok';q.data=null;gRender();
+ }catch(e){q.st='fail';q.err=navigator.onLine?(e.message||'Gagal'):'Tiada internet';gRender()}}
+function gQueueHTML(){if(!GQ.length)return '';return `<div class="gq">`+GQ.map((q,i)=>`<div class="gqi">${q.preview?`<img src="${q.preview}" alt="">`:'<div class="gph"></div>'}<div style="min-width:0"><b>${esc(q.caption||q.name)}</b><div class="muted" style="font-size:.78rem">${q.st==='ok'?'<span style="color:var(--sage)">Berjaya disimpan ke Drive</span>':q.st==='fail'?`<span style="color:var(--warn)">${esc(q.err)}</span>`:q.st}</div></div>${q.st==='fail'?`<button class="btn" data-gretry="${i}">Cuba lagi</button>`:''}</div>`).join('')+`</div>`}
+function gGalleryHTML(){const up=UP();
+ if(!up.url||!up.token)return `<p class="muted" style="margin:0">Galeri akan muncul selepas tetapan Google Drive disimpan.</p>`;
+ if(GERR)return `<p style="margin:0;color:var(--warn)">${esc(GERR)}</p>`;
+ if(GITEMS===null)return `<p class="muted" style="margin:0">Memuatkan galeri…</p>`;
+ const items=GITEMS.filter(i=>gfilter==='semua'||i.cat===gfilter);
+ if(!items.length)return `<p class="muted" style="margin:0">Belum ada gambar${gfilter!=='semua'?' dalam kategori ini':''}.</p>`;
+ return `<div class="ggrid">`+items.map(i=>`<a class="gcell" href="${gView(i.id)}" target="_blank" rel="noopener"><img loading="lazy" src="${gThumb(i.id)}" alt="${esc(i.caption||i.name)}"><span>${esc(i.caption||(GCATS.find(c=>c[0]===i.cat)||[0,''])[1])}<em>${fmtAt(i.ts,'Asia/Riyadh')} · ${esc(i.day)}</em></span></a>`).join('')+`</div>`}
+function gRender(){const a=document.getElementById('gQueue');if(a)a.innerHTML=gQueueHTML();const b=document.getElementById('gGallery');if(b)b.innerHTML=gGalleryHTML()}
+function gambarView(){const up=UP();
+ return `<div><h2>Gambar & resit</h2><p class="lead">Ambil atau pilih gambar dari telefon; gambar dimampatkan dan disimpan terus ke folder Google Drive "Umrah Isteri 2026", disusun mengikut tarikh. Suami boleh lihat galeri yang sama dari Malaysia.</p></div>
+ <div class="panel"><h3>Muat naik gambar</h3>
+  <label class="gpick ${up.url&&up.token?'':'off'}" for="gFile" id="gPick"><b>${up.url&&up.token?'Pilih atau ambil gambar':'Isi tetapan Google Drive dahulu'}</b><span>${up.url&&up.token?'Boleh pilih beberapa gambar sekali gus':'Tekan di sini untuk pergi ke tetapan'}</span>${up.url&&up.token?'<input type="file" id="gFile" class="gfile" accept="image/*" multiple aria-label="Pilih gambar">':''}</label>
+  <p class="muted" id="gPickMsg" style="font-size:.82rem;margin:8px 0 0" aria-live="polite"></p>
+  <div class="glbl" style="margin-top:10px">Kategori</div><div class="chips">${GCATS.map(c=>`<button class="chip" data-gcat="${c[0]}" aria-pressed="${gsel.cat===c[0]}">${c[1]}</button>`).join('')}</div>
+  <label class="glbl" for="gCap" style="display:block;margin-top:10px">Keterangan (pilihan)</label><input type="text" id="gCap" class="txt" maxlength="120" placeholder="cth: Selepas umrah pertama, depan Kaabah">
+  <div id="gQueue">${gQueueHTML()}</div></div>
+ <div class="panel"><div class="row" style="justify-content:space-between;margin-bottom:8px"><h3 style="margin:0">Galeri</h3><button class="btn" id="gReload">Muat semula</button></div>
+  <div class="chips" style="margin-bottom:10px">${[['semua','Semua'],...GCATS].map(c=>`<button class="chip" data-gfil="${c[0]}" aria-pressed="${gfilter===c[0]}">${c[1]}</button>`).join('')}</div>
+  <div id="gGallery">${gGalleryHTML()}</div></div>
+ <div class="panel"><h3>Tetapan Google Drive (sekali sahaja)</h3><div class="form">
+  <label for="gUrl">URL Web App Google Apps Script</label><input type="url" id="gUrl" class="txt" placeholder="https://script.google.com/macros/s/…/exec" value="${esc(up.url)}">
+  <label for="gTok">Kod rahsia (sama seperti SECRET dalam skrip)</label><input type="text" id="gTok" class="txt" value="${esc(up.token)}" autocomplete="off"></div>
+  <div class="row" style="margin-top:10px;justify-content:space-between"><span class="muted" id="gMsg" style="font-size:.82rem"></span><button class="btn pri" id="gSave">Simpan tetapan</button></div>
+  <p class="muted" style="font-size:.78rem;margin:8px 0 0">Tetapan ini dikongsi melalui pautan keluarga, jadi cukup diisi pada satu telefon.</p></div>
+ <div class="panel soft"><h3>Perlu tahu</h3><ul class="plist" style="margin:0"><li>Gambar dikecilkan kepada 1600 piksel untuk jimat data roaming.</li><li>Setiap gambar dikongsi "sesiapa yang ada pautan" supaya boleh dipaparkan dalam galeri. Jangan muat naik gambar pasport atau dokumen sulit.</li><li>Jika gagal kerana tiada internet, tekan "Cuba lagi" bila talian pulih.</li></ul></div>`}
+main.addEventListener('change',e=>{const t=e.target;if(t.id!=='gFile')return;const up=UP();
+ const pm=document.getElementById('gPickMsg');
+ if(!up.url||!up.token){if(pm)pm.textContent='Isi tetapan Google Drive dahulu.';t.value='';return}
+ if(!t.files||!t.files.length){if(pm)pm.textContent='Tiada gambar dipilih.';return}
+ if(pm)pm.textContent=t.files.length+' gambar dipilih — sedang dimuat naik…';
+ const cap=(document.getElementById('gCap').value||'').trim();
+ Array.from(t.files||[]).forEach((f,i)=>{const q={file:f,name:`${saKey()}_${gsel.cat}_${Date.now()}_${i}.jpg`,caption:cap,cat:gsel.cat,ts:Date.now(),day:saKey(),st:'Menunggu…'};GQ.unshift(q)});
+ t.value='';document.getElementById('gCap').value='';gRender();
+ (async()=>{for(const q of GQ.filter(q=>q.st==='Menunggu…'))await gUpload(q);gLoad()})();
+});
+main.addEventListener('click',e=>{const t=e.target;
+ const c=t.closest('[data-gcat]');if(c){gsel.cat=c.dataset.gcat;document.querySelectorAll('[data-gcat]').forEach(x=>x.setAttribute('aria-pressed',x===c));return}
+ const f=t.closest('[data-gfil]');if(f){gfilter=f.dataset.gfil;document.querySelectorAll('[data-gfil]').forEach(x=>x.setAttribute('aria-pressed',x===f));gRender();return}
+ const r=t.closest('[data-gretry]');if(r){const q=GQ[+r.dataset.gretry];if(q)gUpload(q).then(gLoad);return}
+ const gp=t.closest('#gPick');if(gp&&gp.classList.contains('off')){e.preventDefault();const u=document.getElementById('gUrl');if(u){u.scrollIntoView({behavior:'smooth',block:'center'});setTimeout(()=>u.focus(),400)}return}
+ if(t.closest('#gReload')){GITEMS=null;gRender();gLoad();return}
+ if(t.closest('#gSave')){const url=document.getElementById('gUrl').value.trim(),tok=document.getElementById('gTok').value.trim(),m=document.getElementById('gMsg');
+  if(!/^https:\/\/script\.google\.com\//.test(url)){m.textContent='URL mesti bermula dengan https://script.google.com/';return}
+  if(tok.length<8){m.textContent='Kod rahsia sekurang-kurangnya 8 aksara.';return}
+  lsSet('upUrl',url);lsSet('upTok',tok);
+  const done=()=>{GITEMS=null;GERR='';render()};
+  if(typeof tripRef!=='undefined'&&tripRef)tripRef.set({info:{uploadUrl:url,uploadToken:tok}},{merge:true}).then(done).catch(()=>{m.textContent='Disimpan dalam telefon ini sahaja.';gLoad()});else done();return}
+});
+
+/* ---------- ringkasan umrah (dashboard) ---------- */
+let RS_MODE=null, RS_BUSY=false;
+const ZONE_LBL={tawaf:'Kawasan Mataf (tawaf)',saie:"Kawasan Mas'a (sa'ie)",haram:'Masjidil Haram',nabawi:'Masjid Nabawi',raudhah:'Raudhah',quba:'Masjid Quba','hotel-mk':'Hotel Makkah','hotel-md':'Hotel Madinah',miqat:'Miqat',ziarah:'Ziarah luar','jed-ap':'Lapangan Terbang Jeddah','med-ap':'Lapangan Terbang Madinah'};
+function rsDays(mode){if(mode==='umrah')return TRIP.map(t=>t.d);const ks=Object.keys(S.daily||{}).filter(k=>/^\d{4}-\d{2}-\d{2}$/.test(k));return [...new Set(ks.concat(TRIP.map(t=>t.d)))].sort()}
+function rsDayStats(k){const d=(S.daily&&S.daily[k])||{checks:{},counts:{}},c=d.counts||{},ch=d.checks||{};const has=p=>Object.keys(ch).some(x=>x.startsWith(p+'-'));
+ const n=p=>Object.keys(ch).filter(x=>x.startsWith(p+'-')).length;
+ return {selawat:c.selawat||0,istighfar:c.istighfar||0,tasbih:(c.tasbih||0)+(c.tahmid||0)+(c.takbir||0),tahlil:(c.tahlil||0)+(c.wabihamdihi||0)+(c.hauqalah||0),
+  tahajjud:!!ch['malam-2'],malam:has('malam'),dhuha:!!ch['dhuha-0'],pagi:n('pagi'),petang:n('petang'),wirid:n('wirid'),doa:n('doa'),jumaat:n('jumaat'),checks:Object.keys(ch).length}}
+async function rsPlaces(days){const out={};
+ try{if(typeof tripRef!=='undefined'&&tripRef){await Promise.all(days.map(async d=>{const s=await tripRef.collection('days').doc(d).get();const pts=(s.exists&&s.data().pts)||[];const seq=[];pts.forEach(p=>{if(!seq.length||seq[seq.length-1]!==p.zone)seq.push(p.zone)});out[d]=seq}));return {src:'GPS auto',out}}}catch(e){}
+ try{if(typeof DB!=='undefined'&&DB){await Promise.all(days.map(async d=>{const s=await DB.doc('log/'+d).get();const it=(s.exists&&s.data().items)||[];const seq=[];it.forEach(p=>{if(!seq.length||seq[seq.length-1]!==p.place)seq.push(p.place)});out[d]=seq}));return {src:'status dikongsi',out}}}catch(e){}
+ return {src:'',out}}
+function rsChecklist(k){const {t,c}=count(k);return {t,c,p:t?Math.round(c/t*100):0}}
+function rsMissed(k){const res=[];DATA[k].groups.forEach((g,gi)=>g.items.forEach((it,ii)=>{if(!S.checks[`${k}-${gi}-${ii}`])res.push(it[0])}));return res}
+function rsTile(v,l,s){return `<div class="rtile"><b>${v}</b><span>${l}</span>${s?`<em>${s}</em>`:''}</div>`}
+function rsBar(l,p,x){return `<div class="rbar"><span>${l}</span><div class="bar"><i style="width:${p}%"></i></div><b>${x}</b></div>`}
+async function rsBuild(){
+ if(RS_BUSY)return;RS_BUSY=true;const out=document.getElementById('rsOut');if(!out){RS_BUSY=false;return}
+ out.innerHTML=`<p class="muted" style="margin:0">Sedang menyusun ringkasan…</p>`;
+ const mode=RS_MODE||(saKey()>=TRIP[0].d?'umrah':'semua');RS_MODE=mode;
+ const days=rsDays(mode), st={}, tot={selawat:0,istighfar:0,tasbih:0,tahlil:0,tahajjud:0,dhuha:0,pagi:0,petang:0,doa:0,checks:0,aktif:0};
+ days.forEach(d=>{const s=rsDayStats(d);st[d]=s;['selawat','istighfar','tasbih','tahlil','doa','checks'].forEach(k=>tot[k]+=s[k]);if(s.tahajjud)tot.tahajjud++;if(s.dhuha)tot.dhuha++;if(s.pagi>=ZP.length)tot.pagi++;if(s.petang>=ZP.length)tot.petang++;if(s.checks||s.selawat)tot.aktif++});
+ const fr=TRIP.filter(t=>isFriD(t.d)).map(t=>({d:t.d,n:st[t.d]?st[t.d].jumaat:rsDayStats(t.d).jumaat}));
+ const b=BUD(),bt=bTotals();const inDays=i=>days.includes(i.day);const spend=b.items.filter(inDays).reduce((a,i)=>a+i.sar,0);
+ const spendDay={};b.items.filter(inDays).forEach(i=>spendDay[i.day]=(spendDay[i.day]||0)+i.sar);
+ let photos=null,photoDay={};if(typeof GITEMS!=='undefined'){if(GITEMS===null&&typeof gLoad==='function'&&UP().url){try{await gLoad()}catch(e){}}if(Array.isArray(GITEMS)){const ph=GITEMS.filter(g=>days.includes(g.day));photos=ph.length;ph.forEach(g=>photoDay[g.day]=(photoDay[g.day]||0)+1)}}
+ const pl=await rsPlaces(TRIP.map(t=>t.d));const zc={};Object.values(pl.out).forEach(seq=>seq.forEach(z=>zc[z]=(zc[z]||0)+1));
+ const umr=rsChecklist('umrah'),mk=rsChecklist('makkah'),md=rsChecklist('madinah'),ps=rsChecklist('persediaan');
+ const k=saKey(),ti=TRIP.findIndex(t=>t.d===k);
+ const phase=k<TRIP[0].d?`Pratonton sebelum berangkat — ${Math.round((Date.UTC(...TRIP[0].d.split('-').map((v,i)=>i===1?v-1:+v))-Date.UTC(...k.split('-').map((v,i)=>i===1?v-1:+v)))/864e5)} hari lagi`:ti>=0?`Sedang berlangsung — Hari ${ti+1} daripada ${TRIP.length}`:'Umrah selesai — alhamdulillah';
+ const missed=rsMissed('makkah').concat(rsMissed('madinah'));
+ const top=Object.entries(zc).filter(([z])=>ZONE_LBL[z]||PLACES_LBL(z)).sort((a,b)=>b[1]-a[1]).slice(0,8);
+ const refl=(S.reflect||'');
+ out.innerHTML=`
+ <div class="panel rhero"><div class="glbl">${esc(phase)}</div><div class="rtitle">Umrah 4–15 November 2026</div>
+  <div class="muted">${hijriOfDay(TRIP[0].d)} – ${hijriOfDay(TRIP[TRIP.length-1].d)} · Jeddah · Makkah · Madinah · 3 kali umrah</div>
+  <div class="muted" style="font-size:.78rem;margin-top:4px">${mode==='umrah'?'Data 4–15 Nov 2026':'Semua rekod dalam telefon ini'} · dijana ${fmtAt(Date.now(),'Asia/Riyadh')} Saudi</div></div>
+ <div class="rtiles">
+  ${rsTile(tot.selawat.toLocaleString('ms-MY'),'Selawat',`${fr.length?'sasaran 1000 sehari':''}`)}
+  ${rsTile(tot.istighfar.toLocaleString('ms-MY'),'Istighfar')}
+  ${rsTile(tot.tasbih.toLocaleString('ms-MY'),'Tasbih, tahmid & takbir')}
+  ${rsTile(tot.tahlil.toLocaleString('ms-MY'),'Tahlil & zikir lain')}
+  ${rsTile(tot.tahajjud,'Malam bertahajjud')}
+  ${rsTile(tot.dhuha,'Hari solat Dhuha')}
+  ${rsTile(tot.doa,'Doa dibaca')}
+  ${rsTile('SAR '+f2(spend),'Perbelanjaan','≈ RM '+f2(spend*b.rate))}
+  ${photos!==null?rsTile(photos,'Gambar ke Drive'):''}
+  ${rsTile(tot.aktif,'Hari aktif beribadah','daripada '+days.length+' hari')}</div>
+ <div class="panel"><h3>Checklist ibadah</h3>
+  ${rsBar('Langkah umrah',umr.p,umr.c+'/'+umr.t)}${rsBar('Makkah',mk.p,mk.c+'/'+mk.t)}${rsBar('Madinah',md.p,md.c+'/'+md.t)}${rsBar('Persediaan',ps.p,ps.c+'/'+ps.t)}
+  ${rsBar('Zikir pagi lengkap',days.length?Math.round(tot.pagi/days.length*100):0,tot.pagi+' hari')}${rsBar('Zikir petang lengkap',days.length?Math.round(tot.petang/days.length*100):0,tot.petang+' hari')}
+  ${fr.map(f=>rsBar('Jumaat '+dayLabel(f.d).replace(/^\S+,\s*/,''),Math.round(f.n/BK_JUMAAT.length*100),f.n+'/'+BK_JUMAAT.length)).join('')}</div>
+ ${missed.length?`<div class="panel note"><h3>${k>TRIP[TRIP.length-1].d?'Yang tidak sempat dibuat':'Peluang yang belum direbut'}</h3><ul class="plist" style="margin:0">${missed.slice(0,10).map(m=>`<li>${m}</li>`).join('')}${missed.length>10?`<li>dan ${missed.length-10} lagi…</li>`:''}</ul></div>`:`<div class="panel good"><h3>Checklist Makkah & Madinah</h3><p style="margin:0">Semua amalan dalam checklist telah ditandakan. Alhamdulillah.</p></div>`}
+ <div class="panel"><h3>Tempat dikunjungi${pl.src?' ('+pl.src+')':''}</h3>${top.length?top.map(([z,n])=>rsBar(ZONE_LBL[z]||PLACES_LBL(z),Math.round(n/top[0][1]*100),n+'×')).join(''):`<p class="muted" style="margin:0">Tiada rekod lokasi${pl.src?'':' — rekod muncul bila lokasi atau status dikongsi'}.</p>`}</div>
+ <div class="panel"><h3>Perbelanjaan ikut kategori</h3>${bCatsHTML()}</div>
+ <div class="panel"><h3>Hari demi hari</h3><div class="rdays">${TRIP.map((t,i)=>{const s=st[t.d]||rsDayStats(t.d);const z=(pl.out[t.d]||[]).map(x=>ZONE_LBL[x]||PLACES_LBL(x)).filter(Boolean);
+  return `<div class="rday ${t.d===k?'today':''}"><div class="dnum">Hari<b>${i+1}</b></div><div style="min-width:0"><b>${dayLabel(t.d)}</b> <span class="tag ${CITYTAG[t.c]}">${t.c}</span>${t.u?`<div class="umr" style="font-size:.95rem">${t.u}</div>`:''}
+   <div class="rmeta"><span>Selawat <b>${s.selawat}</b></span><span>Tick <b>${s.checks}</b></span><span>Belanja <b>SAR ${f2(spendDay[t.d]||0)}</b></span>${photos!==null?`<span>Gambar <b>${photoDay[t.d]||0}</b></span>`:''}</div>
+   ${z.length?`<div class="muted" style="font-size:.78rem">${[...new Set(z)].slice(0,5).join(' → ')}</div>`:''}</div></div>`}).join('')}</div></div>
+ <div class="panel"><h3>Catatan kenangan & muhasabah</h3><textarea id="rsReflect" class="txt" rows="5" maxlength="2000" placeholder="Apa yang paling menyentuh hati sepanjang umrah ini? Doa yang paling diharapkan? Azam selepas pulang?">${esc(refl)}</textarea><p class="muted" id="rsRefMsg" style="font-size:.78rem;margin:6px 0 0">Disimpan automatik dalam telefon ini.</p></div>`;
+ RS_LAST={mode,tot,spend,photos,umr,mk,md,top,refl,b,phase};RS_BUSY=false;
+}
+let RS_LAST=null;
+function PLACES_LBL(k){try{return (typeof PL==='function'?PL(k).n:'')}catch(e){return ''}}
+function rsText(){const r=RS_LAST;if(!r)return '';let s=`🕋 Ringkasan Umrah 4–15 Nov 2026\n${r.phase}\n\n`;
+ s+=`• Selawat: ${r.tot.selawat}\n• Istighfar: ${r.tot.istighfar}\n• Tasbih/tahmid/takbir: ${r.tot.tasbih}\n• Malam tahajjud: ${r.tot.tahajjud}\n• Hari solat Dhuha: ${r.tot.dhuha}\n• Doa dibaca: ${r.tot.doa}\n`;
+ s+=`• Checklist Makkah ${r.mk.c}/${r.mk.t}, Madinah ${r.md.c}/${r.md.t}\n• Perbelanjaan: SAR ${f2(r.spend)} (≈ RM ${f2(r.spend*r.b.rate)})\n`;if(r.photos!==null)s+=`• Gambar: ${r.photos}\n`;
+ if(r.top.length)s+=`\nTempat: ${r.top.slice(0,5).map(([z,n])=>(ZONE_LBL[z]||PLACES_LBL(z))+' '+n+'×').join(', ')}\n`;
+ const refl=(S.reflect||'').trim();if(refl)s+=`\nCatatan:\n${refl}\n`;return s+'\nSemoga umrah mabrur. 🤲'}
+function ringkasanView(){return `<div><h2>Ringkasan umrah</h2><p class="lead">Satu paparan untuk semua yang telah dibuat: zikir, ibadah, tempat dikunjungi, perbelanjaan dan gambar. Simpan sebagai kenangan selepas pulang.</p></div>
+ <div class="row noprint" style="justify-content:space-between"><div class="seg" role="group" aria-label="Tempoh"><button data-rsmode="umrah" aria-pressed="${(RS_MODE||(saKey()>=TRIP[0].d?'umrah':'semua'))==='umrah'}">4–15 Nov</button><button data-rsmode="semua" aria-pressed="${(RS_MODE||(saKey()>=TRIP[0].d?'umrah':'semua'))==='semua'}">Semua rekod</button></div>
+  <button class="btn pri" id="rsGen">Jana ringkasan</button></div>
+ <div id="rsOut" class="rsout"><p class="muted" style="margin:0">Sedang menyusun ringkasan…</p></div>
+ <div class="row noprint" style="justify-content:flex-start;gap:8px"><button class="btn" id="rsCopy">Salin untuk WhatsApp</button>${typeof FIREBASE_CONFIG!=='undefined'?'<button class="btn" id="rsPrint">Cetak / simpan PDF</button>':''}<span class="muted" id="rsMsg" style="font-size:.8rem"></span></div>`}
+main.addEventListener('click',e=>{const t=e.target;
+ const m=t.closest('[data-rsmode]');if(m){RS_MODE=m.dataset.rsmode;document.querySelectorAll('[data-rsmode]').forEach(x=>x.setAttribute('aria-pressed',x===m));rsBuild();return}
+ if(t.closest('#rsGen')){rsBuild();return}
+ if(t.closest('#rsCopy')){const msg=document.getElementById('rsMsg');const txt=rsText();if(!txt){msg.textContent='Jana ringkasan dahulu.';return}
+  (navigator.clipboard?navigator.clipboard.writeText(txt):Promise.reject()).then(()=>msg.textContent='Disalin. Tampal dalam WhatsApp.').catch(()=>msg.textContent='Tidak dapat menyalin pada telefon ini.');return}
+ if(t.closest('#rsPrint')){try{window.print()}catch(e){}return}
+});
+let rsRefTimer=null;
+main.addEventListener('input',e=>{if(e.target.id!=='rsReflect')return;S.reflect=e.target.value.slice(0,2000);clearTimeout(rsRefTimer);rsRefTimer=setTimeout(()=>{save();const m=document.getElementById('rsRefMsg');if(m)m.textContent='Disimpan.'},500)});
+
+/* ---------- render & events ---------- */
+function render(){
+ const v=current==='utama'?utamaView():current==='doa'?doaView():current==='berkat'?berkatView():current==='zikir'?zikirView():current==='lokasi'?lokasiView():current==='jadual'?jadualView():current==='bajet'?bajetView():current==='ringkasan'?ringkasanView():current==='gambar'?gambarView():listView(current);
+ main.innerHTML=`<section class="view" role="tabpanel" aria-labelledby="tab-${current}">${v}</section><p class="foot">Panduan umum mazhab Syafie. Ikut arahan mutawwif & syarat terkini kerajaan Saudi.</p>`;
+ if(current==='utama') liveUpdate();
+ updateCounts();fillInfo();if(current==='ringkasan')rsBuild();afterRender();
+}
+function go(k){current=k;try{history.replaceState(null,'','#'+k)}catch(_){}drawTabs();render();window.scrollTo({top:0});
+ const b=document.getElementById('tab-'+k);if(b)tabsEl.scrollLeft=b.offsetLeft-tabsEl.offsetLeft-16;}
+function buzz(){try{navigator.vibrate&&navigator.vibrate(8)}catch(e){}}
+function arm(btn,fn){if(btn.dataset.armed){delete btn.dataset.armed;btn.textContent=btn.dataset.label;fn();return}
+ btn.dataset.armed='1';btn.dataset.label=btn.textContent;btn.textContent='Tekan sekali lagi untuk sahkan';
+ setTimeout(()=>{if(btn.isConnected&&btn.dataset.armed){delete btn.dataset.armed;btn.textContent=btn.dataset.label}},3500);}
+main.addEventListener('change',e=>{
+ const t=e.target;
+ if(t.dataset.day){const d=day(t.dataset.day);if(t.checked)d.checks[t.dataset.id]=1;else delete d.checks[t.dataset.id];save();
+  const p=document.getElementById('dp-'+t.dataset.grp);if(p)p.outerHTML=dailyProg(t.dataset.grp,p.dataset.key,+p.dataset.n);return;}
+ if(t.dataset.id){if(t.checked)S.checks[t.dataset.id]=true;else delete S.checks[t.dataset.id];save();const k=t.dataset.id.split('-')[0];const pg=document.getElementById('pg-'+k);if(pg)pg.innerHTML=progHTML(k);return;}
+ if(t.id==='depart'){S.depart=t.value;save();liveUpdate();}
+});
+main.addEventListener('click',e=>{
+ const g=e.target.closest('[data-go]');if(g){go(g.dataset.go);return;}
+ const c=e.target.closest('[data-city]');if(c){S.city=c.dataset.city;save();render();return;}
+ const a=e.target.closest('[data-act]');
+ if(a){const z=a.dataset.z,d=day(todayKey());
+  if(a.dataset.act==='inc'){d.counts[z]=Math.max(0,(d.counts[z]||0)+Number(a.dataset.n));save();updateCounts();buzz();}
+  else if(a.dataset.act==='reset'){arm(a,()=>{d.counts[z]=0;save();updateCounts();});}
+  return;}
+ const r=e.target.closest('.reset');if(r){arm(r,()=>{const k=r.id.slice(6);Object.keys(S.checks).forEach(id=>{if(id.startsWith(k+'-'))delete S.checks[id]});save();render();});}
+});
+window.addEventListener('hashchange',()=>{const h=location.hash.slice(1);if(TABS.some(t=>t[0]===h)&&h!==current){go(h)}});
+let lastDay=todayKey();
+setInterval(()=>{if(todayKey()!==lastDay){lastDay=todayKey();render()}},30000);
+prune();save();
+drawTabs();render();tick();setInterval(tick,1000);setInterval(tickAgo,30000);
+</script>
+
+</body></html>
