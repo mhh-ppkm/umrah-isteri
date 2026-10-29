@@ -119,6 +119,13 @@ input[type=date],select{font:600 .9rem var(--body);color:var(--fg);background:va
 .btns{display:flex;gap:8px;flex-wrap:wrap;justify-content:center}
 .btn{border:1px solid var(--line);background:var(--surface);color:var(--fg);font:600 .85rem var(--body);padding:8px 16px;border-radius:99px;cursor:pointer;min-height:42px;touch-action:manipulation}
 .btn.ghost{color:var(--muted)}
+.wxl{margin-top:4px;font-size:.78rem;font-weight:700;color:var(--fg);font-variant-numeric:tabular-nums}
+.wxgrid{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.wxc{background:var(--tint);border-radius:14px;padding:12px;min-width:0}
+.wxt{font-family:var(--display);font-size:2.4rem;line-height:1.05;color:var(--accent);font-variant-numeric:tabular-nums}
+.wxt span{font-size:1rem;color:var(--muted);margin-left:2px}
+.wxd{font-weight:700;font-size:.9rem;margin:2px 0 4px}
+.wxm{font-size:.76rem;color:var(--muted)}
 .cdbar{display:flex;align-items:center;justify-content:space-between;gap:4px 10px;flex-wrap:wrap;background:var(--tint);border-radius:14px;padding:7px 12px;font-variant-numeric:tabular-nums}
 .cdbar .cl{font-size:.68rem;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);font-weight:700;flex-basis:100%}
 .cdbar .cus{display:flex;gap:10px;align-items:baseline}
@@ -285,7 +292,7 @@ body.sleeping>header,body.sleeping>main{display:none}
     <div class="brand"><h1>Diari Umrah Isteriku</h1><span class="hijri" id="hijri">Umrah4Ladies · 4–15 Nov 2026</span></div>
     <div class="clocks">
       <div class="clock"><div class="lbl"><span class="flag" role="img" aria-label="Bendera Malaysia">🇲🇾</span>Malaysia<span class="sky" id="skyMY"></span></div><div class="t" id="cMY">--:--</div><div class="d" id="dMY"></div></div>
-      <div class="clock sa"><div class="lbl"><span class="flag" role="img" aria-label="Bendera Arab Saudi">🇸🇦</span>Saudi<span class="sky" id="skySA"></span></div><div class="t" id="cSA">--:--</div><div class="d" id="dSA"></div></div>
+      <div class="clock sa"><div class="lbl"><span class="flag" role="img" aria-label="Bendera Arab Saudi">🇸🇦</span>Saudi<span class="sky" id="skySA"></span></div><div class="t" id="cSA">--:--</div><div class="d" id="dSA"></div><div class="wxl" id="wxLine"></div></div>
     </div>
     <div class="cdbar" id="cdBar" aria-live="off"></div>
     <nav class="tabs" role="tablist" id="tabs"></nav>
@@ -535,6 +542,7 @@ function utamaView(){
  <div class="shortcuts"><button class="sc" data-go="berkat"><b>Waktu Berkat</b><span>1/3 malam · Dhuha · Jumaat</span></button><button class="sc" data-go="zikir"><b>Selawat 1000</b><span id="home-sel">0 / 1000 hari ini</span></button><button class="sc" data-go="zikir"><b>Zikir harian</b><span>Tasbih, pagi & petang</span></button><button class="sc" data-go="doa"><b>Doa pilihan</b><span>Kesihatan & rumah tangga</span></button><button class="sc wide" data-go="ringkasan"><b>Ringkasan umrah</b><span>Dashboard semua ibadah, tempat, belanja & gambar</span></button><button class="sc wide" data-go="bajet"><b>Bajet</b><span id="home-bajet">SAR ${f2(bTotals().all)} dibelanjakan</span></button></div>
  <div class="panel"><div class="row" style="justify-content:space-between;margin-bottom:6px"><h3 style="margin:0">Program hari ini</h3><button class="btn" data-go="jadual">Jadual penuh</button></div>${todayProgram()}</div>
  <div class="panel"><div class="row" style="justify-content:space-between;margin-bottom:6px"><h3 style="margin:0">Lokasi semasa isteri</h3><button class="btn" data-go="lokasi">Kemas kini / lihat</button></div><div id="homeLive">${statusCard(true)}</div></div>
+ <div class="panel" id="wxPanel">${wxPanelHTML()}</div>
  <div class="panel"><div class="row" style="justify-content:space-between;margin-bottom:8px"><h3 style="margin:0">Waktu solat hari ini</h3>
   <div class="seg" role="group" aria-label="Pilih bandar"><button data-city="makkah" aria-pressed="${S.city==='makkah'}">Makkah</button><button data-city="madinah" aria-pressed="${S.city==='madinah'}">Madinah</button></div></div>
   <div class="muted" style="font-size:.85rem;margin-bottom:6px" id="nextp"></div>
@@ -745,12 +753,12 @@ function doaView(){const tk=todayKey();let n=0;
 /* ---------- lokasi (GitHub Pages + Firebase, auto GPS) ---------- */
 /* 1) Isi konfigurasi Firebase anda di sini (Firebase console → Project settings → Your apps → Web app) */
 const FIREBASE_CONFIG={
-  apiKey:"",
-  authDomain:"",
-  projectId:"",
-  storageBucket:"",
-  messagingSenderId:"",
-  appId:""
+  apiKey:"AIzaSyA8STi2b272d4qeEq-QjkZ0MzMOPJQXvio",
+  authDomain:"umrah-isteri.firebaseapp.com",
+  projectId:"umrah-isteri",
+  storageBucket:"umrah-isteri.firebasestorage.app",
+  messagingSenderId:"264305764257",
+  appId:"1:264305764257:web:69aaf6862227c60a14cde0"
 };
 const TRACK_HOURS=8;
 
@@ -1323,6 +1331,35 @@ main.addEventListener('click',e=>{const t=e.target;
 });
 let rsRefTimer=null;
 main.addEventListener('input',e=>{if(e.target.id!=='rsReflect')return;S.reflect=e.target.value.slice(0,2000);clearTimeout(rsRefTimer);rsRefTimer=setTimeout(()=>{save();const m=document.getElementById('rsRefMsg');if(m)m.textContent='Disimpan.'},500)});
+
+/* ---------- cuaca semasa Makkah & Madinah (Open-Meteo, tanpa kunci API) ---------- */
+const WX_NAMES=['Makkah','Madinah'];
+let WX=null;try{WX=JSON.parse(lsGet('umrahWx')||'null')}catch(e){WX=null}
+function wxDesc(c){if(c===0)return 'Cerah';if(c<=2)return 'Sebahagian berawan';if(c===3)return 'Berawan';if(c===45||c===48)return 'Berkabus';if(c>=51&&c<=57)return 'Gerimis';if(c>=61&&c<=67)return 'Hujan';if(c>=80&&c<=82)return 'Hujan lebat';if(c>=95)return 'Ribut petir';if(c>=71&&c<=77)return 'Salji';return 'Berdebu / jerebu'}
+async function wxLoad(){
+ try{const url='https://api.open-meteo.com/v1/forecast?latitude=21.4225,24.4672&longitude=39.8262,39.6111&current=temperature_2m,relative_humidity_2m,apparent_temperature,weather_code&daily=temperature_2m_max,temperature_2m_min,uv_index_max&timezone=Asia%2FRiyadh&forecast_days=1';
+  const r=await fetch(url);if(!r.ok)throw new Error(r.status);const j=await r.json();const arr=Array.isArray(j)?j:[j];
+  WX={ts:Date.now(),d:arr.map(x=>({t:x.current.temperature_2m,f:x.current.apparent_temperature,h:x.current.relative_humidity_2m,c:x.current.weather_code,mx:x.daily.temperature_2m_max[0],mn:x.daily.temperature_2m_min[0],uv:x.daily.uv_index_max?x.daily.uv_index_max[0]:null}))};
+  lsSet('umrahWx',JSON.stringify(WX));WX.err=false;
+ }catch(e){if(WX)WX.err=true}
+ wxRender();
+}
+const r0=v=>Math.round(v);
+function wxTip(){if(!WX||!WX.d[0])return '';const mx=Math.max(...WX.d.map(d=>d.mx));
+ if(mx>=40)return 'Sangat panas. Elak berjalan di luar antara 11 pagi hingga 4 petang, bawa payung dan semburan air, dan minum air zamzam dengan kerap.';
+ if(mx>=34)return 'Panas. Bawa payung, botol air dan pakai kasut yang selesa; rehat di dalam masjid ketika tengah hari.';
+ return 'Cuaca agak selesa. Dalam masjid dan bas boleh terasa sejuk — bawa cardigan nipis.'}
+function wxPanelHTML(){
+ if(!WX||!WX.d)return `<h3>Cuaca sekarang</h3><p class="muted" style="margin:0">Memuatkan suhu Makkah dan Madinah…</p>`;
+ return `<div class="row" style="justify-content:space-between;margin-bottom:8px"><h3 style="margin:0">Cuaca sekarang</h3><button class="btn" id="wxRefresh">Kemas kini</button></div>
+ <div class="wxgrid">${WX.d.map((d,i)=>`<div class="wxc"><div class="glbl">${WX_NAMES[i]}</div><div class="wxt">${r0(d.t)}°<span>C</span></div><div class="wxd">${wxDesc(d.c)}</div>
+  <div class="wxm">Terasa ${r0(d.f)}° · Lembap ${r0(d.h)}%</div><div class="wxm">Tinggi ${r0(d.mx)}° · Rendah ${r0(d.mn)}°${d.uv!=null?` · UV ${r0(d.uv)}`:''}</div></div>`).join('')}</div>
+ <p class="mk" style="margin:10px 0 0">${wxTip()}</p>
+ <p class="muted" style="font-size:.74rem;margin:6px 0 0">${WX.err?'Tiada sambungan — memaparkan data terakhir. ':''}Dikemas kini ${fmtAt(WX.ts,'Asia/Riyadh')} Saudi · ${fmtAt(WX.ts,'Asia/Kuala_Lumpur')} Malaysia · sumber Open-Meteo</p>`}
+function wxRender(){const l=document.getElementById('wxLine');if(l)l.textContent=WX&&WX.d?`Makkah ${r0(WX.d[0].t)}° · Madinah ${r0(WX.d[1].t)}°`:'';
+ const p=document.getElementById('wxPanel');if(p)p.innerHTML=wxPanelHTML()}
+main.addEventListener('click',e=>{const b=e.target.closest('#wxRefresh');if(b){b.disabled=true;b.textContent='Memuatkan…';wxLoad()}});
+wxRender();wxLoad();setInterval(wxLoad,15*60e3);
 
 /* ---------- render & events ---------- */
 function render(){
