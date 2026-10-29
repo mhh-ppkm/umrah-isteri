@@ -1,0 +1,18 @@
+{
+  "name": "Diari Umrah Isteriku",
+  "short_name": "Umrah Isteri",
+  "description": "Panduan umrah isteri: jadual, lokasi, zikir, doa, bajet dan gambar (4–15 Nov 2026).",
+  "id": "./",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait",
+  "lang": "ms",
+  "background_color": "#1d1519",
+  "theme_color": "#a4466e",
+  "icons": [
+    { "src": "icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    { "src": "icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
+    { "src": "icon-maskable-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+  ]
+}
