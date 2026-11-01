@@ -120,6 +120,41 @@ input[type=date],select{font:600 .9rem var(--body);color:var(--fg);background:va
 .btns{display:flex;gap:8px;flex-wrap:wrap;justify-content:center}
 .btn{border:1px solid var(--line);background:var(--surface);color:var(--fg);font:600 .85rem var(--body);padding:8px 16px;border-radius:99px;cursor:pointer;min-height:42px;touch-action:manipulation}
 .btn.ghost{color:var(--muted)}
+.trem{margin-top:12px;padding-top:10px;border-top:1px solid var(--line)}
+.btn.wa{display:inline-block;margin-top:8px;background:#25d366;border-color:#25d366;color:#fff;text-decoration:none}
+.th{border:1px solid var(--line);border-radius:14px;padding:10px 12px;margin-top:8px}.th.now{border-color:var(--accent);background:var(--accent-soft)}
+.thd{display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap}
+.thm{font-size:.78rem;color:var(--muted);margin:2px 0 6px;font-variant-numeric:tabular-nums}
+.thg{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:6px}
+.thg span{display:flex;flex-direction:column;font-size:.7rem;color:var(--muted)}.thg b{font-family:var(--display);font-weight:400;font-size:1.05rem;color:var(--fg);font-variant-numeric:tabular-nums;white-space:nowrap}
+.thp{font-size:.8rem;margin-top:6px;line-height:1.45}
+.thu{font-size:.8rem;margin-top:4px;color:var(--sage);font-weight:600}
+.hvbar{display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap;background:var(--tint);border-radius:12px;padding:8px 12px;font-size:.84rem;margin-bottom:6px}
+#mExtend{margin-top:4px}#mini.sleep #mExtend{display:none}
+.addr{font-size:.86rem;color:var(--muted);margin:1px 0 3px}
+.pmsg{font-size:.8rem;color:var(--warn);margin-top:2px}
+.tag.rec{background:#c0392b;color:#fff;animation:tagBlink 1.2s ease-in-out infinite}
+.scur{display:grid;grid-template-columns:auto minmax(0,1fr) auto;gap:10px;align-items:center;background:var(--tint);border-radius:14px;padding:10px 12px}
+.sdot{width:12px;height:12px;border-radius:50%;display:inline-block;flex:none;vertical-align:middle}
+.sname{font-family:var(--display);font-size:1.35rem;line-height:1.2}
+.stime{font-family:var(--display);font-size:1.6rem;font-variant-numeric:tabular-nums;color:var(--accent)}
+.srounds{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;margin-top:10px}
+.srounds b{font-family:var(--display);font-size:2.2rem;font-weight:400;color:var(--accent)}.srounds span{color:var(--muted);margin-left:4px}
+.sbig{min-height:48px;padding:10px 18px;font-size:1rem}
+.good-note{margin:8px 0 0;color:var(--sage);font-size:.85rem;font-weight:600}
+.stbl{display:flex;flex-direction:column}
+.srow{display:grid;grid-template-columns:14px minmax(0,1fr) auto auto auto;gap:4px 10px;align-items:center;padding:7px 0;border-top:1px solid var(--line);font-size:.86rem;font-variant-numeric:tabular-nums}
+.srow.h3c{grid-template-columns:minmax(0,1fr) auto auto}
+.srow:first-child{border-top:0}.srow>span:nth-last-child(-n+3){text-align:right;white-space:nowrap}.srow.h3c>span:first-child{text-align:left;white-space:normal}
+.srow .sn{min-width:0}.srow em{font-style:normal;color:var(--muted);font-size:.78rem}
+.srow.tot{font-weight:700}
+.sgap{color:var(--warn);font-size:.84rem;margin:8px 0 0}
+.sfix{margin-top:10px;border:1px solid var(--line);border-radius:12px;padding:8px 12px}.sfix summary{cursor:pointer;font-weight:600}
+.mlegend{display:flex;flex-wrap:wrap;gap:4px 12px;margin-top:8px;font-size:.78rem}.mlegend:empty{display:none}.mlegend i{display:inline-block;width:14px;height:4px;border-radius:2px;margin-right:5px;vertical-align:middle}
+.m-sess{display:flex;flex-direction:column;align-items:center;gap:10px;margin-top:6px}.m-sess:empty{display:none}
+.m-sess .ms1{font-size:1rem;color:#e9dde3}.m-sess .ms1 b{font-variant-numeric:tabular-nums}
+.m-round{border:0;background:#a4466e;color:#fff;font:700 1.15rem var(--body);padding:18px 28px;border-radius:99px;min-width:220px;touch-action:manipulation}
+#mini.sleep .m-round{display:none}
 .pwa-row{display:flex;gap:12px;align-items:center}.pwa-row img{border-radius:12px;flex:none}
 #pwaBox:empty{display:none}
 .wxl{margin-top:4px;font-size:.78rem;font-weight:700;color:var(--fg);font-variant-numeric:tabular-nums;display:flex;flex-wrap:wrap;gap:0 10px}.wxl span{white-space:nowrap}
@@ -288,6 +323,55 @@ body.sleeping>header,body.sleeping>.tabbar,body.sleeping>main{display:none}
 .sky{margin-left:auto;display:inline-flex;align-items:center;gap:3px;text-transform:none;letter-spacing:0;font-weight:600}
 .sky svg{flex:none}
 .clock .t{font-size:1.4rem}}
+/* ===== Penjejak (daripada Simulasi Umrah V2) ===== */
+.kwrap,.kfam{--ink:var(--fg);--ink-soft:var(--muted);--glass-edge:var(--line);--chip:var(--tint);--chip-on:var(--accent);--chip-on-ink:#fff;--green:var(--accent);color:var(--fg)}
+#kcard{background:var(--surface);border:1px solid var(--line);border-radius:18px;padding:16px 16px 18px;min-width:0;overflow:hidden}
+#kcard button{font:inherit;font-size:13px;font-weight:700;border:0;border-radius:10px;padding:9px 12px;background:var(--chip);color:var(--ink);cursor:pointer;touch-action:manipulation}
+#kcard button[aria-pressed="true"]{background:var(--chip-on);color:var(--chip-on-ink)}
+#kback{display:none!important}
+.kwrap .ztitle{margin:2px 0 4px;font-family:var(--display);font-size:1.5rem;font-weight:400;letter-spacing:-.2px}
+.kwrap .zsub{color:var(--ink-soft);margin:0 0 10px;font-size:14px;line-height:1.55;text-align:justify;hyphens:auto}
+.kwrap .zinfo{background:var(--chip);border-radius:12px;padding:12px 14px;margin:10px 0;font-size:14px;line-height:1.55}
+.kwrap .zinfo p{margin:4px 0 0;text-align:justify;-webkit-hyphens:auto;hyphens:auto}
+.kwrap .place,.kfam .place{border:1px solid var(--glass-edge);border-radius:14px;padding:12px 14px;margin:10px 0;min-width:0}
+.kwrap .pname{font-weight:800;font-size:16px;line-height:1.25}
+.kwrap .pdesc{font-size:14px;line-height:1.55;margin:8px 0 4px;text-align:justify;-webkit-hyphens:auto;hyphens:auto}
+.kwrap .pmeta,.kfam .pmeta{font-size:12.5px;color:var(--ink-soft);margin:3px 0;line-height:1.45}
+.kwrap .pmap{display:inline-block;margin-top:6px;font-size:13px;font-weight:700;padding:10px 12px;border-radius:10px;background:var(--chip);color:var(--ink);text-decoration:none;min-height:44px;box-sizing:border-box}
+.kwrap .src,.kfam .src{font-size:12px!important;color:var(--ink-soft);text-align:justify}
+.kwrap .act{width:100%;margin-top:14px;padding:13px;font-weight:800;background:var(--accent)!important;color:#fff!important}
+.kwrap .zh3,.kfam .zh3{font-size:12.5px;text-transform:uppercase;letter-spacing:.07em;color:var(--ink-soft);margin:18px 0 4px;font-family:var(--body)}
+.kwrap .ztabs{display:grid;grid-template-columns:repeat(2,1fr);gap:6px;margin:4px 0 10px}
+.kwrap .ztabs button{font-size:13px;padding:10px 8px;min-height:44px}
+.kwrap .pbtns{display:flex;gap:8px;flex-wrap:wrap}.kwrap .pbtns button,.kwrap .pbtns a{min-height:44px}
+.kwrap .zreset{margin-top:10px;font-size:12px}
+.kwrap .rtr{font-size:13px;display:flex;gap:6px;align-items:center}
+.kform{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:12px 0}.kform label,.kfl{display:flex;flex-direction:column;gap:4px;font-size:12.5px;font-weight:700;color:var(--ink-soft)}
+.kform input,.kform select,.kfl select{font:inherit;font-size:16px!important;padding:9px 10px;border-radius:10px;border:1px solid var(--glass-edge);background:var(--surface);color:var(--ink);min-width:0}
+.kfl{margin:6px 0 4px}
+.kbig{width:100%;padding:14px!important;font-size:16px!important;margin:8px 0}
+.kstats{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;margin:10px 0}.kstats div{background:var(--chip);border-radius:12px;padding:10px 6px;text-align:center;min-width:0}
+.kstats span{display:block;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--ink-soft)}.kstats b{display:block;font-size:20px;font-weight:800;color:var(--ink);margin-top:2px;white-space:nowrap}.kstats small{display:block;font-size:10.5px;color:var(--ink-soft)}
+.kstats.live b{font-size:22px}
+.ksegs{list-style:none;padding:0;margin:8px 0;display:flex;flex-wrap:wrap;gap:5px}.ksegs li{font-size:11.5px;padding:5px 8px;border-radius:999px;background:var(--chip);color:var(--ink-soft);cursor:pointer}
+.ksegs li.cur{background:var(--accent);color:#fff;font-weight:800}.ksegs li.ok{background:var(--sage-soft);color:var(--sage);font-weight:700}
+.kcnt{text-align:center;margin:6px 0}.kcnt b{font-size:28px;font-weight:800;display:block}.kcnt small{color:var(--gold);font-weight:700}
+.kctl{margin-top:8px}.kctl button{flex:1}
+.ktab{width:100%;border-collapse:collapse;font-size:12.5px}.ktab td{padding:7px 4px;border-bottom:1px solid var(--glass-edge)}.ktab td:not(:first-child){text-align:right;white-space:nowrap}
+.kroute{width:100%;max-height:320px;background:var(--chip);border-radius:12px}
+.khist summary,.kedit summary{cursor:pointer;font-size:13.5px}
+.kmap{position:relative;z-index:0;border-radius:12px;overflow:hidden;margin:6px 0}.kmap.on{height:300px;background:#e8e4da}.kmapL.on{height:240px}
+.klegend{display:flex;flex-wrap:wrap;gap:6px 12px;font-size:11.5px;color:var(--ink-soft);margin:4px 0 8px}.klegend i{display:inline-block;width:14px;height:4px;border-radius:2px;margin-right:5px;vertical-align:middle}
+.kprog{height:10px;border-radius:6px;background:var(--chip);overflow:hidden;margin:8px 0}#kBar{height:100%;width:0;background:var(--sage);transition:width .5s}
+.ztabs.kmode button:first-child{grid-column:auto}
+.khotel input[type=text],.khotel input[type=number],.khotel select{font:inherit;font-size:16px!important;padding:9px 10px;border-radius:10px;border:1px solid var(--glass-edge);background:var(--surface);color:var(--ink);width:100%;box-sizing:border-box}
+.khotel .kfl{margin:8px 0 4px}.kvo{margin:10px 0 0}.kloc .kbig{margin-bottom:2px}.ksure{background:#c0392b!important;color:#fff!important}
+.kfamnote{font-size:13px;color:var(--muted);margin:0 0 10px;text-align:justify}.kfam{margin-bottom:12px}
+#kpocket{position:fixed;inset:0;z-index:9999;background:#000;display:flex;align-items:center;justify-content:center;touch-action:none;user-select:none;-webkit-user-select:none}
+#kpocket .pk{text-align:center;color:#5b5b5b;font-family:inherit}#kpocket b{display:block;font-size:34px;font-weight:800;color:#6d6d6d;margin:6px 0}#kpocket p{margin:6px 0;font-size:13px}
+#kpocket .pkU{margin-top:28px;font-size:14px;color:#777}.pkBar{height:4px;width:0;background:#a4466e;margin:10px auto 0;border-radius:4px}#kpocket.hold .pkBar{width:200px;transition:width 2s linear}
+#kflash{position:fixed;left:50%;bottom:calc(20px + env(safe-area-inset-bottom,0px));transform:translateX(-50%);max-width:min(92vw,460px);background:#2b1d24;color:#fff;padding:10px 14px;border-radius:12px;font-size:13px;z-index:10000;opacity:0;pointer-events:none;transition:opacity .2s}#kflash.on{opacity:1}
+@media (max-width:380px){.kform{grid-template-columns:1fr}.kstats b{font-size:17px}.kstats.live b{font-size:19px}}
 </style>
 
 </head><body>
@@ -520,7 +604,7 @@ function tick(){if(typeof SLEEP!=="undefined"&&SLEEP)return;
 }
 
 /* ---------- views ---------- */
-const TABS=[['utama','Utama'],['ringkasan','Ringkasan'],['jadual','Jadual'],['lokasi','Lokasi'],['bajet','Bajet'],['gambar','Gambar'],['berkat','Waktu Berkat'],['zikir','Zikir & Selawat'],['persediaan','Persediaan'],['bawa','Barang'],['umrah','Umrah'],['makkah','Makkah'],['madinah','Madinah'],['doa','Doa']];
+const TABS=[['utama','Utama'],['ringkasan','Ringkasan'],['jadual','Jadual'],['lokasi','Lokasi'],['penjejak','Penjejak'],['bajet','Bajet'],['gambar','Gambar'],['berkat','Waktu Berkat'],['zikir','Zikir & Selawat'],['persediaan','Persediaan'],['bawa','Barang'],['umrah','Umrah'],['makkah','Makkah'],['madinah','Madinah'],['doa','Doa']];
 let current='utama';
 try{const h=location.hash.slice(1); if(TABS.some(t=>t[0]===h)) current=h;}catch(e){}
 const tabsEl=document.getElementById('tabs'), main=document.getElementById('main');
@@ -552,6 +636,7 @@ function utamaView(){
  const c=CITY[S.city];
  return `<div><h2>Assalamualaikum, sayang</h2><p class="lead">Semoga umrahmu mabrur. Semua masa di bawah ditunjukkan dalam waktu Saudi dan Malaysia.</p></div>
  <div id="pwaBox">${pwaPanel()}</div>
+ ${trkEndedBanner()}
  ${friBanner()}
  <div class="shortcuts"><button class="sc" data-go="berkat"><b>Waktu Berkat</b><span>1/3 malam · Dhuha · Jumaat</span></button><button class="sc" data-go="zikir"><b>Selawat 1000</b><span id="home-sel">0 / 1000 hari ini</span></button><button class="sc" data-go="zikir"><b>Zikir harian</b><span>Tasbih, pagi & petang</span></button><button class="sc" data-go="doa"><b>Doa pilihan</b><span>Kesihatan & rumah tangga</span></button><button class="sc wide" data-go="ringkasan"><b>Ringkasan umrah</b><span>Dashboard semua ibadah, tempat, belanja & gambar</span></button><button class="sc wide" data-go="bajet"><b>Bajet</b><span id="home-bajet">SAR ${f2(bTotals().all)} dibelanjakan</span></button></div>
  <div class="panel"><div class="row" style="justify-content:space-between;margin-bottom:6px"><h3 style="margin:0">Program hari ini</h3><button class="btn" data-go="jadual">Jadual penuh</button></div>${todayProgram()}</div>
@@ -764,6 +849,128 @@ function doaView(){const tk=todayKey();let n=0;
   <ul class="check" style="border-top:1px solid var(--line);margin-top:4px"><li><label for="${uid}"><input type="checkbox" id="${uid}" data-day="${tk}" data-id="${id}" data-grp="doa" ${ck?'checked':''}><span class="tx"><b>Sudah dibaca hari ini</b></span></label></li></ul></div>`}).join('')).join('')+
  `<div class="panel good"><h3>Senarai hajat</h3><p style="margin:0">Tulis doa untuk diri, suami, anak-anak, ibu bapa, adik-beradik dan sahabat yang berpesan. Bacakan di Multazam, ketika minum zamzam, di Safa & Marwah, di Raudhah, dan pada sepertiga malam.</p></div>`}
 
+/* ---------- penjejak umrah: bahagian, masa, jarak, langkah, pusingan + alamat ---------- */
+const PH=[
+ {k:'pergi',n:'Hotel ke Masjidil Haram',c:'#3b82f6'},
+ {k:'tawaf',n:'Tawaf',c:'#d4a72c',laps:7,lap:200},
+ {k:'saie',n:"Sa'ie",c:'#2e9d5b',laps:7,lap:395},
+ {k:'tahallul',n:'Tahallul',c:'#c0392b'},
+ {k:'pulang',n:'Pulang ke hotel',c:'#8b5cf6'}];
+const STRIDE=0.68;
+function PHK(k){return PH.find(p=>p.k===k)||{k:String(k),n:String(k),c:'#888'}}
+function fmtDur(ms){ms=Math.max(0,(+ms)||0);const s=Math.floor(ms/1000),h=Math.floor(s/3600),m=Math.floor(s%3600/60),x=s%60;return h?`${h}:${pad(m)}:${pad(x)}`:`${m}:${pad(x)}`}
+function fmtDist(m){m=(+m)||0;return m>=1000?(m/1000).toFixed(2)+' km':Math.round(m)+' m'}
+const saKeyOf=ms=>{try{return new Intl.DateTimeFormat('en-CA',{timeZone:'Asia/Riyadh'}).format(new Date(ms))}catch(e){return saKey()}};
+
+let SESS=null;try{SESS=JSON.parse(localStorage.getItem('umrahSess')||'null')}catch(e){SESS=null}
+if(SESS&&(!Array.isArray(SESS.phases)||!SESS.phases.length))SESS=null;
+if(SESS&&!SESS.end&&SESS.hiddenAt){SESS.gaps=(SESS.gaps||0)+1;SESS.hiddenAt=null}
+let sessW=0;
+function sessLocal(){try{SESS?localStorage.setItem('umrahSess',JSON.stringify(SESS)):localStorage.removeItem('umrahSess')}catch(e){}}
+function sessSum(s){return {id:s.id,start:s.start,end:s.end||null,cur:s.cur,gaps:s.gaps||0,phases:s.phases.map(p=>({k:p.k,t0:p.t0,t1:p.t1||null,dist:Math.round(p.dist||0),rounds:p.rounds||0}))}}
+function sessSave(force){sessLocal();if(!tripRef||!SESS)return;const n=Date.now();if(!force&&n-sessW<25000)return;sessW=n;tripRef.set({sess:sessSum(SESS)},{merge:true}).catch(()=>{})}
+function sessActive(){return !!(SESS&&!SESS.end)}
+function sessStart(i){
+ const m=document.getElementById('trkMsg')||document.getElementById('sessMsg');
+ if(!tripRef){if(m)m.textContent='Sediakan pautan keluarga dahulu.';return}
+ if(!tracking())startTracking(false);
+ const n=Date.now();SESS={id:n.toString(36),start:n,cur:i,phases:[{k:PH[i].k,t0:n,t1:null,dist:0,rounds:0}],gaps:0,lastPt:null,end:null};
+ sessSave(true);last.ts=0;renderLive();openMini();
+}
+function sessNext(){if(!sessActive())return;const n=Date.now();SESS.phases[SESS.phases.length-1].t1=n;SESS.cur++;
+ if(SESS.cur>=PH.length){SESS.cur=PH.length-1;return sessEnd()}
+ SESS.phases.push({k:PH[SESS.cur].k,t0:n,t1:null,dist:0,rounds:0});sessSave(true);last.ts=0;renderLive();sessMiniKey='';}
+function sessEnd(at){if(!SESS||SESS.end)return;const n=at||Date.now();const c=SESS.phases[SESS.phases.length-1];if(!c.t1)c.t1=n;SESS.end=n;SESS.lastPt=null;
+ const sum=sessSum(SESS);if(tripRef)tripRef.set({sess:sum,sessHist:firebase.firestore.FieldValue.arrayUnion(sum)},{merge:true}).catch(()=>{});
+ sessLocal();renderLive();sessMiniKey='';}
+function sessFixSave(){sessLocal();if(!tripRef||!SESS)return;const sum=sessSum(SESS);
+ if(!LIVE.ready||!Array.isArray(LIVE.doc&&LIVE.doc.sessHist)||!LIVE.doc.sessHist.some(x=>x&&x.id===SESS.id)){tripRef.set({sess:sum},{merge:true}).catch(()=>{});return}const h=((LIVE.doc&&LIVE.doc.sessHist)||[]).map(x=>x&&x.id===SESS.id?sum:x);
+ tripRef.set({sess:sum,sessHist:h},{merge:true}).catch(()=>{})}
+function roundAdd(d,idx){if(!SESS||(idx==null&&SESS.end))return;const p=idx!=null?SESS.phases[idx]:SESS.phases[SESS.phases.length-1];const P=PHK(p.k);if(!P.laps)return;
+ p.rounds=Math.max(0,Math.min(P.laps,(p.rounds||0)+d));try{navigator.vibrate&&navigator.vibrate(d>0?30:10)}catch(e){}
+ if(idx!=null)sessFixSave();else sessSave(true);renderLive();sessMiniKey='';sessTick();}
+function sessOnFix(c,now){
+ if(!sessActive()||!(c.accuracy<=40))return;const p={lat:c.latitude,lng:c.longitude,ts:now};
+ if(SESS.lastPt){const d=meters([SESS.lastPt.lat,SESS.lastPt.lng],[p.lat,p.lng]),dt=Math.max(1,(now-SESS.lastPt.ts)/1000);
+  if(d<Math.max(4,c.accuracy*0.4))return;
+  if(d/dt<=7||dt>60)SESS.phases[SESS.phases.length-1].dist+=d}
+ SESS.lastPt=p;sessSave(false);
+}
+/* --- alamat (reverse geocoding, OpenStreetMap Nominatim) --- */
+let GEO={lat:0,lng:0,ts:0,addr:''},geoBusy=false;
+function geoAddrNear(lat,lng){return GEO.addr&&meters([GEO.lat,GEO.lng],[lat,lng])<150?GEO.addr:null}
+async function revGeo(lat,lng){const n=Date.now();if(geoBusy||n-GEO.ts<45000||(GEO.addr&&meters([GEO.lat,GEO.lng],[lat,lng])<60))return;geoBusy=true;
+ try{const ac=new AbortController();const to=setTimeout(()=>ac.abort(),10000);const r=await fetch(`https://nominatim.openstreetmap.org/reverse?format=jsonv2&lat=${lat.toFixed(6)}&lon=${lng.toFixed(6)}&zoom=18&addressdetails=1&accept-language=ms,en`,{signal:ac.signal});clearTimeout(to);
+  const j=await r.json();const a=j.address||{};const parts=[];const road=a.road||a.pedestrian||a.footway||a.path||a.square;
+  if(j.name&&j.name!==road)parts.push(j.name);if(road)parts.push(road);
+  const area=a.neighbourhood||a.suburb||a.quarter||a.city_district||a.village||a.hamlet;if(area)parts.push(area);
+  const city=a.city||a.town||a.municipality||a.county||a.state;if(city)parts.push(city);
+  const addr=[...new Set(parts.map(String))].slice(0,4).join(', ').slice(0,160);GEO={lat,lng,ts:n,addr};
+  if(addr&&tripRef)tripRef.set({pos:{addr}},{merge:true}).catch(()=>{});
+ }catch(e){GEO.ts=n}geoBusy=false}
+const GENZ=['lain','makkah','madinah','jeddah','jalan'];
+function posTitle(p){if(!p)return '';const a=typeof p.addr==='string'?p.addr:'';
+ if(p.zone==='jalan')return 'Dalam perjalanan'+((+p.spd)>0?' · '+(+p.spd|0)+' km/j':'');
+ if(a&&GENZ.includes(p.zone))return a.split(', ')[0];return String(p.label||'')}
+function posSub(p){if(!p)return '';const a=typeof p.addr==='string'?p.addr:'';if(!a)return '';
+ if(p.zone==='jalan')return a;if(GENZ.includes(p.zone))return a.split(', ').slice(1).join(', ');return a}
+function pausedMsg(tr,pos){if(tr&&tr.on&&(+tr.paused)>0&&pos&&(+tr.paused)>=(+pos.ts)-1000&&Date.now()<tr.until)
+ return `<div class="pmsg">Isteri keluar dari aplikasi pada ${fmtAt(+tr.paused,'Asia/Riyadh')} Saudi / ${fmtAt(+tr.paused,'Asia/Kuala_Lumpur')} Malaysia — lokasi berhenti sementara sehingga aplikasi dibuka semula.</div>`;return ''}
+
+/* --- paparan --- */
+function sessData(){if(ROLE==='isteri')return SESS;const s=LIVE.doc&&LIVE.doc.sess;return s&&Array.isArray(s.phases)&&s.phases.length?s:null}
+function histList(){const h=(LIVE.doc&&LIVE.doc.sessHist)||[];return Array.isArray(h)?h.filter(x=>x&&Array.isArray(x.phases)):[]}
+function histHTML(){const h=histList();if(!h.length)return '';
+ return `<div class="glbl" style="margin-top:14px">Rakaman umrah sebelum ini</div>`+h.slice().reverse().slice(0,6).map(s=>{const t=((+s.end)||(+s.start))-(+s.start),d=s.phases.reduce((a,p)=>a+((+p.dist)||0),0);
+  const tw=s.phases.find(p=>p.k==='tawaf'),sa=s.phases.find(p=>p.k==='saie');
+  return `<div class="srow h3c"><span class="sn">${esc(dayLabel(saKeyOf(+s.start)))} · ${fmtAt(+s.start,'Asia/Riyadh')}${tw?` <em>tawaf ${+tw.rounds|0}/7</em>`:''}${sa?` <em>sa'ie ${+sa.rounds|0}/7</em>`:''}</span><span>${fmtDur(t)}</span><span>${fmtDist(d)}</span></div>`}).join('')}
+function histPanel(){const x=histHTML();return x?`<div class="panel"><h3>Fasa ibadah</h3>${x}</div>`:''}
+function sessPanelHTML(){
+ const s=sessData(),isteri=ROLE==='isteri',act=!!(s&&!s.end);
+ let h=`<div class="row" style="justify-content:space-between;margin-bottom:6px"><h3 style="margin:0">Fasa ibadah</h3>${act?'<span class="tag rec">● Merakam</span>':s?`<span class="tag s">Selesai ${fmtAt(+s.end,'Asia/Riyadh')}</span>`:''}</div>`;
+ if(!s){h+=isteri?`<p class="mk" style="margin:0 0 10px">Rakam setiap bahagian umrah — masa, jarak, anggaran langkah dan pusingan. Suami nampak secara langsung, dan laluan diwarnakan ikut bahagian.</p>
+  <button class="btn pri" data-sstart="0" style="width:100%">Mula rakam umrah (dari hotel)</button>
+  <div class="glbl" style="margin-top:10px">Atau mula terus pada</div><div class="chips">${PH.slice(1).map((p,i)=>`<button class="chip" data-sstart="${i+1}">${p.n}</button>`).join('')}</div><p class="muted" id="sessMsg" style="font-size:.8rem;margin:6px 0 0"></p>`
+  :`<p class="muted" style="margin:0">Belum ada rakaman umrah. Isteri boleh mula rakam dari tab Lokasi.</p>`;return h+histHTML()}
+ const cur=s.phases[s.phases.length-1],P=PHK(cur.k);
+ if(act){const est=P.laps?Math.min(P.laps,Math.floor(((+cur.dist)||0)/P.lap)):0;
+  h+=`<div class="scur"><span class="sdot" style="background:${P.c}"></span><div style="min-width:0"><div class="glbl" style="margin:0">Sekarang</div><div class="sname">${esc(P.n)}</div></div><div class="stime" id="sessTimer">${fmtDur(Date.now()-(+cur.t0))}</div></div>`;
+  if(P.laps)h+=`<div class="srounds"><div><b id="sessRounds">${+cur.rounds|0}</b><span>/ ${P.laps} pusingan</span><div class="muted" style="font-size:.74rem">Anggaran GPS: ${est} · ${fmtDist(cur.dist)}</div></div>${isteri?`<div class="row"><button class="btn" data-sround="-1" aria-label="Tolak satu pusingan">−1</button><button class="btn pri sbig" data-sround="1">+1 pusingan</button></div>`:''}</div>
+  ${(+cur.rounds|0)>=P.laps&&isteri?`<p class="good-note">Lengkap ${P.laps} pusingan. Tekan "Seterusnya" bila mula bahagian baharu.</p>`:''}`;
+  if(isteri){const nx=PH[s.cur+1];h+=`<div class="row" style="margin-top:10px;justify-content:space-between">${nx?`<button class="btn pri" id="sNext">Seterusnya: ${nx.n} →</button>`:`<button class="btn pri" id="sEnd2">Selesai umrah</button>`}<button class="btn ghost" id="sEnd">Tamat rakaman</button></div>`}}
+ const tot={t:0,d:0};
+ h+=`<div class="glbl" style="margin-top:12px">Mengikut bahagian</div><div class="stbl">`+s.phases.map(p=>{const Q=PHK(p.k),t=((+p.t1)||(act?Date.now():(+s.end)||(+p.t0)))-(+p.t0),d=(+p.dist)||0;tot.t+=t;tot.d+=d;
+  return `<div class="srow"><span class="sdot" style="background:${Q.c}"></span><span class="sn">${esc(Q.n)}${Q.laps?` <em>(${+p.rounds|0}/${Q.laps})</em>`:''}</span><span>${fmtDur(t)}</span><span>${fmtDist(d)}</span><span>${Math.round(d/STRIDE).toLocaleString('ms-MY')}</span></div>`}).join('')
+  +`<div class="srow tot"><span></span><span class="sn">Jumlah</span><span>${fmtDur(tot.t)}</span><span>${fmtDist(tot.d)}</span><span>${Math.round(tot.d/STRIDE).toLocaleString('ms-MY')}</span></div></div><div class="muted" style="font-size:.72rem;margin-top:4px">Lajur: masa · jarak · anggaran langkah</div>`;
+ if(+s.gaps)h+=`<p class="sgap">⚠ Rakaman terputus semasa skrin mati atau keluar aplikasi (×${+s.gaps|0})</p>`;
+ if(!act&&isteri)h+=`<details class="sfix"><summary>Betulkan jika perlu (selepas ibadah)</summary>${s.phases.map((p,i)=>{const Q=PHK(p.k);return Q.laps?`<div class="row" style="justify-content:space-between;margin-top:8px"><span>${esc(Q.n)}</span><span class="row"><button class="btn" data-sfix="${i}" data-d="-1" aria-label="Tolak">−</button><b>${+p.rounds|0}/${Q.laps}</b><button class="btn" data-sfix="${i}" data-d="1" aria-label="Tambah">+</button></span></div>`:''}).join('')}</details>
+  <button class="btn pri" id="sNew" style="margin-top:10px;width:100%">Rakam umrah seterusnya</button>`;
+ return h+histHTML();
+}
+let sessMiniKey='';
+function sessTick(){
+ const s=sessData();const t=document.getElementById('sessTimer');
+ if(t&&s&&!s.end){const c=s.phases[s.phases.length-1];t.textContent=fmtDur(Date.now()-(+c.t0))}
+ const ms=document.getElementById('mSess');if(!ms||miniEl.hidden)return;
+ if(!sessActive()){if(sessMiniKey!=='none'){ms.innerHTML='';sessMiniKey='none'}return}
+ const c=SESS.phases[SESS.phases.length-1],P=PHK(c.k),key=SESS.id+'|'+SESS.cur+'|'+(c.rounds||0);
+ if(key!==sessMiniKey){sessMiniKey=key;ms.innerHTML=`<div class="ms1"><span class="sdot" style="background:${P.c}"></span> ${esc(P.n)}${P.laps?` · <b>${c.rounds||0}/${P.laps}</b>`:''} · <b id="mSessT"></b></div>${P.laps?`<button class="m-round" id="mRound">+1 pusingan</button>`:''}`}
+ const mt=document.getElementById('mSessT');if(mt)mt.textContent=fmtDur(Date.now()-c.t0);
+}
+setInterval(sessTick,1000);
+/* nadi GPS: paksa bacaan walaupun telefon tidak bergerak */
+setInterval(()=>{if(tracking()&&watchId!=='eco'&&document.visibilityState==='visible')navigator.geolocation.getCurrentPosition(onPos,()=>{},{enableHighAccuracy:true,maximumAge:15000,timeout:20000})},45000);
+setTimeout(()=>miniEl.addEventListener('click',e=>{if(SLEEP===2)return;if(e.target.closest('#mRound'))roundAdd(1)}),0);
+main.addEventListener('click',e=>{const t=e.target;
+ const st=t.closest('[data-sstart]');if(st){sessStart(+st.dataset.sstart);return}
+ const r=t.closest('[data-sround]');if(r){roundAdd(+r.dataset.sround);return}
+ const fx=t.closest('[data-sfix]');if(fx){roundAdd(+fx.dataset.d,+fx.dataset.sfix);return}
+ if(t.closest('#sNext')){sessNext();return}
+ if(t.closest('#sEnd2')){sessEnd();return}
+ const en=t.closest('#sEnd');if(en){arm(en,()=>sessEnd());return}
+ if(t.closest('#sNew')){SESS=null;sessLocal();renderLive();return}
+});
+
 /* ---------- lokasi (GitHub Pages + Firebase, auto GPS) ---------- */
 /* 1) Isi konfigurasi Firebase anda di sini (Firebase console → Project settings → Your apps → Web app) */
 const FIREBASE_CONFIG={
@@ -844,7 +1051,18 @@ const INFO=()=>(LIVE.doc&&LIVE.doc.info)||{};
 /* --- auto tracking (isteri) --- */
 let watchId=null, wake=null, last={ts:0,k:'',lat:0,lng:0}, lastFix=null, trackUntil=+(lsGet('umrahTrackUntil')||0);
 async function reqWake(){try{if('wakeLock' in navigator){wake=await navigator.wakeLock.request('screen');}}catch(e){wake=null}}
-document.addEventListener('visibilitychange',()=>{if(document.visibilityState==='visible'&&watchId!==null)reqWake()});
+document.addEventListener('visibilitychange',()=>{
+ const vis=document.visibilityState==='visible';
+ if(!vis){if(tracking()&&tripRef){tripRef.set({track:{paused:Date.now()}},{merge:true}).catch(()=>{})}if(sessActive()){SESS.hiddenAt=Date.now();sessLocal()}if(TRKS&&!TRKS.end){TRKS.hiddenAt=Date.now();trksSave()}return}
+ if(watchId!==null&&Date.now()<trackUntil){reqWake();last.ts=0;
+  if(watchId!=='eco'){try{navigator.geolocation.clearWatch(watchId)}catch(e){}watchId=navigator.geolocation.watchPosition(onPos,onPosErr,GPS_OPTS)}
+  navigator.geolocation.getCurrentPosition(onPos,()=>{},{enableHighAccuracy:true,maximumAge:0,timeout:20000});
+  if(tripRef)tripRef.set({track:{paused:0}},{merge:true}).catch(()=>{})}
+ if(SESS&&SESS.hiddenAt){if(Date.now()-SESS.hiddenAt>20000)SESS.gaps=(SESS.gaps||0)+1;SESS.hiddenAt=null;sessSave(true);renderLive()}
+ if(TRKS&&TRKS.hiddenAt){if(Date.now()-TRKS.hiddenAt>20000)TRKS.gaps=(TRKS.gaps||0)+1;TRKS.hiddenAt=null;trksSave()}
+ if(watchId!==null&&Date.now()>=trackUntil){stopTracking(true);return}
+ if(!tracking()&&ROLE==='isteri'&&(current==='utama'||current==='lokasi'))render();
+});
 function tracking(){return watchId!==null&&Date.now()<trackUntil}
 function startTracking(resume){
  const m=document.getElementById('trkMsg');
@@ -854,11 +1072,12 @@ function startTracking(resume){
  if(watchId!==null)navigator.geolocation.clearWatch(watchId);
  if(ecoTimer){clearInterval(ecoTimer);ecoTimer=null}
  watchId=navigator.geolocation.watchPosition(onPos,onPosErr,GPS_OPTS);if(SLEEP===2)gpsEco();
- reqWake();last.ts=0;
+ reqWake();last.ts=0;trksOnStart(resume);askNotify();
  tripRef.set({track:{on:true,until:trackUntil,startedAt:Date.now()}},{merge:true}).catch(()=>{});
  updateTrkUI();
 }
-function stopTracking(auto){
+function stopTracking(auto){const renew=!!(auto&&S.autoRenew&&document.visibilityState==='visible');trksFinish(auto?'auto':'manual');
+ if(renew)setTimeout(()=>startTracking(false),600);else if(auto){notify('Kongsi lokasi telah tamat','Buka aplikasi dan tekan "Mula semula" untuk kongsi lokasi 8 jam lagi.');buzzLong();try{if(!miniEl.hidden)toMini()}catch(e){}}
  if(ecoTimer){clearInterval(ecoTimer);ecoTimer=null}
  if(watchId!==null&&watchId!=='eco')navigator.geolocation.clearWatch(watchId);watchId=null;
  try{wake&&wake.release()}catch(e){}wake=null;trackUntil=0;lsSet('umrahTrackUntil',null);
@@ -866,18 +1085,23 @@ function stopTracking(auto){
  updateTrkUI();
 }
 function onPosErr(e){const m=document.getElementById('trkMsg');if(m)m.textContent=e.code===1?'Izin lokasi ditolak. Benarkan lokasi untuk Safari: Settings → Privacy & Security → Location Services → Safari Websites → While Using.':'Isyarat GPS lemah — sedang mencuba lagi…'}
+let PTW={ts:0,k:'',ph:'',addr:''};
 function onPos(p){
+ if(watchId===null)return;
  if(Date.now()>=trackUntil){stopTracking(true);return}
  const c=p.coords, z=detectZone(c.latitude,c.longitude,c.accuracy,c.speed,INFO()), now=Date.now();
  lastFix={lat:c.latitude,lng:c.longitude,acc:Math.round(c.accuracy),zone:z,ts:now};updateTrkUI();
  const moved=last.ts?meters([last.lat,last.lng],[c.latitude,c.longitude]):1e9, dt=now-last.ts;
- const send=(z.k!==last.k&&dt>=20000)||dt>=180000||(moved>=60&&dt>=60000);
+ sessOnFix(c,now);trksFix(c,now,z);revGeo(c.latitude,c.longitude);
+ const act=sessActive();
+ const send=(z.k!==last.k&&dt>=(act?5000:20000))||dt>=(act?60000:180000)||(act?(moved>=8&&dt>=8000):(moved>=60&&dt>=60000));
  if(!send||!tripRef)return;
  last={ts:now,k:z.k,lat:c.latitude,lng:c.longitude};
- const pos={lat:+c.latitude.toFixed(6),lng:+c.longitude.toFixed(6),acc:Math.round(c.accuracy),zone:z.k,label:z.n,ts:now};
+ const pos={lat:+c.latitude.toFixed(6),lng:+c.longitude.toFixed(6),acc:Math.round(c.accuracy),zone:z.k,label:z.n,ts:now,addr:geoAddrNear(c.latitude,c.longitude),spd:(c.speed!=null&&c.speed>=0)?Math.round(c.speed*3.6):null,ph:act?PH[SESS.cur].k:null,sid:act?SESS.id:null};
  pending=true;miniUpdate();
- tripRef.set({pos,track:{on:true,until:trackUntil}},{merge:true}).then(()=>{pending=false;netOk=Date.now();miniUpdate()}).catch(()=>{pending=false;miniUpdate()});
- tripRef.collection('days').doc(saKey()).set({pts:firebase.firestore.FieldValue.arrayUnion(pos)},{merge:true}).catch(()=>{});
+ tripRef.set({pos,track:{on:true,until:trackUntil,paused:0}},{merge:true}).then(()=>{pending=false;netOk=Date.now();miniUpdate()}).catch(()=>{pending=false;miniUpdate()});
+ if(!act||now-PTW.ts>=25000||z.k!==PTW.k||(pos.ph||'')!==PTW.ph){PTW={ts:now,k:z.k,ph:pos.ph||''};const pt={lat:pos.lat,lng:pos.lng,acc:pos.acc,zone:pos.zone,ts:now};pt.label=pos.label;if(pos.addr&&pos.addr!==PTW.addr){pt.addr=pos.addr;PTW.addr=pos.addr}if(pos.spd!=null)pt.spd=pos.spd;if(pos.ph){pt.ph=pos.ph;pt.sid=pos.sid}
+ tripRef.collection('days').doc(saKey()).set({pts:firebase.firestore.FieldValue.arrayUnion(pt)},{merge:true}).catch(()=>{})}
 }
 setInterval(()=>{if(watchId!==null&&Date.now()>=trackUntil)stopTracking(true);updateTrkUI()},30000);
 function updateTrkUI(){miniUpdate();
@@ -897,10 +1121,10 @@ function statusCard(compact){
  const d=LIVE.doc||{}, pos=d.pos, man=d.manual, tr=d.track||{};
  let h='';
  if(pos){const on=tr.on&&Date.now()<tr.until, stale=on&&Date.now()-pos.ts>10*60e3;
-  h+=`<div class="live"><div class="dot ${on&&!stale?'':'stale'}"></div><div style="min-width:0"><div class="where">${esc(pos.label)}</div>
+  h+=`<div class="live"><div class="dot ${on&&!stale?'':'stale'}"></div><div style="min-width:0"><div class="where">${esc(posTitle(pos))}</div>${posSub(pos)?`<div class="addr">${esc(posSub(pos))}</div>`:''}
   <div class="muted" style="font-size:.82rem">${fmtAt(pos.ts,'Asia/Riyadh')} Saudi · ${fmtAt(pos.ts,'Asia/Kuala_Lumpur')} Malaysia · <span data-ago="${(+pos.ts||0)}">${ago(pos.ts)}</span> · ±${(+pos.acc|0)} m</div>
   <div style="font-size:.8rem;margin-top:2px" class="${on?'':'muted'}">${on?`GPS auto aktif hingga ${fmtAt(tr.until,'Asia/Riyadh')} Saudi / ${fmtAt(tr.until,'Asia/Kuala_Lumpur')} Malaysia`:'GPS auto tidak aktif'}</div>
-  ${stale?`<div style="font-size:.8rem;color:var(--warn);margin-top:2px">Tiada kemas kini lebih 10 minit — skrin telefon mungkin terkunci atau tiada internet.</div>`:''}
+  ${endedMsg(tr)||pausedMsg(tr,pos)||(stale?`<div style="font-size:.8rem;color:var(--warn);margin-top:2px">Tiada kemas kini lebih 10 minit — skrin telefon mungkin terkunci atau tiada internet.</div>`:'')}
   ${compact?'':`<a class="maplink" href="${mapLL(pos.lat,pos.lng)}" target="_blank" rel="noopener">Buka di Google Maps</a>`}</div></div>`}
  if(man&&(!pos||man.ts>=pos.ts-6*3600e3)){const p=PL(man.place);
   h+=`<div class="live ${p.alert?'alert':''}" style="margin-top:${pos?'12px':'0'}"><div class="dot stale" style="${p.alert?'':'background:var(--accent);box-shadow:0 0 0 4px var(--accent-soft)'}"></div><div style="min-width:0"><div class="glbl" style="margin:0">Status ibadah (ditekan isteri)</div><div class="where" style="font-size:1.15rem">${esc(p.n)}${man.round?` <span class="tag w">Pusingan ${(+man.round|0)}/7</span>`:''}</div>${man.note?`<div class="mk">“${esc(man.note)}”</div>`:''}<div class="muted" style="font-size:.8rem"><span data-ago="${(+man.ts||0)}">${ago(man.ts)}</span></div></div></div>`}
@@ -908,9 +1132,9 @@ function statusCard(compact){
 }
 function logHTML(){
  if(LIVE.off||!LIVE.ready)return '';
- const pts=LIVE.pts||[];if(!pts.length)return `<p class="muted" style="margin:0">Tiada pergerakan direkod hari ini (tarikh Saudi).</p>`;
- const ch=[];pts.forEach(p=>{if(!ch.length||ch[ch.length-1].zone!==p.zone)ch.push(p)});
- return `<div class="berkat">`+ch.slice().reverse().map(e=>`<div class="bk"><div class="when">${fmtAt(e.ts,'Asia/Riyadh')}<span>MY ${fmtAt(e.ts,'Asia/Kuala_Lumpur')}</span></div><b>${esc(e.label)}</b><p>±${(+e.acc|0)} m</p></div>`).join('')+`</div>`;
+ let la='';const pts=(LIVE.pts||[]).map(p=>{if(p&&p.addr)la=p.addr;return Object.assign({},p,{addr:(p&&p.addr)||la})});if(!pts.length)return `<p class="muted" style="margin:0">Tiada pergerakan direkod hari ini (tarikh Saudi).</p>`;
+ const ch=[];pts.forEach(p=>{const q=ch[ch.length-1];if(!q||q.zone!==p.zone||(q.addr||'')!==(p.addr||'')||(q.ph||'')!==(p.ph||''))ch.push(p)});
+ return `<div class="berkat">`+ch.slice().reverse().map(e=>`<div class="bk"><div class="when">${fmtAt(e.ts,'Asia/Riyadh')}<span>MY ${fmtAt(e.ts,'Asia/Kuala_Lumpur')}</span></div><b>${esc(posTitle(e))}${e.ph?` <span class="tag" style="background:${PHK(e.ph).c};color:#fff">${esc(PHK(e.ph).n)}</span>`:''}</b><p>${posSub(e)?esc(posSub(e))+' · ':''}±${(+e.acc|0)} m</p></div>`).join('')+`</div>`;
 }
 let MAP=null, MK=null, CIR=null, LINE=null;
 function initMap(){
@@ -920,19 +1144,33 @@ function initMap(){
  L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png',{crossOrigin:true,maxZoom:19,attribution:'© OpenStreetMap'}).addTo(MAP);
  MK=null;CIR=null;LINE=null;drawMap(true);
 }
+let TRK=null;
 function drawMap(fit){
- if(!MAP)return;const d=LIVE.doc||{},pos=d.pos;const pts=(LIVE.pts||[]).map(p=>[p.lat,p.lng]);
- if(LINE)LINE.remove();if(pts.length>1)LINE=L.polyline(pts,{color:getComputedStyle(document.documentElement).getPropertyValue('--accent').trim()||'#a4466e',weight:3,opacity:.7}).addTo(MAP);
- if(pos){const ll=[pos.lat,pos.lng];
-  if(!MK){MK=L.circleMarker(ll,{radius:9,color:'#fff',weight:3,fillColor:'#a4466e',fillOpacity:1}).addTo(MAP);CIR=L.circle(ll,{radius:pos.acc,color:'#a4466e',weight:1,fillOpacity:.08}).addTo(MAP)}
-  else{MK.setLatLng(ll);CIR.setLatLng(ll).setRadius(pos.acc)}
-  MK.bindTooltip(esc(pos.label));if(fit)MAP.setView(ll,17)}
+ if(!MAP)return;const d=LIVE.doc||{},pos=d.pos;
+ if(TRK)TRK.remove();TRK=L.layerGroup().addTo(MAP);
+ const pts=((HV&&!HV.loading)?HV.pts:(LIVE.pts||[])).filter(p=>p&&isFinite(+p.lat)&&isFinite(+p.lng));
+ const acc=getComputedStyle(document.documentElement).getPropertyValue('--accent').trim()||'#a4466e';const used=new Set();
+ let seg=[],prev=null;
+ const flush=ph=>{if(seg.length>1){const q=ph?PHK(ph):null;if(ph)used.add(ph);L.polyline(seg,{color:q?q.c:acc,weight:q?5:3,opacity:q?.9:.55,dashArray:q?null:'4 6'}).addTo(TRK)}seg=[]};
+ pts.forEach(p=>{if(prev){const gap=(+p.ts)-(+prev.ts)>180000,chg=(p.ph||'')!==(prev.ph||'')||(p.sid||'')!==(prev.sid||'');
+   if(gap||chg){if(chg&&!gap)seg.push([+p.lat,+p.lng]);flush(prev.ph)}}
+  seg.push([+p.lat,+p.lng]);prev=p});
+ if(prev)flush(prev.ph);
+ const sp=pts.filter(p=>p.sid);
+ if(sp.length){L.circleMarker([+sp[0].lat,+sp[0].lng],{radius:7,color:'#fff',weight:2,fillColor:'#1f9d55',fillOpacity:1}).bindTooltip('Mula').addTo(TRK);
+  const e=sp[sp.length-1];if(sp.length>1)L.circleMarker([+e.lat,+e.lng],{radius:7,color:'#fff',weight:2,fillColor:'#c0392b',fillOpacity:1}).bindTooltip('Akhir').addTo(TRK)}
+ if(pos&&isFinite(+pos.lat)&&isFinite(+pos.lng)){const ll=[+pos.lat,+pos.lng];
+  if(!MK){MK=L.circleMarker(ll,{radius:9,color:'#fff',weight:3,fillColor:'#a4466e',fillOpacity:1}).addTo(MAP);CIR=L.circle(ll,{radius:+pos.acc||10,color:'#a4466e',weight:1,fillOpacity:.08}).addTo(MAP)}
+  else{MK.setLatLng(ll);CIR.setLatLng(ll).setRadius(+pos.acc||10)}
+  MK.bindTooltip(esc(posTitle(pos)));MK.bringToFront();if(fit&&!HV)MAP.setView(ll,17)}
+ const lg=document.getElementById('mapLegend');if(lg)lg.innerHTML=[...used].map(k=>`<span><i style="background:${PHK(k).c}"></i>${esc(PHK(k).n)}</span>`).join('');
 }
 function renderLive(){
  const a=document.getElementById('liveCard');if(a)a.innerHTML=statusCard(false);
  const h=document.getElementById('homeLive');if(h)h.innerHTML=statusCard(true);
  const l=document.getElementById('liveLog');if(l)l.innerHTML=logHTML();
  const firstPos=MAP&&!MK;drawMap(firstPos);
+ try{const sp=document.getElementById('sessPanel');if(sp)sp.innerHTML=sessPanelHTML();const th=document.getElementById('trkHistPanel');if(th)th.innerHTML=trkHistHTML()}catch(e){}
 }
 function tickAgo(){document.querySelectorAll('[data-ago]').forEach(e=>e.textContent=ago(+e.dataset.ago))}
 function fillInfo(){const i=INFO();[['inHotelMk','hotelMakkah'],['inHotelMd','hotelMadinah'],['inMutawwif','mutawwif']].forEach(([id,k])=>{const el=document.getElementById(id);if(el&&document.activeElement!==el)el.value=i[k]||''});
@@ -953,11 +1191,15 @@ function lokasiView(){const tk=todayKey();
  return `<div><h2>Lokasi semasa</h2><p class="lead">Tekan sekali; lokasi dikemas kini sendiri selama ${TRACK_HOURS} jam dan tempat seperti Mataf, Mas'a atau hotel dikenal pasti secara automatik.</p></div>
  <div class="row" style="justify-content:space-between"><span class="muted" style="font-size:.85rem">Telefon ini milik:</span><div class="seg" role="group" aria-label="Peranan"><button data-role="isteri" aria-pressed="${ROLE==='isteri'}">Isteri</button><button data-role="suami" aria-pressed="${ROLE==='suami'}">Suami</button></div></div>
  ${!ROLE?`<div class="panel note"><h3>Pilih peranan</h3><p style="margin:0">Pilih "Isteri" pada telefon isteri dan "Suami" pada telefon suami.</p></div>`:''}
- <div class="panel"><h3>Di mana sayang sekarang</h3><div id="liveCard">${statusCard(false)}</div><div id="map" class="map" role="img" aria-label="Peta lokasi isteri"></div></div>
+ ${trkEndedBanner()}
+ <div class="panel"><h3>Di mana sayang sekarang</h3><div id="liveCard">${statusCard(false)}</div><div id="map" class="map" role="img" aria-label="Peta lokasi isteri"></div><div id="mapLegend" class="mlegend"></div></div>
+ <div class="panel" id="sessPanel">${sessPanelHTML()}</div>
+ <div class="panel" id="trkHistPanel">${trkHistHTML()}</div>
  ${isteri?`<div class="panel"><h3>Kongsi lokasi automatik</h3>
   <p class="muted" style="font-size:.85rem;margin:0 0 8px" id="trkState">Tidak aktif.</p>
   <button class="btn pri" id="trkBtn" style="width:100%">Mula kongsi lokasi auto (${TRACK_HOURS} jam)</button>
   <div class="row" style="margin-top:8px;justify-content:space-between"><label class="muted" for="autoSleep" style="font-size:.82rem;display:flex;gap:6px;align-items:center"><input type="checkbox" id="autoSleep" ${autoSleep?'checked':''}> Mod tidur auto selepas 1 minit</label><button class="btn" id="openMini">Buka skrin mini</button></div>
+  ${trkRemindHTML()}
   <p class="muted" id="trkMsg" style="font-size:.8rem;margin:8px 0 0"></p></div>
  <div class="panel"><h3>Status ibadah (pilihan)</h3><p class="muted" style="font-size:.85rem;margin:0 0 8px">GPS tidak dapat mengenal Raudhah atau pusingan tawaf. Tekan di sini jika mahu suami tahu.</p>
   ${[...new Set(PLACES.map(p=>p.g))].map(g=>`<div class="pgrp"><div class="glbl">${g}</div><div class="chips">${PLACES.filter(p=>p.g===g).map(p=>`<button class="chip ${p.alert?'alertc':''}" data-place="${p.k}" aria-pressed="${sel.place===p.k}">${p.n}</button>`).join('')}</div></div>`).join('')}
@@ -1017,9 +1259,111 @@ main.addEventListener('click',e=>{
  const cl=t.closest('#copyLink');if(cl){const msg=document.getElementById('copyMsg');const link=familyLink();
   (navigator.clipboard?navigator.clipboard.writeText(link):Promise.reject()).then(()=>msg.textContent='Disalin. Tampal dalam WhatsApp suami.').catch(()=>{msg.textContent='Tekan lama pada pautan di atas untuk salin.'});return}
 });
-function afterRender(){if(current==='gambar'&&GITEMS===null&&!GERR)gLoad();if(current==='lokasi'){initMap();updateTrkUI();fillInfo()}else if(MAP){try{MAP.remove()}catch(e){}MAP=null;MK=null}}
+function penjejakView(){return `<div id="pjFam"></div><div id="kcard" class="kwrap"><div id="kbody"><p class="muted">Memuatkan penjejak…</p></div></div>`}
+function afterRender(){if(current==='penjejak'&&window.PJ)window.PJ.open();if(current==='gambar'&&GITEMS===null&&!GERR)gLoad();if(current==='lokasi'){initMap();updateTrkUI();fillInfo()}else if(MAP){try{MAP.remove()}catch(e){}MAP=null;MK=null}}
 connect();
 if(ROLE==='isteri'&&trackUntil>Date.now()&&TRIPID&&cfgOk){setTimeout(()=>{startTracking(true);openMini()},800)}
+
+/* ---------- sejarah perjalanan (setiap sesi kongsi lokasi) + peringatan 8 jam ---------- */
+let TRKS=null;try{TRKS=JSON.parse(localStorage.getItem('umrahTrks')||'null')}catch(e){TRKS=null}
+if(TRKS&&typeof TRKS!=='object')TRKS=null;
+let HV=null;
+function trksSave(){try{TRKS?localStorage.setItem('umrahTrks',JSON.stringify(TRKS)):localStorage.removeItem('umrahTrks')}catch(e){}}
+function trksStart(){const n=Date.now();TRKS={id:'t'+n.toString(36),start:n,until:trackUntil,dist:0,lastPt:null,n:0,places:[],gaps:0,warned:0};trksSave()}
+function trksOnStart(resume){if(!resume||!TRKS||TRKS.end){if(TRKS&&!TRKS.end)trksFinish('manual',true);trksStart()}else{TRKS.until=trackUntil;trksSave()}}
+function placeLbl(c,z){if(GENZ.includes(z.k)){if(z.k==='jalan')return 'Dalam perjalanan';const a=GEO.addr&&meters([GEO.lat,GEO.lng],[c.latitude,c.longitude])<400?GEO.addr:'';if(a)return a.split(', ').slice(0,2).join(', ');const pl=TRKS&&TRKS.places;if(pl&&pl.length)return pl[pl.length-1].l}return z.n}
+function trksFix(c,now,z){
+ if(!TRKS||TRKS.end)return;TRKS.n++;
+ const lb=placeLbl(c,z),pl=TRKS.places;if(lb&&(!pl.length||pl[pl.length-1].l!==lb)){pl.push({t:now,l:String(lb).slice(0,80)});if(pl.length>40)pl.splice(1,1)}
+ if(c.accuracy<=50){const p={lat:c.latitude,lng:c.longitude,ts:now};
+  if(TRKS.lastPt){const d=meters([TRKS.lastPt.lat,TRKS.lastPt.lng],[p.lat,p.lng]),dt=Math.max(1,(now-TRKS.lastPt.ts)/1000);
+   if(d>=Math.max(8,c.accuracy*0.5)){if(d/dt<=70)TRKS.dist+=d;TRKS.lastPt=p}}else TRKS.lastPt=p}
+ TRKS.last=now;if(TRKS.n%3===0)trksSave();
+}
+function trkSum(t,reason){const end=Math.max(+t.start,Math.min(Date.now(),+t.until||Date.now(),reason==='auto'?(+t.until||Date.now()):Date.now()));
+ return {id:t.id,start:+t.start,end,dist:Math.round(+t.dist||0),n:+t.n||0,gaps:+t.gaps||0,reason,places:((p)=>p.length>25?[p[0],...p.slice(-24)]:p)(t.places||[]).map(p=>({t:+p.t||0,l:String(p.l||'')}))}}
+function trksFinish(reason,quiet){
+ if(!TRKS||TRKS.end)return;
+ const sum=trkSum(TRKS,reason);if(sessActive())sessEnd(sum.end);TRKS.end=sum.end;
+ S.trkHist=(S.trkHist||[]).filter(x=>x&&x.id!==sum.id).concat([sum]).slice(-60);S.trkLastEnd=sum.end;save();
+ if(tripRef)tripRef.set({trkHist:firebase.firestore.FieldValue.arrayUnion(sum)},{merge:true}).catch(()=>{});
+ TRKS=null;trksSave();
+ if(!quiet&&(current==='utama'||current==='lokasi'))setTimeout(render,60);
+}
+/* aplikasi ditutup ketika 8 jam tamat → rekod bila dibuka semula */
+if(TRKS&&!TRKS.end){if(TRKS.hiddenAt){TRKS.gaps=(TRKS.gaps||0)+1;TRKS.hiddenAt=null}
+ if(Date.now()>=(+TRKS.until||0)){trksFinish('auto',true);lsSet('umrahTrackUntil',null);trackUntil=0;
+  if(tripRef)tripRef.set({track:{on:false,until:0,stoppedAt:Date.now(),auto:true}},{merge:true}).catch(()=>{})}}
+
+/* --- pemberitahuan --- */
+function askNotify(){try{if('Notification' in window&&Notification.permission==='default')Notification.requestPermission()}catch(e){}}
+function notify(t,b){try{if(!('Notification' in window)||Notification.permission!=='granted')return;
+ const o={body:b,icon:'icon-192.png',badge:'icon-192.png',tag:'umrah-trk',renotify:true,vibrate:[200,100,200]};
+ if(navigator.serviceWorker&&navigator.serviceWorker.controller)navigator.serviceWorker.ready.then(r=>r.showNotification(t,o)).catch(()=>{try{new Notification(t,o)}catch(e){}});
+ else new Notification(t,o)}catch(e){}}
+function buzzLong(){try{navigator.vibrate&&navigator.vibrate([300,150,300,150,300])}catch(e){}}
+function extendTracking(){if(!tracking())return startTracking(false);trackUntil=Date.now()+TRACK_HOURS*3600e3;lsSet('umrahTrackUntil',String(trackUntil));
+ if(TRKS){TRKS.until=trackUntil;TRKS.warned=0;trksSave()}if(tripRef)tripRef.set({track:{on:true,until:trackUntil}},{merge:true}).catch(()=>{});updateTrkUI();sessTick()}
+setInterval(()=>{if(!tracking()||!TRKS)return;const left=trackUntil-Date.now();
+ if(left<=15*60e3&&!TRKS.warned){TRKS.warned=1;trksSave();notify('Kongsi lokasi tamat dalam 15 minit','Buka aplikasi dan tekan "Sambung 8 jam lagi" supaya suami terus nampak lokasi.');buzzLong();if(!miniEl.hidden&&SLEEP===2)toMini()}},30000);
+
+/* --- peringatan kalendar --- */
+const ymdhUTC=ms=>new Date(ms).toISOString().replace(/[-:]/g,'').replace(/\.\d{3}/,'');
+function calOpen(kind,msg){if(!tracking()){msg.textContent='Mula kongsi lokasi dahulu.';return}
+ const end=trackUntil,start=end-10*60e3,title='Kongsi lokasi umrah tamat — mula semula',det='Buka aplikasi Diari Umrah Isteriku → tab Lokasi → Mula kongsi lokasi auto. '+familyLink();
+ if(kind==='g'){const u='https://calendar.google.com/calendar/render?action=TEMPLATE&text='+encodeURIComponent(title)+'&dates='+ymdhUTC(start)+'/'+ymdhUTC(end)+'&details='+encodeURIComponent(det);
+  const a=document.createElement('a');a.href=u;a.target='_blank';a.rel='noopener';document.body.appendChild(a);a.click();a.remove();msg.textContent='Google Calendar dibuka — tekan Save.';return}
+ const ics=['BEGIN:VCALENDAR','VERSION:2.0','PRODID:-//Diari Umrah//MS','BEGIN:VEVENT','UID:'+Date.now()+'@umrah-isteri','DTSTAMP:'+ymdhUTC(Date.now()),'DTSTART:'+ymdhUTC(start),'DTEND:'+ymdhUTC(end),'SUMMARY:'+title,'DESCRIPTION:'+det.replace(/[,;]/g,' '),'BEGIN:VALARM','TRIGGER:-PT5M','ACTION:DISPLAY','DESCRIPTION:'+title,'END:VALARM','BEGIN:VALARM','TRIGGER:PT10M','ACTION:DISPLAY','DESCRIPTION:'+title,'END:VALARM','END:VEVENT','END:VCALENDAR'].join('\r\n');
+ try{const fl=new File([ics],'peringatan-lokasi.ics',{type:'text/calendar'});if(navigator.canShare&&navigator.canShare({files:[fl]})){navigator.share({files:[fl],title:title}).then(()=>{msg.textContent='Pilih Calendar/Kalendar untuk simpan peringatan.'}).catch(()=>{});return}}catch(e){}
+ const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([ics],{type:'text/calendar'}));a.download='peringatan-lokasi.ics';document.body.appendChild(a);a.click();setTimeout(()=>{URL.revokeObjectURL(a.href);a.remove()},60000);msg.textContent='Fail kalendar dimuat turun — buka dan tekan Add.'}
+function trkRemindHTML(){return `<div class="trem"><div class="glbl">Peringatan bila 8 jam tamat</div>
+ <div class="row"><button class="btn" data-cal="g">Google Calendar</button><button class="btn" data-cal="ics">Kalendar iPhone (.ics)</button></div>
+ <label class="muted" for="autoRenew" style="font-size:.82rem;display:flex;gap:6px;align-items:center;margin-top:8px"><input type="checkbox" id="autoRenew" ${S.autoRenew?'checked':''}> Sambung 8 jam lagi secara automatik (jika aplikasi masih dibuka)</label>
+ <p class="muted" id="calMsg" style="font-size:.78rem;margin:4px 0 0">Aplikasi juga akan bergetar dan memaparkan notifikasi 15 minit sebelum tamat dan ketika tamat (jika dibenarkan).</p></div>`}
+function trkEndedBanner(){if(ROLE!=='isteri'||tracking())return '';const e=+S.trkLastEnd;if(!e||Date.now()-e>24*3600e3)return '';
+ return `<div class="panel blinkbox" role="alert"><h3 style="color:var(--warn)">Kongsi lokasi telah tamat</h3><p style="margin:0 0 10px">Tamat pada ${fmtAt(e,'Asia/Riyadh')} Saudi / ${fmtAt(e,'Asia/Kuala_Lumpur')} Malaysia dan telah disimpan dalam Sejarah perjalanan. Mula semula supaya suami nampak lokasi terkini.</p><button class="btn pri" data-trkrestart style="width:100%">Mula semula kongsi lokasi (8 jam)</button></div>`}
+function endedMsg(tr){if(ROLE==='isteri'||!tr)return '';const ended=(!tr.on&&(+tr.stoppedAt)>0)||(tr.on&&(+tr.until)>0&&Date.now()>=+tr.until);if(!ended)return '';
+ const at=tr.on?+tr.until:+tr.stoppedAt;if(Date.now()-at>24*3600e3)return '';
+ const txt='Sayang, kongsi lokasi dalam aplikasi Umrah Isteri dah tamat. Bila senang, buka aplikasi → tab Lokasi → tekan "Mula kongsi lokasi auto" ya. '+familyLink();
+ return `<div class="pmsg">Kongsi lokasi isteri tamat pada ${fmtAt(at,'Asia/Riyadh')} Saudi / ${fmtAt(at,'Asia/Kuala_Lumpur')} Malaysia.</div><a class="btn wa" href="https://wa.me/?text=${encodeURIComponent(txt)}" target="_blank" rel="noopener">Ingatkan isteri melalui WhatsApp</a>`}
+
+/* --- senarai sejarah --- */
+function trkHistList(){const m=new Map();[...(Array.isArray(LIVE.doc&&LIVE.doc.trkHist)?LIVE.doc.trkHist:[]),...(S.trkHist||[])].forEach(x=>{if(x&&x.id&&isFinite(+x.start))m.set(String(x.id),x)});
+ return [...m.values()].sort((a,b)=>(+b.start)-(+a.start))}
+function trkItem(h,btn){const st=+h.start,en=+h.end||st,d=+h.dist||0,pl=Array.isArray(h.places)?h.places:[];
+ const us=histList().filter(s=>(+s.start)>=st-60e3&&(+s.start)<=en+60e3);
+ return `<div class="th"><div class="thd"><b>${esc(dayLabel(saKeyOf(st)))}</b><span class="tag ${h.reason==='auto'?'w':'s'}">${h.reason==='auto'?'Tamat 8 jam':'Dihentikan'}</span></div>
+ <div class="thm">${fmtAt(st,'Asia/Riyadh')}–${fmtAt(en,'Asia/Riyadh')} Saudi · ${fmtAt(st,'Asia/Kuala_Lumpur')}–${fmtAt(en,'Asia/Kuala_Lumpur')} Malaysia</div>
+ <div class="thg"><span><b>${fmtDur(en-st)}</b>tempoh</span><span><b>${fmtDist(d)}</b>jarak</span><span><b>${Math.round(d/STRIDE).toLocaleString('ms-MY')}</b>langkah</span><span><b>${pl.length}</b>tempat</span></div>
+ ${pl.length?`<div class="thp">${pl.slice(0,6).map(p=>esc(p.l)).join(' → ')}${pl.length>6?` → … (${pl.length-6} lagi)`:''}</div>`:''}
+ ${us.map(s=>{const tw=s.phases.find(p=>p.k==='tawaf'),sa=s.phases.find(p=>p.k==='saie');return `<div class="thu">Rakaman umrah${tw?` · Tawaf ${+tw.rounds|0}/7`:''}${sa?` · Sa'ie ${+sa.rounds|0}/7`:''} · ${fmtDur(((+s.end)||(+s.start))-(+s.start))}</div>`}).join('')}
+ ${+h.gaps?`<div class="sgap" style="margin:4px 0 0">⚠ Terputus semasa skrin mati ×${+h.gaps|0}</div>`:''}
+ ${btn?`<button class="btn" data-thview="${esc(h.id)}" style="margin-top:8px">${HV&&HV.id===h.id?'Sedang dipaparkan di peta':'Lihat laluan di peta'}</button>`:''}</div>`}
+function trkHistHTML(){const L2=trkHistList();let h=`<h3>Sejarah perjalanan</h3>`;
+ if(HV)h+=`<div class="hvbar">${HV.loading?'Memuatkan laluan…':`Peta memaparkan laluan sejarah (${HV.pts.length} titik).`}<button class="btn" id="hvBack">Kembali ke hari ini</button></div>`;
+ if(ROLE==='isteri'&&TRKS&&!TRKS.end)h+=`<div class="th now"><div class="thd"><b>Sedang berjalan</b><span class="tag rec">● Aktif</span></div><div class="thm">Mula ${fmtAt(TRKS.start,'Asia/Riyadh')} Saudi · tamat ${fmtAt(trackUntil,'Asia/Riyadh')} Saudi</div><div class="thg"><span><b>${fmtDist(TRKS.dist)}</b>jarak</span><span><b>${TRKS.places.length}</b>tempat</span></div></div>`;
+ if(!L2.length)return h+`<p class="muted" style="margin:0">Belum ada sejarah. Setiap kali kongsi lokasi dihentikan atau tamat selepas 8 jam, ia disimpan di sini secara automatik.</p>`;
+ return h+L2.slice(0,15).map(x=>trkItem(x,true)).join('')}
+function trkHistRs(){const L2=trkHistList();if(!L2.length)return '';const tot=L2.reduce((a,x)=>a+(+x.dist||0),0);
+ return `<div class="panel"><h3>Sejarah perjalanan</h3><p class="mk" style="margin:0 0 6px">${L2.length} sesi · jumlah jarak ${fmtDist(tot)} · kira-kira ${Math.round(tot/STRIDE).toLocaleString('ms-MY')} langkah</p>${L2.slice(0,8).map(x=>trkItem(x,false)).join('')}</div>`}
+async function thView(id){const h=trkHistList().find(x=>String(x.id)===id);if(!h)return;
+ HV={id,loading:true,pts:[]};renderLive();
+ const days=[];for(let t=+h.start;t<=(+h.end||+h.start)+864e5&&days.length<4;t+=6*3600e3){const k=saKeyOf(t);if(!days.includes(k))days.push(k)}
+ let pts=[];if(tripRef){for(const k of days){const s=await Promise.race([tripRef.collection('days').doc(k).get(),new Promise((_,rj)=>setTimeout(()=>rj(new Error('t')),5000))]).catch(()=>null);if(s&&s.exists&&Array.isArray(s.data().pts))pts=pts.concat(s.data().pts)}}
+ if(!HV||HV.id!==id)return;
+ HV.pts=pts.filter(p=>p&&(+p.ts)>=(+h.start)-1000&&(+p.ts)<=(+h.end||Date.now())+1000).sort((a,b)=>a.ts-b.ts);HV.loading=false;
+ renderLive();if(MAP&&HV.pts.length){try{MAP.fitBounds(L.latLngBounds(HV.pts.map(p=>[+p.lat,+p.lng])),{padding:[24,24]})}catch(e){}}
+ const m=document.getElementById('map');if(m)m.scrollIntoView({behavior:'smooth',block:'center'})}
+main.addEventListener('click',e=>{const t=e.target;
+ const v=t.closest('[data-thview]');if(v){thView(v.dataset.thview);return}
+ if(t.closest('#hvBack')){HV=null;renderLive();drawMap(true);return}
+ if(t.closest('[data-trkrestart]')){startTracking(false);openMini();setTimeout(render,80);return}
+ const c=t.closest('[data-cal]');if(c){calOpen(c.dataset.cal,document.getElementById('calMsg'));return}
+});
+main.addEventListener('change',e=>{if(e.target.id==='autoRenew'){S.autoRenew=e.target.checked;save()}});
+setTimeout(()=>miniEl.addEventListener('click',e=>{if(SLEEP===2)return;if(e.target.closest('#mRestart')){startTracking(false);toMini()}else if(e.target.closest('#mExtend'))extendTracking()}),0);
+setInterval(()=>{const r=document.getElementById('mRestart'),x=document.getElementById('mExtend');if(!r||miniEl.hidden)return;
+ const on=tracking();r.hidden=on||ROLE!=='isteri';x.hidden=!(on&&trackUntil-Date.now()<=15*60e3)},1000);
 
 /* ---------- skrin mini & mod tidur (jimat bateri) ---------- */
 var SLEEP=0; /* 0 = halaman biasa, 1 = skrin mini, 2 = mod tidur */
@@ -1032,7 +1376,7 @@ function gpsEco(){if(watchId===null||watchId==='eco')return;navigator.geolocatio
  f();ecoTimer=setInterval(f,120000)}
 const miniEl=document.createElement('div');miniEl.id='mini';miniEl.hidden=true;miniEl.setAttribute('role','dialog');miniEl.setAttribute('aria-label','Skrin mini lokasi');
 miniEl.innerHTML=`<div class="m-in" id="mIn"><div class="m-lbl">🇸🇦 Waktu Saudi</div><div class="m-time" id="mTime">--:--</div><div class="m-sub" id="mMy"></div>
- <div class="m-zone"><span class="m-dot" id="mDot"></span><span id="mZone">Menunggu GPS…</span></div>
+ <div class="m-zone"><span class="m-dot" id="mDot"></span><span id="mZone">Menunggu GPS…</span></div><div class="m-sess" id="mSess"></div><button class="m-round" id="mRestart" hidden>Mula semula kongsi lokasi (8 jam)</button><button class="m-btn" id="mExtend" hidden>Sambung 8 jam lagi</button>
  <div class="m-rows"><div id="mSent"></div><div id="mNet"></div><div id="mUntil"></div><div id="mWake"></div></div>
  <div class="m-btns"><button id="mSleep" class="m-btn">Mod tidur</button><button id="mExit" class="m-btn ghost">Keluar skrin mini</button></div>
  <div class="m-hint" id="mHint">Mod tidur bermula sendiri selepas 1 minit tanpa sentuhan</div></div>`;
@@ -1041,7 +1385,7 @@ function miniUpdate(){
  if(miniEl.hidden)return;const $=id=>document.getElementById(id);
  const p=partsIn('Asia/Riyadh'),m=partsIn('Asia/Kuala_Lumpur');
  $('mTime').textContent=pad(p.h)+':'+pad(p.mi);$('mMy').textContent='🇲🇾 Malaysia '+pad(m.h)+':'+pad(m.mi);
- const on=tracking();const z=lastFix?lastFix.zone.n:(LIVE.doc&&LIVE.doc.pos?LIVE.doc.pos.label:'');
+ const on=tracking();const z=lastFix?(GENZ.includes(lastFix.zone.k)&&geoAddrNear(lastFix.lat,lastFix.lng)?geoAddrNear(lastFix.lat,lastFix.lng).split(', ').slice(0,2).join(', '):lastFix.zone.n):(LIVE.doc&&LIVE.doc.pos?posTitle(LIVE.doc.pos):'');
  $('mZone').textContent=on?(z||'Menunggu GPS…'):'Penjejakan tidak aktif';
  $('mDot').className='m-dot'+(on?(navigator.onLine?' ok':' warn'):'');
  $('mSent').textContent=last.ts?'Dihantar kepada suami '+ago(last.ts):'Belum dihantar';
@@ -1325,6 +1669,7 @@ async function rsBuild_(){
   return `<div class="rday ${t.d===k?'today':''}"><div class="dnum">Hari<b>${i+1}</b></div><div style="min-width:0"><b>${dayLabel(t.d)}</b> <span class="tag ${CITYTAG[t.c]}">${t.c}</span>${t.u?`<div class="umr" style="font-size:.95rem">${t.u}</div>`:''}
    <div class="rmeta"><span>Selawat <b>${s.selawat}</b></span><span>Tick <b>${s.checks}</b></span><span>Belanja <b>SAR ${f2(spendDay[t.d]||0)}</b></span>${photos!==null?`<span>Gambar <b>${photoDay[t.d]||0}</b></span>`:''}</div>
    ${z.length?`<div class="muted" style="font-size:.78rem">${[...new Set(z)].slice(0,5).join(' → ')}</div>`:''}</div></div>`}).join('')}</div></div>
+ ${histPanel()}${trkHistRs()}
  <div class="panel"><h3>Catatan kenangan & muhasabah</h3><textarea id="rsReflect" class="txt" rows="5" maxlength="2000" placeholder="Apa yang paling menyentuh hati sepanjang umrah ini? Doa yang paling diharapkan? Azam selepas pulang?">${esc(refl)}</textarea><p class="muted" id="rsRefMsg" style="font-size:.78rem;margin:6px 0 0">Disimpan automatik dalam telefon ini.</p></div>`;
  RS_LAST={mode,tot,spend,photos,umr,mk,md,top,refl,b,phase};
 }
@@ -1438,7 +1783,7 @@ if('serviceWorker' in navigator&&(location.protocol==='https:'||location.hostnam
 
 /* ---------- render & events ---------- */
 function render(){
- const v=current==='utama'?utamaView():current==='doa'?doaView():current==='berkat'?berkatView():current==='zikir'?zikirView():current==='lokasi'?lokasiView():current==='jadual'?jadualView():current==='bajet'?bajetView():current==='ringkasan'?ringkasanView():current==='gambar'?gambarView():listView(current);
+ const v=current==='utama'?utamaView():current==='doa'?doaView():current==='berkat'?berkatView():current==='zikir'?zikirView():current==='lokasi'?lokasiView():current==='penjejak'?penjejakView():current==='jadual'?jadualView():current==='bajet'?bajetView():current==='ringkasan'?ringkasanView():current==='gambar'?gambarView():listView(current);
  main.innerHTML=`<section class="view" role="tabpanel" aria-labelledby="tab-${current}">${v}</section><p class="foot">Panduan umum mazhab Syafie. Ikut arahan mutawwif & syarat terkini kerajaan Saudi.</p>`;
  if(current==='utama') liveUpdate();
  updateCounts();fillInfo();if(current==='ringkasan')rsBuild();afterRender();
@@ -1474,4 +1819,558 @@ prune();save();
 drawTabs();render();tick();setTimeout(tabScroll,50);setInterval(tick,1000);setInterval(tickAgo,30000);
 </script>
 
+<script>
+/* ===== PENJEJAK UMRAH — dipindahkan 100% daripada SIMULASI UMRAH V2 ===== */
+(function(){"use strict";
+const lang="bm";const $=id=>document.getElementById(id);
+function setCredit(){}
+function flash(t){let f=document.getElementById("kflash");if(!f){f=document.createElement("div");f.id="kflash";document.body.appendChild(f);}f.textContent=t;f.classList.add("on");clearTimeout(flash.t);flash.t=setTimeout(()=>f.classList.remove("on"),4500);}
+const IDB={p:null,
+ open(){if(this.p)return this.p;this.p=new Promise((res,rej)=>{if(!window.indexedDB)return rej("noidb");const r=indexedDB.open("simulasi-umrah",1);
+   r.onupgradeneeded=()=>{const d=r.result;if(!d.objectStoreNames.contains("kv"))d.createObjectStore("kv");if(!d.objectStoreNames.contains("audio"))d.createObjectStore("audio");};
+   r.onsuccess=()=>res(r.result);r.onerror=()=>rej(r.error);});return this.p;},
+ tx(st,mode,fn){return this.open().then(d=>new Promise((res,rej)=>{const t=d.transaction(st,mode),q=fn(t.objectStore(st));t.oncomplete=()=>res(q?q.result:undefined);t.onerror=()=>rej(t.error);t.onabort=()=>rej(t.error);}));},
+ get(st,k){return this.tx(st,"readonly",s=>s.get(k));},put(st,k,v){return this.tx(st,"readwrite",s=>s.put(v,k));},
+ del(st,k){return this.tx(st,"readwrite",s=>s.delete(k));},keys(st){return this.tx(st,"readonly",s=>s.getAllKeys());}};
+try{navigator.storage&&navigator.storage.persist&&navigator.storage.persist().catch(()=>{});}catch(e){}
+
+const TXT = {
+  bm: {
+    title:"Simulasi Tawaf 3D", sub:"Latihan visual 7 pusingan untuk jemaah umrah dan haji",
+    body:"Anda berjalan mengikut arah lawan jam dengan Kaabah di sebelah kiri, di tengah arus jemaah. Seret skrin untuk memandang sekeliling, hidupkan giroskop untuk memandang dengan menggerakkan telefon, atau masuk mod VR jika ada set kepala. Disyorkan duduk ketika menggunakan VR.",
+    lang:"Bahasa", who:"Jemaah", m:"Lelaki", f:"Perempuan", crowd:"Kesesakan", c1:"Sederhana", c2:"Sesak", c3:"Sangat sesak",
+    go:"Mula tawaf", fine:"Model anggaran untuk latihan visual, bukan rujukan hukum. Rujuk pembimbing ibadah anda untuk tatacara lengkap.",
+    view:"Paparan", real:"Rakaman sebenar", sim:"Model 3D", toSim:"Tukar ke 3D", toReal:"Tukar ke video", snd:"Bunyi", v360:"Video 360° (dari peranti)", v360has:"Video 360 mengandungi", one:"1 pusingan (diulang)", full:"7 pusingan penuh", pick:"Pilih video 360° dan mula", toV360:"Tukar ke video 360°", v360note:"Video dibuka terus dari peranti anda dan tidak dimuat naik ke mana-mana. Format terbaik ialah MP4 (H.264) atau WebM; fail MKV biasanya hanya dimainkan dalam Chrome.", fmtErr:"Pelayar ini tidak dapat memainkan format video ini. Cuba MP4 (H.264) atau guna Chrome.", vidErr:"Video tidak dapat dimainkan, beralih ke model 3D",
+    lap:"Pusingan", pre:"Sebelum mula", play:"Sambung", pause:"Jeda", look:"Lihat Kaabah", gyro:"Giroskop", vr:"Masuk VR", restart:"Mula semula",
+    newlap:n=>`Pusingan ${n} bermula`, done:"Tawaf selesai",
+    raml:"Lelaki: sunat ramal (langkah pendek dan cepat) pada pusingan 1 hingga 3 serta idtiba' (bahu kanan terbuka) dalam tawaf umrah atau qudum.",
+    flow:"Ikut arus jemaah dan jangan berhenti secara tiba-tiba.",
+    seg:{
+      pre:["Bersedia di garisan lampu hijau","Berdiri sejajar dengan Hajar Aswad (lampu hijau di dinding masjid). Niat tawaf dalam hati, dan pastikan Kaabah di sebelah kiri anda."],
+      aswad:["Hajar Aswad: istilam","Hadap Hajar Aswad, angkat tangan kanan ke arahnya dan ucapkan:"],
+      multazam:["Multazam dan Pintu Kaabah","Kawasan antara Hajar Aswad dan pintu Kaabah. Teruskan berjalan sambil berzikir dan berdoa, boleh dalam bahasa sendiri."],
+      maqam:["Maqam Ibrahim","Kubah emas di antara anda dan Kaabah menyimpan kesan tapak kaki Nabi Ibrahim. Selepas tawaf, solat sunat 2 rakaat di belakangnya jika mampu."],
+      hijr:["Hijr Ismail (Hatim)","Dinding separuh bulatan ini sebahagian daripada Kaabah. Tawaf mesti di luarnya; jangan masuk atau memotong melaluinya. Di atas bumbung ialah pancur emas Mizab ar-Rahmah."],
+      toyamani:["Menuju Rukun Yamani","Lepas Rukun Syami, teruskan zikir dan doa sambil mengikut arus."],
+      yamani:["Rukun Yamani","Sentuh dengan tangan kanan jika mudah. Jika sesak, cukup berisyarat ke arahnya sambil bertakbir, tanpa mengucup tangan."],
+      rabbana:["Rukun Yamani ke Hajar Aswad","Sunat membaca doa ini:"],
+      done:["Tawaf selesai: 7 pusingan","Istilam terakhir di Hajar Aswad. Seterusnya solat sunat tawaf 2 rakaat (di belakang Maqam Ibrahim jika mampu), minum air zamzam, kemudian sa'ie bagi umrah."]
+    }
+  },
+  en: {
+    title:"3D Tawaf Simulator", sub:"Visual practice of the 7 circuits for umrah and hajj pilgrims",
+    body:"You walk anticlockwise with the Kaaba on your left, inside the flow of pilgrims. Drag to look around, turn on the gyroscope to look by moving your phone, or enter VR if you have a headset. Sitting down is recommended in VR.",
+    lang:"Language", who:"Pilgrim", m:"Man", f:"Woman", crowd:"Crowd", c1:"Moderate", c2:"Busy", c3:"Very busy",
+    go:"Start tawaf", fine:"An approximate model for visual practice, not a ruling. Follow your ibadah guide for the full procedure.",
+    view:"View", real:"Real footage", sim:"3D model", toSim:"Switch to 3D", toReal:"Switch to video", snd:"Sound", v360:"360° video (from your device)", v360has:"The 360 video contains", one:"1 circuit (repeated)", full:"All 7 circuits", pick:"Choose a 360° video and start", toV360:"Switch to 360° video", v360note:"The video opens straight from your device and is not uploaded anywhere. MP4 (H.264) or WebM work best; MKV files usually play only in Chrome.", fmtErr:"This browser cannot play this video format. Try MP4 (H.264) or use Chrome.", vidErr:"The video could not play, switching to the 3D model",
+    lap:"Circuit", pre:"Before starting", play:"Resume", pause:"Pause", look:"Face the Kaaba", gyro:"Gyroscope", vr:"Enter VR", restart:"Restart",
+    newlap:n=>`Circuit ${n} begins`, done:"Tawaf complete",
+    raml:"Men: raml (short, brisk steps) is sunnah in circuits 1 to 3, with idtiba' (right shoulder uncovered) in the tawaf of umrah or arrival.",
+    flow:"Move with the crowd and never stop suddenly.",
+    seg:{
+      pre:["Get ready at the green light","Stand in line with the Black Stone (the green lamp on the mosque wall). Make your intention for tawaf in your heart, with the Kaaba on your left."],
+      aswad:["Black Stone: istilam","Face the Black Stone, raise your right hand towards it and say:"],
+      multazam:["Multazam and the Kaaba door","The wall between the Black Stone and the door. Keep walking with dhikr and du'a, in any language."],
+      maqam:["Maqam Ibrahim","The golden enclosure between you and the Kaaba holds the footprints of Prophet Ibrahim. After tawaf, pray 2 rak'ahs behind it if you can."],
+      hijr:["Hijr Ismail (Hatim)","This semicircular wall is part of the Kaaba. Tawaf must go around the outside; never enter or cut through it. Above is the golden spout, Mizab ar-Rahmah."],
+      toyamani:["Towards Rukn al-Yamani","After the Shami corner, continue dhikr and du'a while following the flow."],
+      yamani:["Rukn al-Yamani","Touch it with your right hand if easy. If crowded, simply gesture towards it with takbir, without kissing the hand."],
+      rabbana:["Yamani corner to the Black Stone","It is sunnah to recite:"],
+      done:["Tawaf complete: 7 circuits","Final istilam at the Black Stone. Next pray 2 rak'ahs (behind Maqam Ibrahim if possible), drink zamzam, then perform sa'i for umrah."]
+    }
+  }
+  ,id: {
+    title:"Simulasi Tawaf 3D", sub:"Latihan visual 7 putaran untuk jemaah umrah dan haji",
+    body:"Anda berjalan berlawanan arah jarum jam dengan Ka'bah di sebelah kiri, di tengah arus jemaah. Geser layar untuk melihat sekeliling, aktifkan giroskop untuk melihat dengan menggerakkan ponsel, atau masuk mode VR jika memiliki headset. Disarankan duduk saat menggunakan VR.",
+    lang:"Bahasa", who:"Jemaah", m:"Laki-laki", f:"Perempuan", crowd:"Kepadatan", c1:"Sedang", c2:"Padat", c3:"Sangat padat",
+    go:"Mulai tawaf", fine:"Model perkiraan untuk latihan visual, bukan rujukan hukum. Ikuti pembimbing ibadah Anda untuk tata cara lengkap.",
+    view:"Tampilan", real:"Rekaman asli", sim:"Model 3D", toSim:"Beralih ke 3D", toReal:"Beralih ke video", snd:"Suara", v360:"Video 360° (dari perangkat)", v360has:"Video 360 berisi", one:"1 putaran (diulang)", full:"7 putaran penuh", pick:"Pilih video 360° dan mulai", toV360:"Beralih ke video 360°", v360note:"Video dibuka langsung dari perangkat Anda dan tidak diunggah ke mana pun. Format terbaik adalah MP4 (H.264) atau WebM; file MKV biasanya hanya diputar di Chrome.", fmtErr:"Browser ini tidak dapat memutar format video ini. Coba MP4 (H.264) atau gunakan Chrome.", vidErr:"Video tidak dapat diputar, beralih ke model 3D",
+    lap:"Putaran", pre:"Sebelum mulai", play:"Lanjutkan", pause:"Jeda", look:"Hadap Ka'bah", gyro:"Giroskop", vr:"Masuk VR", restart:"Ulangi",
+    newlap:n=>`Putaran ${n} dimulai`, done:"Tawaf selesai",
+    raml:"Laki-laki: disunahkan raml (langkah pendek dan cepat) pada putaran 1 sampai 3, serta idtiba' (bahu kanan terbuka) pada tawaf umrah atau qudum.",
+    flow:"Ikuti arus jemaah dan jangan berhenti tiba-tiba.",
+    seg:{
+      pre:["Bersiap di garis lampu hijau","Berdirilah sejajar dengan Hajar Aswad (lampu hijau di dinding masjid). Niatkan tawaf dalam hati, dan pastikan Ka'bah di sebelah kiri Anda."],
+      aswad:["Hajar Aswad: istilam","Hadapkan diri ke Hajar Aswad, angkat tangan kanan ke arahnya dan ucapkan:"],
+      multazam:["Multazam dan pintu Ka'bah","Area antara Hajar Aswad dan pintu Ka'bah. Terus berjalan sambil berzikir dan berdoa, boleh dalam bahasa sendiri."],
+      maqam:["Maqam Ibrahim","Kubah emas di antara Anda dan Ka'bah menyimpan bekas telapak kaki Nabi Ibrahim. Setelah tawaf, salat sunah 2 rakaat di belakangnya jika mampu."],
+      hijr:["Hijr Ismail (Hathim)","Dinding setengah lingkaran ini bagian dari Ka'bah. Tawaf harus di luarnya; jangan masuk atau memotong melaluinya. Di atas atap terdapat talang emas Mizab ar-Rahmah."],
+      toyamani:["Menuju Rukun Yamani","Setelah Rukun Syami, lanjutkan zikir dan doa sambil mengikuti arus."],
+      yamani:["Rukun Yamani","Usap dengan tangan kanan jika mudah. Jika padat, cukup berisyarat ke arahnya sambil bertakbir, tanpa mencium tangan."],
+      rabbana:["Rukun Yamani ke Hajar Aswad","Disunahkan membaca doa ini:"],
+      done:["Tawaf selesai: 7 putaran","Istilam terakhir di Hajar Aswad. Selanjutnya salat sunah tawaf 2 rakaat (di belakang Maqam Ibrahim jika mampu), minum air zamzam, lalu sa'i untuk umrah."]
+    }
+  }
+  ,ar: {
+    title:"محاكاة الطواف ثلاثية الأبعاد", sub:"تدريب بصري على الأشواط السبعة للمعتمرين والحجاج",
+    body:"تمشي عكس اتجاه عقارب الساعة والكعبة عن يسارك وسط الطائفين. اسحب الشاشة للنظر حولك، أو فعّل الجيروسكوب لتنظر بتحريك هاتفك، أو ادخل وضع الواقع الافتراضي إن كانت لديك نظارة. يُنصح بالجلوس عند استخدام الواقع الافتراضي.",
+    lang:"اللغة", who:"المعتمر", m:"رجل", f:"امرأة", crowd:"الازدحام", c1:"متوسط", c2:"مزدحم", c3:"مزدحم جدًا",
+    go:"ابدأ الطواف", fine:"نموذج تقريبي للتدريب البصري وليس مرجعًا فقهيًا. اتبع مرشدك في العبادة للتفاصيل الكاملة.",
+    view:"العرض", real:"تصوير حقيقي", sim:"نموذج ثلاثي الأبعاد", toSim:"التبديل إلى 3D", toReal:"التبديل إلى الفيديو", snd:"الصوت", v360:"فيديو 360° (من جهازك)", v360has:"يحتوي فيديو 360 على", one:"شوط واحد (يتكرر)", full:"الأشواط السبعة كاملة", pick:"اختر فيديو 360° وابدأ", toV360:"التبديل إلى فيديو 360°", v360note:"يُفتح الفيديو مباشرة من جهازك ولا يُرفع إلى أي مكان. أفضل الصيغ MP4 (H.264) أو WebM، وملفات MKV تعمل عادةً في متصفح Chrome فقط.", fmtErr:"لا يستطيع هذا المتصفح تشغيل صيغة الفيديو هذه. جرّب MP4 (H.264) أو استخدم Chrome.", vidErr:"تعذّر تشغيل الفيديو، جارٍ التبديل إلى النموذج ثلاثي الأبعاد",
+    lap:"الشوط", pre:"قبل البدء", play:"متابعة", pause:"إيقاف مؤقت", look:"انظر إلى الكعبة", gyro:"الجيروسكوب", vr:"الواقع الافتراضي", restart:"إعادة البدء",
+    newlap:n=>`بدأ الشوط ${n}`, done:"اكتمل الطواف",
+    raml:"للرجال: يُسن الرَّمَل (الإسراع مع مقاربة الخطى) في الأشواط الثلاثة الأولى، والاضطباع (كشف الكتف الأيمن) في طواف العمرة أو القدوم.",
+    flow:"سِر مع حركة الطائفين ولا تتوقف فجأة.",
+    seg:{
+      pre:["استعد عند محاذاة الضوء الأخضر","قف بمحاذاة الحجر الأسود (المصباح الأخضر على جدار المسجد). انوِ الطواف بقلبك، واجعل الكعبة عن يسارك."],
+      aswad:["الحجر الأسود: الاستلام","استقبل الحجر الأسود، وأشر إليه بيدك اليمنى وقل:"],
+      multazam:["الملتزم وباب الكعبة","ما بين الحجر الأسود وباب الكعبة. واصل المشي مع الذكر والدعاء بأي لغة."],
+      maqam:["مقام إبراهيم","القبة الذهبية بينك وبين الكعبة فيها أثر قدمي إبراهيم عليه السلام. بعد الطواف صلِّ ركعتين خلفه إن تيسّر."],
+      hijr:["حِجر إسماعيل (الحطيم)","هذا الجدار نصف الدائري جزء من الكعبة، فيجب أن يكون الطواف من خارجه، فلا تدخله ولا تقطع من خلاله. وفي الأعلى ميزاب الرحمة الذهبي."],
+      toyamani:["نحو الركن اليماني","بعد الركن الشامي، واصل الذكر والدعاء مع السير مع الطائفين."],
+      yamani:["الركن اليماني","استلمه بيدك اليمنى إن تيسّر، وإن كان زحام فأشر إليه مكبّرًا دون تقبيل اليد."],
+      rabbana:["من الركن اليماني إلى الحجر الأسود","يُسن أن تقول:"],
+      done:["اكتمل الطواف: 7 أشواط","الاستلام الأخير عند الحجر الأسود. ثم صلِّ ركعتي الطواف (خلف المقام إن تيسّر)، واشرب من ماء زمزم، ثم اسعَ بين الصفا والمروة للعمرة."]
+    }
+  }
+};
+const AR = {
+  aswad:["بِسْمِ اللهِ وَاللهُ أَكْبَرُ","Bismillahi wallahu akbar"],
+  rabbana:["رَبَّنَا آتِنَا فِي الدُّنْيَا حَسَنَةً وَفِي الْآخِرَةِ حَسَنَةً وَقِنَا عَذَابَ النَّارِ","Rabbana atina fid-dunya hasanah, wa fil-akhirati hasanah, wa qina 'adhaban-nar"]
+};
+
+const SEGS=[[0,8,"aswad"],[8,40,"multazam"],[40,80,"maqam"],[80,190,"hijr"],[190,266,"toyamani"],[266,276,"yamani"],[276,360,"rabbana"]];
+
+const SAR={verse:["إِنَّ الصَّفَا وَالْمَرْوَةَ مِنْ شَعَائِرِ اللّٰهِ","Innas-Safa wal-Marwata min sha'a'irillah (al-Baqarah: 158)"],
+  dzikr:["اللّٰهُ أَكْبَرُ، اللّٰهُ أَكْبَرُ، اللّٰهُ أَكْبَرُ، لَا إِلٰهَ إِلَّا اللّٰهُ وَحْدَهُ لَا شَرِيكَ لَهُ، لَهُ الْمُلْكُ وَلَهُ الْحَمْدُ وَهُوَ عَلَىٰ كُلِّ شَيْءٍ قَدِيرٌ","Allahu akbar (3 kali), La ilaha illallahu wahdahu la sharika lah, lahul-mulku wa lahul-hamdu wa huwa 'ala kulli shay'in qadir"]};
+const JT={
+ bm:{prev:"Kembali",next:"Seterusnya",inI:"Dalam ihram: jaga larangan",notI:"Belum berihram",halal:"Selesai: bebas daripada ihram",guide:"Panduan",nextStep:"Langkah seterusnya",trip:"Perjalanan",
+   rukun:"RUKUN",wajib:"WAJIB",sunat:"SUNAT",
+   sai:{safa:["Di Bukit Safa","Hadap ke arah Kaabah, angkat tangan, bertakbir 3 kali, bertahlil dan berdoa. Lelaki sunat menaiki bukit."],
+        safa1:["Mula sa'ie di Bukit Safa","Niat sa'ie dalam hati. Hadap ke arah Kaabah, baca ayat ini, kemudian bertakbir 3 kali, bertahlil dan berdoa."],
+        marwah:["Di Bukit Marwah","Hadap ke arah Kaabah, angkat tangan, bertakbir 3 kali, bertahlil dan berdoa. Lelaki sunat menaiki bukit."],
+        walk:["Berjalan di Mas'a","Berzikir, berdoa dan membaca al-Quran. Pastikan sampai ke hujung Safa dan Marwah pada setiap perjalanan."],
+        green:["Kawasan lampu hijau","Lelaki: sunat berlari-lari anak di antara dua tanda lampu hijau. Wanita: teruskan berjalan seperti biasa."],
+        done:["Sa'ie selesai: 7 perjalanan","Sa'ie berakhir di Bukit Marwah. Langkah seterusnya: bercukur atau bergunting (tahallul)."]},
+   dir1:"Safa ke Marwah",dir2:"Marwah ke Safa",saiTip:"Jika sesak, elakkan daripada menyakiti orang lain.",saiDone:"Sa'ie selesai"},
+ en:{prev:"Back",next:"Next",inI:"In ihram: observe the prohibitions",notI:"Not yet in ihram",halal:"Done: released from ihram",guide:"Guide",nextStep:"Next step",trip:"Lap",
+   rukun:"PILLAR",wajib:"WAJIB",sunat:"SUNNAH",
+   sai:{safa:["On Mount Safa","Face the Kaaba, raise your hands, say takbir 3 times, the tahlil, and make du'a. Men may climb the hill (sunnah)."],
+        safa1:["Begin sa'i at Safa","Intend sa'i in your heart. Face the Kaaba, recite this verse, then takbir 3 times, the tahlil and du'a."],
+        marwah:["On Mount Marwah","Face the Kaaba, raise your hands, say takbir 3 times, the tahlil, and make du'a. Men may climb the hill (sunnah)."],
+        walk:["Walking the Mas'a","Dhikr, du'a and Quran. Make sure you reach the very end at Safa and Marwah on every lap."],
+        green:["Green light zone","Men: brisk trotting between the two green lights is sunnah. Women: keep walking normally."],
+        done:["Sa'i complete: 7 laps","Sa'i ends at Marwah. Next step: shaving or cutting the hair (tahallul)."]},
+   dir1:"Safa to Marwah",dir2:"Marwah to Safa",saiTip:"If crowded, take care not to hurt anyone.",saiDone:"Sa'i complete"}
+ ,id:{prev:"Kembali",next:"Lanjut",inI:"Dalam ihram: jaga larangan",notI:"Belum berihram",halal:"Selesai: bebas dari ihram",guide:"Panduan",nextStep:"Langkah berikutnya",trip:"Perjalanan",
+   rukun:"RUKUN",wajib:"WAJIB",sunat:"SUNAH",
+   sai:{safa:["Di Bukit Shafa","Hadap ke arah Ka'bah, angkat tangan, bertakbir 3 kali, bertahlil dan berdoa. Laki-laki disunahkan naik ke bukit."],
+        safa1:["Mulai sa'i di Bukit Shafa","Niatkan sa'i dalam hati. Hadap ke arah Ka'bah, baca ayat ini, lalu bertakbir 3 kali, bertahlil dan berdoa."],
+        marwah:["Di Bukit Marwah","Hadap ke arah Ka'bah, angkat tangan, bertakbir 3 kali, bertahlil dan berdoa. Laki-laki disunahkan naik ke bukit."],
+        walk:["Berjalan di Mas'a","Berzikir, berdoa dan membaca Al-Qur'an. Pastikan sampai ke ujung Shafa dan Marwah pada setiap perjalanan."],
+        green:["Area lampu hijau","Laki-laki: disunahkan berlari kecil di antara dua tanda lampu hijau. Perempuan: tetap berjalan seperti biasa."],
+        done:["Sa'i selesai: 7 perjalanan","Sa'i berakhir di Bukit Marwah. Langkah berikutnya: mencukur atau menggunting rambut (tahallul)."]},
+   dir1:"Shafa ke Marwah",dir2:"Marwah ke Shafa",saiTip:"Jika padat, hindari menyakiti orang lain.",saiDone:"Sa'i selesai"}
+ ,ar:{prev:"السابق",next:"التالي",inI:"في الإحرام: اجتنب المحظورات",notI:"لم تُحرم بعد",halal:"تم: تحلّلت من الإحرام",guide:"الدليل",nextStep:"الخطوة التالية",trip:"الشوط",
+   rukun:"ركن",wajib:"واجب",sunat:"سنة",
+   sai:{safa:["على الصفا","استقبل الكعبة، وارفع يديك، وكبّر ثلاثًا، وهلّل، وادعُ. ويُسن للرجال صعود الصفا."],
+        safa1:["ابدأ السعي من الصفا","انوِ السعي بقلبك، واستقبل الكعبة، واقرأ هذه الآية، ثم كبّر ثلاثًا، وهلّل، وادعُ."],
+        marwah:["على المروة","استقبل الكعبة، وارفع يديك، وكبّر ثلاثًا، وهلّل، وادعُ. ويُسن للرجال صعود المروة."],
+        walk:["المشي في المسعى","اذكر الله وادعُه واقرأ القرآن، وتأكد من بلوغ طرف الصفا والمروة في كل شوط."],
+        green:["منطقة الأضواء الخضراء","للرجال: يُسن الإسراع بين العلمين الأخضرين، أما المرأة فتمشي على عادتها."],
+        done:["اكتمل السعي: 7 أشواط","ينتهي السعي عند المروة. الخطوة التالية: الحلق أو التقصير (التحلل)."]},
+   dir1:"من الصفا إلى المروة",dir2:"من المروة إلى الصفا",saiTip:"عند الزحام احرص على ألا تؤذي أحدًا.",saiDone:"اكتمل السعي"}
+};
+
+/* ---------- V2: Audio bacaan al-Quran (surah pendek) ---------- */
+const SURAH_L=[[18,"Al-Kahf","الكهف"],[32,"As-Sajdah","السجدة"],[56,"Al-Waqi'ah","الواقعة"],[67,"Al-Mulk","الملك"]];
+const SURAH=[[1,"Al-Fatihah","الفاتحة"],[103,"Al-'Asr","العصر"],[106,"Quraisy","قريش"],[107,"Al-Ma'un","الماعون"],[108,"Al-Kauthar","الكوثر"],[109,"Al-Kafirun","الكافرون"],[110,"An-Nasr","النصر"],[112,"Al-Ikhlas","الإخلاص"],[113,"Al-Falaq","الفلق"],[114,"An-Nas","الناس"]];
+const QTX={bm:{tab:"🎧 Surah",qari:"Qari",dl:"⬇️ Simpan",saved:"✓ Luar talian",dlAll:"⬇️ Simpan semua yang ditanda (untuk luar talian)",dlErr:"Muat turun gagal. Periksa internet; jika masih gagal, pelayan audio mungkin tidak membenarkan simpanan luar talian, jadi audio akan distrim apabila ada internet.",credit:"Audio distrim dari MP3Quran.net, yang membenarkan pelawat dan pembangun menggunakan bahan dan pautannya (mp3quran.net/eng/privacy). Rakaman ialah hasil kerja qari masing-masing.",gS:"Surah pendek",gL:"Surah pilihan",sel:"Semasa tawaf & sa'ie",selInfo:"Tandakan surah yang mahu dimainkan oleh butang 📿 Murattal semasa tawaf dan sa'ie.",big:"surah panjang",info:"Dengar bacaan surah-surah pendek. Boleh dimainkan berterusan semasa tawaf dan sa'ie; audio berhenti seketika apabila panduan suara dibaca.",all:"▶ Main semua",stop:"⏹ Henti",play:"▶ Dengar",bar:"📿 Murattal",trk:"📿 Mainkan bacaan surah semasa tawaf & sa'ie",na:"Audio tidak dapat dimainkan. Periksa sambungan internet, atau simpan surah untuk luar talian."},
+ en:{tab:"🎧 Surahs",qari:"Reciter",dl:"⬇️ Save",saved:"✓ Offline",dlAll:"⬇️ Save all ticked (for offline)",dlErr:"Download failed. Check your internet; if it still fails, the audio server may not allow offline saving, so audio will stream when online.",credit:"Audio is streamed from MP3Quran.net, which allows visitors and developers to use its material and links (mp3quran.net/eng/privacy). Recordings remain the work of the respective reciters.",gS:"Short surahs",gL:"Selected surahs",sel:"During tawaf & sa'ie",selInfo:"Tick the surahs that the 📿 Recitation button plays during tawaf and sa'ie.",big:"long surah",info:"Listen to short surah recitations. They can play continuously during tawaf and sa'ie; audio pauses while voice guidance is spoken.",all:"▶ Play all",stop:"⏹ Stop",play:"▶ Listen",bar:"📿 Recitation",trk:"📿 Play surah recitation during tawaf & sa'ie",na:"Audio is not available here; open the GitHub version."}};
+const SURAH_ALL=SURAH.concat(SURAH_L);
+function qSel(){try{const v=JSON.parse(localStorage.getItem("su-qsel"));if(Array.isArray(v)&&v.length)return v;}catch(e){}return SURAH.map(x=>x[0]);}
+function qSetSel(a){try{localStorage.setItem("su-qsel",JSON.stringify(a));}catch(e){}}
+function qt(){return QTX[lang==="en"||lang==="ar"?"en":"bm"];}
+/* bacaan dari MP3Quran.net (strim, tidak disimpan dalam pakej aplikasi) */
+const QARI=[{id:"afs",n:"Mishary Rashid Alafasy",s:"https://server8.mp3quran.net/afs/"},{id:"s_gmd",n:"Saad Al-Ghamdi",s:"https://server7.mp3quran.net/s_gmd/"},
+ {id:"sds",n:"Abdul Rahman Al-Sudais",s:"https://server11.mp3quran.net/sds/"},{id:"yasser",n:"Yasser Al-Dosari",s:"https://server11.mp3quran.net/yasser/"},
+ {id:"ajm",n:"Ahmad Al-Ajmi",s:"https://server10.mp3quran.net/ajm/"},{id:"mhsny",n:"Mohammad Al-Muhaisni",s:"https://server11.mp3quran.net/mhsny/"}];
+function qQari(){let id=null;try{id=localStorage.getItem("su-qari");}catch(e){}return QARI.find(x=>x.id===id)||QARI[0];}
+function qUrl(n,r){r=r||qQari();return r.s+String(n).padStart(3,"0")+".mp3";}
+const qOffKeys=new Set(),qBlobUrls={};
+IDB.keys("audio").then(ks=>{(ks||[]).forEach(k=>qOffKeys.add(k));}).catch(()=>{});
+function qKey(n){return qQari().id+"/"+n;}
+function qResolve(n){const k=qKey(n);if(qBlobUrls[k])return Promise.resolve(qBlobUrls[k]);
+  return IDB.get("audio",k).then(b=>{if(b){qBlobUrls[k]=URL.createObjectURL(b);return qBlobUrls[k];}return qUrl(n);}).catch(()=>qUrl(n));}
+function qSrc(n){return qUrl(n);}
+function qDownload(n){const k=qKey(n);return fetch(qUrl(n),{mode:"cors"}).then(r=>{if(!r.ok)throw new Error("http");return r.blob();})
+  .then(b=>IDB.put("audio",k,b)).then(()=>{qOffKeys.add(k);});}
+function qRemoveOff(n){const k=qKey(n);if(qBlobUrls[k]){URL.revokeObjectURL(qBlobUrls[k]);delete qBlobUrls[k];}return IDB.del("audio",k).then(()=>qOffKeys.delete(k));}
+
+/* player: HTML audio for files, Web Audio for embedded data (works where media URLs are blocked) */
+const qa=new Audio();qa.preload="none";let qList=[],qIdx=0,qOn=false,qLoop=false,qHeld=false,qCb=null,qGen=0;
+let qCtx=null,qNode=null,qBufs={},qStartAt=0,qOff=0,qWA=false;
+function qUseWA(n){return false;}
+function qCtxInit(){try{if(!qCtx){const C=window.AudioContext||window.webkitAudioContext;if(C)qCtx=new C();}if(qCtx&&qCtx.state==="suspended")qCtx.resume();}catch(e){}}
+function qBuf(n){if(qBufs[n])return Promise.resolve(qBufs[n]);const b=atob(AUD_DATA[n].split(",")[1]),u=new Uint8Array(b.length);for(let i=0;i<b.length;i++)u[i]=b.charCodeAt(i);
+  return new Promise((res,rej)=>qCtx.decodeAudioData(u.buffer,x=>{qBufs[n]=x;res(x);},rej));}
+function qWAStop(){if(qNode){qNode.onended=null;try{qNode.stop();}catch(e){}qNode=null;}}
+function qWAStart(){const n=qList[qIdx],g=qGen;qBuf(n).then(buf=>{if(g!==qGen||!qOn||qHeld)return;qWAStop();const src=qCtx.createBufferSource();src.buffer=buf;src.connect(qCtx.destination);
+  if(qOff>=buf.duration)qOff=0;src.onended=()=>{if(qNode!==src)return;qNode=null;qOff=0;qEnded();};qStartAt=qCtx.currentTime;src.start(0,qOff);qNode=src;}).catch(()=>qFail());}
+function qEnded(){const n=qList[qIdx];if(qCb)qCb(n);qIdx++;qGo();}
+function qFail(){if(!qOn)return;const o=document.getElementById("qmsg");if(o)o.textContent=qt().na;if(typeof flash==="function"&&$("bar")&&$("bar").style.display!=="none")flash(qt().na);qOn=false;qUI();if(typeof buildBar==="function")try{buildBar();}catch(e){}}
+function qPlay(list,loop,cb){qCtxInit();qStop(true);qList=list.slice();qIdx=0;qOn=true;qLoop=!!loop;qCb=cb||null;qHeld=false;qGo();}
+function qGo(){if(!qOn)return;if(qIdx>=qList.length){if(qLoop&&qList.length)qIdx=0;else{qOn=false;qUI();return;}}
+  const n=qList[qIdx];qGen++;qOff=0;qWA=qUseWA(n);
+  if(qWA&&qCtx){try{qa.pause();}catch(e){}if(!qHeld)qWAStart();}
+  else{qWAStop();const k=qKey(n),g=qGen,go=u=>{if(g!==qGen||!qOn)return;qa.src=u;qa.volume=1;if(!qHeld)qa.play().catch(e=>{if(e&&e.name==="NotAllowedError")return;qErr();});};
+    if(qOffKeys.has(k))qResolve(n).then(go);else go(qUrl(n));}
+  qUI();}
+qa.onended=()=>{if(!qWA)qEnded();};
+let qErrN=0;function qErr(){qErrN++;if(qErrN>=3||qList.length<=1){qErrN=0;qFail();}else{qIdx++;qGo();}}
+qa.addEventListener("playing",()=>{qErrN=0;});
+qa.onerror=()=>{if(qOn&&!qWA)qErr();};
+function qStop(silent){qOn=false;qHeld=false;qGen++;qWAStop();qOff=0;try{qa.pause();}catch(e){}if(!silent)qUI();}
+function qHold(h){if(h===qHeld)return;qHeld=h;if(!qOn)return;
+  if(qWA){if(h){if(qNode&&qCtx){qOff+=qCtx.currentTime-qStartAt;qWAStop();}}else qWAStart();}
+  else{try{if(h)qa.pause();else qa.play().catch(()=>{});}catch(e){}}}
+function qUnlock(){qCtxInit();try{if(!window.AUD_DATA){qa.src=qSrc(112);qa.muted=true;qa.play().then(()=>{qa.pause();qa.muted=false;qa.currentTime=0;}).catch(()=>{qa.muted=false;});}}catch(e){}}
+function qUI(){document.querySelectorAll("[data-q]").forEach(b=>{const on=qOn&&qList[qIdx]===+b.dataset.q&&qList.length===1;b.textContent=on?qt().stop:qt().play;b.setAttribute("aria-pressed",on);});
+  const a=document.getElementById("qall");if(a)a.textContent=(qOn&&qList.length>1)?qt().stop:qt().all;const qb=document.getElementById("qbtn");if(qb){qb.setAttribute("aria-pressed",qOn&&qLoop);}}
+function qToggleOne(n,cb){if(qOn&&qList.length===1&&qList[0]===n){qStop();return;}qPlay([n],false,cb);}
+
+/* ---------- V2: Bacaan suara tawaf & sa'ie (Web Speech) ---------- */
+const VO={get on(){try{return localStorage.getItem("su-voice")!=="0";}catch(e){return true;}},set on(v){try{localStorage.setItem("su-voice",v?"1":"0");}catch(e){}}};
+const VLANG={bm:"ms-MY",en:"en-US",id:"id-ID",ar:"ar-SA"};
+const VTX={bm:{on:"🔊 Bacaan",off:"🔇 Bacaan",tawafStart:"Tawaf bermula",saiStart:"Sa'ie bermula"},en:{on:"🔊 Readings",off:"🔇 Readings",tawafStart:"Tawaf begins",saiStart:"Sa'ie begins"},id:{on:"🔊 Bacaan",off:"🔇 Bacaan",tawafStart:"Tawaf dimulai",saiStart:"Sa'i dimulai"},ar:{on:"🔊 الأذكار",off:"🔇 الأذكار",tawafStart:"بدء الطواف",saiStart:"بدء السعي"}};
+function vPick(code){try{const vs=speechSynthesis.getVoices(),b=code.slice(0,2).toLowerCase();return vs.find(v=>v.lang.replace("_","-")===code)||vs.find(v=>v.lang.toLowerCase().startsWith(b))||(b==="ms"?vs.find(v=>v.lang.toLowerCase().startsWith("id")):null);}catch(e){return null;}}
+let vTok=0;
+function vSpeak(parts,force){if(!window.speechSynthesis||(!VO.on&&!force))return;try{speechSynthesis.cancel();const tok=++vTok,ps=parts.filter(p=>p&&p.t),canTalk=speechSynthesis.getVoices().length>0;if(ps.length&&canTalk)qHold(true);
+  ps.forEach((p,i)=>{const code=p.ar?"ar-SA":(VLANG[lang]||"ms-MY"),u=new SpeechSynthesisUtterance(p.t);u.lang=code;const v=vPick(code);if(v)u.voice=v;u.rate=p.ar?0.8:0.95;
+    if(i===ps.length-1)u.onend=u.onerror=()=>{if(tok===vTok)qHold(false);};speechSynthesis.speak(u);});
+  const ms=Math.min(30000,2500+ps.reduce((a,p)=>a+p.t.length,0)*95);setTimeout(()=>{if(tok===vTok&&qHeld)qHold(false);},ms);}catch(e){qHold(false);}}
+function vStop(){try{speechSynthesis.cancel();}catch(e){}}
+function vTawaf(k,head,force){const L=TXT[lang]||TXT.bm,sg=L.seg&&L.seg[k];if(!sg)return;const ar=AR[k];vSpeak([{t:head},{t:sg[0]+". "+sg[1]},ar&&{t:ar[0],ar:1}],force);}
+function vSai(k,head,force){const L=JT[lang]||JT.bm,sg=L.sai&&L.sai[k];if(!sg)return;let ar=null;if(k==="safa1")ar=SAR.verse[0]+"، "+SAR.dzikr[0];else if(k==="safa"||k==="marwah")ar=SAR.dzikr[0];vSpeak([{t:head},{t:sg[0]+". "+sg[1]},ar&&{t:ar,ar:1}],force);}
+function segOfDeg(dg){const s=SEGS.find(([a,b])=>dg>=a&&dg<b);return s?s[2]:"rabbana";}
+function saiKeyT(t,leg){if(t<0.06||t>0.94){const atSafa=t<0.5;return atSafa?(leg===0?"safa1":"safa"):"marwah";}return(t>0.26&&t<0.38)?"green":"walk";}
+document.addEventListener("click",function vUnlock(){try{const u=new SpeechSynthesisUtterance(" ");u.volume=0;speechSynthesis.speak(u);}catch(e){}document.removeEventListener("click",vUnlock,true);},true);
+let vLap=-1,vTrip=-1;
+const VTEST={bm:{btn:"🔈 Uji suara",say:"Ujian suara. Bismillah.",ok:"Suara Bahasa Melayu",ar:"Suara Arab",none:"tiada (guna suara lain)",unsup:"Pelayar ini tidak menyokong suara. Buka pautan di Chrome (Android) atau Safari (iPhone), bukan di dalam aplikasi lain.",chk:"Jika tiada bunyi: matikan mod senyap, naikkan volume media."},
+ en:{btn:"🔈 Test voice",say:"Voice test. Bismillah.",ok:"Local voice",ar:"Arabic voice",none:"none (fallback voice used)",unsup:"This browser does not support speech. Open the link in Chrome (Android) or Safari (iPhone), not inside another app.",chk:"If silent: turn off silent mode and raise media volume."}};
+function vTest(out){const T=VTEST[lang==="en"||lang==="ar"?"en":"bm"];if(!("speechSynthesis" in window)||typeof SpeechSynthesisUtterance==="undefined"){if(out)out.textContent="⛔ "+T.unsup;return;}
+  const go=()=>{const loc=vPick(VLANG[lang]||"ms-MY"),ar=vPick("ar-SA");if(out)out.textContent=`${T.ok}: ${loc?loc.name:T.none} · ${T.ar}: ${ar?ar.name:T.none}. ${T.chk}`;vSpeak([{t:T.say},{t:"بِسْمِ اللهِ وَاللهُ أَكْبَرُ",ar:1}],true);};
+  if(speechSynthesis.getVoices().length)go();else{speechSynthesis.onvoiceschanged=()=>{speechSynthesis.onvoiceschanged=null;go();};setTimeout(go,800);}}
+
+/* ---------- V2: Penjejak Umrah AUTOMATIK (jarak, langkah, masa) ---------- */
+const KT={bm:{open:"🏃 Penjejak Umrah: masa, jarak & langkah",back:"‹ Panduan Umrah",title:"Penjejak Umrah",sub:"Tekan Mula sekali di hotel, simpan telefon dalam poket, dan beribadah dengan tenang. Aplikasi mengesan sendiri tawaf, sa'ie dan perjalanan pulang, kemudian mengira masa, jarak dan langkah.",
+ discT:"📍 Penggunaan lokasi",discB:"Aplikasi ini menggunakan <b>lokasi</b> (GPS) dan sensor gerakan telefon anda untuk mengira jarak dan langkah semasa rakaman sahaja. Semua data disimpan di dalam telefon anda dan tidak dihantar ke mana-mana.",
+ howT:"✋ Tanpa perlu tekan semasa ibadah",howB:"Selepas Mula, skrin bertukar gelap (<b>Mod poket</b>) supaya tidak tersentuh dalam poket. Skrin perlu kekal hidup kerana telefon menghentikan GPS apabila skrin dimatikan; skrin gelap menjimatkan bateri. Tekan lama 2 saat untuk membuka semula. Apabila anda sampai semula ke hotel, rakaman tamat sendiri.",
+ h:"Tinggi (cm)",g:"Jantina",L:"Lelaki",P:"Perempuan",fl:"Biasanya tawaf di",start:"▶ Setuju & mula",hist:"Rekod lepas",none:"Belum ada rekod.",del:"Padam",delAll:"🗑️ Padam semua rekod",sure:"Tekan sekali lagi untuk sahkan",
+ seg:["🏨 Hotel ke Masjidil Haram","🕋 Tawaf","🏃 Sa'ie","✂️ Tahallul","🏨 Pulang ke hotel"],time:"Masa",dist:"Jarak",steps:"Langkah",est:"anggaran",sensor:"dikesan sensor",
+ pause:"⏸ Jeda",resume:"▶ Sambung",finish:"🏁 Tamat & simpan",pocket:"🔒 Mod poket",unlock:"Tekan lama 2 saat untuk buka",
+ floors:["Dataran Kaabah (±200 m/pusingan)","Tingkat 1 (±450 m)","Bumbung (±600 m)"],auto:"Dikesan automatik",now:"Sekarang",lapsA:"pusingan dikesan (anggaran)",
+ gpsWait:"Mencari isyarat GPS…",gpsOk:"GPS aktif",acc:"ketepatan",gpsErr:"Lokasi disekat. Benarkan lokasi dalam tetapan telefon/pelayar. Jika dibuka di dalam aplikasi Claude, lokasi mungkin disekat: guna pautan GitHub Pages.",
+ gap:"⚠ Rakaman terputus semasa skrin mati",wl:"Skrin dikunci hidup",sumT:"🏁 Tahniah! Ringkasan umrah anda",per:"Mengikut bahagian",share:"📤 Kongsi",newS:"🔄 Rekod baharu",route:"Laluan GPS",noRoute:"Tiada titik GPS untuk dipaparkan.",
+ fix:"✏️ Betulkan jika perlu (selepas ibadah)",
+ locT:"📍 Lokasi terkini",locBtn:"📍 Benarkan & buka lokasi",locUpd:"🔄 Kemas kini lokasi",sat:"🛰️ Lihat satelit (Google Maps)",mapT:"Peta sebenar",ringNote:"Bulatan kuning = jarak hotel anda ke Masjidil Haram. Rancang laluan latihan dalam kawasan ini.",locNow:"Lokasi anda",locFar:"dari Kaabah",locMap:"🗺️ Lihat di peta",locWait:"Meminta kebenaran lokasi…",locHint:"Tekan butang di bawah dan pilih Benarkan apabila telefon bertanya.",
+ modeT:"Mod",modes:["🕋 Di Makkah (sebenar)","🏠 Latihan di mana-mana"],pracInfo:"Mod latihan: berjalan di kawasan rumah, taman atau padang dengan jarak yang sama seperti di Makkah. Aplikasi memberitahu dengan suara dan getaran setiap kali satu pusingan selesai, jadi anda tidak perlu melihat telefon. Sesuai sebagai persediaan stamina sebelum ke Tanah Suci.",
+ hd:"Jarak hotel ke Masjidil Haram",hotel:"🏨 Hotel penginapan",hg:{abraj:"Kompleks Menara Jam (Abraj al-Bait)",near:"Sekitar dataran Masjidil Haram",far:"Lebih jauh"},hOther:"✏️ Lain-lain / di luar kawasan Tanah Haram (masukkan sendiri)",hName:"Nama hotel",hDist:"Jarak berjalan kaki ke Masjidil Haram (meter)",hDetect:"📍 Kesan jarak dari lokasi saya",hGmap:"🗺️ Semak jarak di Google Maps",hDetHint:"Kesan automatik hanya tepat jika anda berada di hotel di Makkah. Jika berlatih di rumah, semak jarak di Google Maps dan masukkan sendiri.",hNote:"Jarak ialah anggaran laluan berjalan kaki ke pintu masjid terdekat dan berbeza mengikut sumber serta pintu yang digunakan. Anda boleh ubah nombor ini.",hDet:"Dikesan",voice:"🔊 Pengumuman suara",round:"Pusingan ",tgt:"Sasaran",prog:"Kemajuan",
+ sayStart:"Mula. Berjalan ke Masjidil Haram.",saySeg:["Berjalan ke Masjidil Haram","Tawaf bermula","Sa'ie bermula","Sila bertahallul","Pulang ke hotel"],sayLap:"Pusingan {n} selesai",sayLeg:"Perjalanan sa'ie {n} selesai",sayEnd:"Alhamdulillah, umrah selesai. Jarak {d} kilometer, {s} langkah.",tawafN:"Pusingan tawaf",saiN:"Perjalanan sa'ie",where:"Lokasi tawaf",autoEnd:"Rakaman tamat secara automatik apabila anda sampai ke hotel.",tapSeg:"Ketik bahagian untuk tukar secara manual jika pengesanan tersilap.",
+ note:"Jarak di luar masjid diukur dengan GPS. GPS kurang tepat di dalam Masjidil Haram, jadi jarak tawaf dan sa'ie dikira daripada 7 pusingan × jarak satu pusingan (tawaf mengikut lokasi; sa'ie ±394 m sehala, Saudipedia). Langkah dikira oleh sensor telefon semasa skrin hidup, atau dianggarkan daripada jarak dan ketinggian (0.415 × tinggi lelaki, 0.413 × tinggi perempuan). Tutup aplikasi selepas tamat untuk menjimatkan bateri."},
+ en:{open:"🏃 Umrah tracker: time, distance & steps",back:"‹ Umrah guide",title:"Umrah tracker",sub:"Tap Start once at your hotel, put the phone in your pocket and focus on your worship. The app detects tawaf, sa'ie and the walk back by itself, then calculates time, distance and steps.",
+ discT:"📍 Use of location",discB:"This app uses your phone's <b>location</b> (GPS) and motion sensors to calculate distance and steps, only while recording. All data stays on your phone and is never sent anywhere.",
+ howT:"✋ No tapping during worship",howB:"After Start, the screen turns dark (<b>Pocket mode</b>) so nothing is pressed by accident. The screen must stay on because phones stop GPS when the screen is off; the dark screen saves battery. Press and hold for 2 seconds to unlock. When you arrive back at your hotel, recording finishes by itself.",
+ h:"Height (cm)",g:"Gender",L:"Male",P:"Female",fl:"Usual tawaf area",start:"▶ Agree & start",hist:"Past records",none:"No records yet.",del:"Delete",delAll:"🗑️ Delete all records",sure:"Tap again to confirm",
+ seg:["🏨 Hotel to Masjid al-Haram","🕋 Tawaf","🏃 Sa'ie","✂️ Tahallul","🏨 Back to hotel"],time:"Time",dist:"Distance",steps:"Steps",est:"estimated",sensor:"sensor-detected",
+ pause:"⏸ Pause",resume:"▶ Resume",finish:"🏁 Finish & save",pocket:"🔒 Pocket mode",unlock:"Press and hold 2 seconds to unlock",
+ floors:["Kaaba courtyard (±200 m/circuit)","First floor (±450 m)","Roof (±600 m)"],auto:"Detected automatically",now:"Now",lapsA:"circuits detected (estimate)",
+ gpsWait:"Searching for GPS…",gpsOk:"GPS active",acc:"accuracy",gpsErr:"Location is blocked. Allow location in phone/browser settings. Inside the Claude app, location may be blocked: use the GitHub Pages link.",
+ gap:"⚠ Recording interrupted while the screen was off",wl:"Screen kept on",sumT:"🏁 Congratulations! Your umrah summary",per:"By section",share:"📤 Share",newS:"🔄 New record",route:"GPS route",noRoute:"No GPS points to display.",
+ fix:"✏️ Correct if needed (after worship)",
+ locT:"📍 Current location",locBtn:"📍 Allow & show location",locUpd:"🔄 Refresh location",sat:"🛰️ Satellite view (Google Maps)",mapT:"Real map",ringNote:"Yellow circle = your hotel-to-Masjid al-Haram distance. Plan your practice route within this area.",locNow:"Your location",locFar:"from the Kaaba",locMap:"🗺️ View on map",locWait:"Requesting location permission…",locHint:"Tap the button below and choose Allow when your phone asks.",
+ modeT:"Mode",modes:["🕋 In Makkah (real)","🏠 Practise anywhere"],pracInfo:"Practice mode: walk around your home, a park or a field covering the same distances as in Makkah. The app tells you by voice and vibration whenever a circuit is completed, so you don't need to look at the phone. Good stamina preparation before travelling to the Holy Land.",
+ hd:"Hotel to Masjid al-Haram distance",hotel:"🏨 Your hotel",hg:{abraj:"Clock Tower complex (Abraj al-Bait)",near:"Around the Masjid al-Haram plaza",far:"Further away"},hOther:"✏️ Other / outside the Haram area (enter manually)",hName:"Hotel name",hDist:"Walking distance to Masjid al-Haram (metres)",hDetect:"📍 Detect distance from my location",hGmap:"🗺️ Check distance on Google Maps",hDetHint:"Automatic detection is only accurate when you are at your hotel in Makkah. If practising at home, check the distance on Google Maps and enter it yourself.",hNote:"Distances are estimates of the walking route to the nearest mosque gate and vary by source and gate used. You can change this number.",hDet:"Detected",voice:"🔊 Voice announcements",round:"Circuit ",tgt:"Target",prog:"Progress",
+ sayStart:"Start. Walk to Masjid al-Haram.",saySeg:["Walk to Masjid al-Haram","Tawaf begins","Sa'ie begins","Please do tahallul","Walk back to the hotel"],sayLap:"Circuit {n} complete",sayLeg:"Sa'ie lap {n} complete",sayEnd:"Alhamdulillah, umrah complete. Distance {d} kilometres, {s} steps.",tawafN:"Tawaf circuits",saiN:"Sa'ie laps",where:"Tawaf area",autoEnd:"Recording finishes automatically when you reach your hotel.",tapSeg:"Tap a section to change it manually if detection is wrong.",
+ note:"Distance outside the mosque is measured by GPS. GPS is unreliable inside Masjid al-Haram, so tawaf and sa'ie distances are calculated from 7 circuits × one circuit's distance (tawaf by area; sa'ie ±394 m one way, Saudipedia). Steps are counted by the phone's sensor while the screen is on, or estimated from distance and height (0.415 × height for men, 0.413 × height for women). Close the app when finished to save battery."}};
+const TAWAF_M=[200,450,600],SAI_M=394,KAABA=[21.422487,39.826206],SAFA=[21.42190,39.82745],MARWAH=[21.42530,39.82705];
+const HDIST=[300,600,1000,1500,2000];
+const HOTELS=[["abraj",[["Fairmont Makkah Clock Royal Tower",100],["Raffles Makkah Palace",100],["Swissôtel Al Maqam Makkah",100],["Al Marwa Rayhaan by Rotana",100],["Swissôtel Makkah",150],["Mövenpick Hotel & Residences Hajar Tower",150],["Pullman ZamZam Makkah",300],["Al Safwah Orchid (Menara Safwah, sebelah Menara Jam)",150]]],
+ ["near",[["InterContinental Dar Al Tawhid",100],["Hilton Suites Makkah",300],["Elaf Kinda Hotel",250],["Jumeirah Jabal Omar",200],["Conrad Makkah",300],["Anjum Hotel Makkah",400],["Elaf Al Mashaer",400],["Hyatt Regency Makkah (Jabal Omar)",450],["Le Méridien Towers Makkah",600],["DoubleTree by Hilton Jabal Omar",750]]],
+ ["far",[["Kiswah Towers (bas ulang-alik)",2000]]]];
+function hotelAt(id){const [g,i]=String(id).split(".");const G=HOTELS.find(x=>x[0]===g);return G&&G[1][+i]?G[1][+i]:null;}let tloc=null,TS=null,twatch=null,tlock=null,ttick=null,tlast=null,tgps={s:"wait",acc:null},tsure={};
+function kl(){return lang==="en"||lang==="ar"?"en":"bm";}
+function tprof(){try{return Object.assign({h:158,g:"P",f:0,m:1,hd:1,v:1,hid:"abraj.7",hn:"",hm:150},JSON.parse(localStorage.getItem("su-trk-prof"))||{});}catch(e){return {h:165,g:"L",f:0};}}
+function tsave(){try{localStorage.setItem("su-trk-cur",JSON.stringify(TS));}catch(e){}}
+let HIST=null;
+function thist(){if(HIST)return HIST;try{return JSON.parse(localStorage.getItem("su-trk-hist"))||[];}catch(e){return [];}}
+function hsave(H){HIST=H.slice(0,50);IDB.put("kv","hist",HIST).then(()=>{try{localStorage.removeItem("su-trk-hist");}catch(e){}})
+  .catch(()=>{try{localStorage.setItem("su-trk-hist",JSON.stringify(HIST.slice(0,20)));}catch(e){}});}
+IDB.get("kv","hist").then(v=>{if(Array.isArray(v))HIST=v;else{const old=thist();HIST=old;if(old.length)hsave(old);}
+  if($("kbody")&&!TS)renderTrk();}).catch(()=>{});
+function hav(a,b){const R=6371000,r=Math.PI/180,dLa=(b[0]-a[0])*r,dLo=(b[1]-a[1])*r,x=Math.sin(dLa/2)**2+Math.cos(a[0]*r)*Math.cos(b[0]*r)*Math.sin(dLo/2)**2;return 2*R*Math.asin(Math.sqrt(x));}
+function xy(p){const r=Math.PI/180;return [(p[1]-KAABA[1])*r*6371000*Math.cos(KAABA[0]*r),(p[0]-KAABA[0])*r*6371000];}
+function distSeg(p,a,b){const P=xy(p),A=xy(a),B=xy(b),dx=B[0]-A[0],dy=B[1]-A[1];let t=((P[0]-A[0])*dx+(P[1]-A[1])*dy)/(dx*dx+dy*dy);t=Math.max(0,Math.min(1,t));return Math.hypot(P[0]-A[0]-t*dx,P[1]-A[1]-t*dy);}
+function zone(p){if(distSeg(p,SAFA,MARWAH)<=30)return "masa";const d=hav(p,KAABA);if(d<=110)return "mataf";if(d<=230)return "haram";return "out";}
+function lapM(s){return TAWAF_M[s.floor];}
+function segModel(s,i){if(s.mode==="prac")return 0;if(i===1)return s.laps*lapM(s);if(i===2)return s.legs*SAI_M;return 0;}
+function segDist(s,i){return segModel(s,i)+(s.gd[i]||0);}
+function totDist(s){let d=0;for(let i=0;i<5;i++)d+=segDist(s,i);return d;}
+function stepLen(s){return s.h/100*(s.g==="L"?0.415:0.413);}
+function segSteps(s,i){return Math.round((s.gd[i]||0)/stepLen(s)+segModel(s,i)/(stepLen(s)*0.85));}
+function hm(s){return s.hm||HDIST[s.hd]||600;}
+function tgt(s,i){return [hm(s),7*lapM(s),7*SAI_M,0,hm(s)][i];}
+function say(t){try{if(!TS||!TS.v||!window.speechSynthesis)return;const u=new SpeechSynthesisUtterance(t);u.lang=kl()==="en"?"en-US":"ms-MY";u.rate=0.95;speechSynthesis.cancel();speechSynthesis.speak(u);}catch(e){}}
+function estSteps(s){let n=0;for(let i=0;i<5;i++)n+=segSteps(s,i);return n;}
+function mainSteps(s){return s.sens>=0.6*estSteps(s)&&s.sens>0?s.sens:estSteps(s);}
+function elapsed(s){return s.acc+(s.run&&!s.paused?Date.now()-s.run:0);}
+function fmtT(ms){const t=Math.floor(ms/1000),h=Math.floor(t/3600),m=Math.floor(t%3600/60),x=t%60;return (h?h+":":"")+String(m).padStart(h?2:1,"0")+":"+String(x).padStart(2,"0");}
+function fmtD(m){return m>=1000?(m/1000).toFixed(2)+" km":Math.round(m)+" m";}
+function segTime(s,i){const st=s.segT[i]||0;if(i===s.seg&&s.run&&!s.paused)return st+Date.now()-s.segRun;return st;}
+function setSeg(n){if(!TS||n===TS.seg)return;const now=Date.now();if(!TS.paused){TS.segT[TS.seg]+=now-TS.segRun;TS.segRun=now;}
+  if(n>=2&&TS.laps<7)TS.laps=7;if(n>=3&&TS.legs<7)TS.legs=7;TS.seg=n;TS.zt=0;navigator.vibrate&&navigator.vibrate([150,80,150]);say(KT[kl()].saySeg[n]);pjPush(true);if($("kbody")&&$("kpocket")&&$("kpocket").style.display!=="flex")setTimeout(renderTrk,0);if(TS.q){if(n===1||n===2){if(!(qOn&&qLoop))qPlay(qSel(),true);}else qStop();}tsave();}
+/* automatic stage detection */
+function autoStage(p,dt){const z=zone(p),s=TS;s.zone=z;
+  if(z===s.zlast)s.zt+=dt;else{s.zt=dt;s.zlast=z;}
+  if(s.seg===0&&z==="mataf"&&s.zt>=45)setSeg(1);
+  if(s.seg<=1&&z==="masa"&&s.zt>=60)setSeg(2);
+  if(s.seg===2&&z!=="masa"&&s.zt>=120)setSeg(3);
+  if(s.seg===3&&z==="out"&&s.zt>=60)setSeg(4);
+  if(s.seg===1&&z==="mataf"){const P=xy(p),dg=(Math.atan2(P[1],P[0])*180/Math.PI+360)%360,k=segOfDeg(dg);
+    if(k===s.vkc)s.vkcn=(s.vkcn||0)+1;else{s.vkc=k;s.vkcn=1;}
+    if(s.vkcn===2&&k!==s.vk){if(k==="aswad"){s.vlap=(s.vlap||0)+1;}const n=s.vlap||0;s.vk=k;
+      if(s.v&&n<=7)vTawaf(k,k==="aswad"&&n?(n===1?VTX[lang].tawafStart+". ":"")+(TXT[lang]||TXT.bm).lap+" "+n:"",true);}}
+  if(s.seg===2&&z==="masa"){const A=xy(SAFA),B=xy(MARWAH),P=xy(p),dx=B[0]-A[0],dy=B[1]-A[1];let t=((P[0]-A[0])*dx+(P[1]-A[1])*dy)/(dx*dx+dy*dy);t=Math.max(0,Math.min(1,t));
+    const end=t<0.08?"S":t>0.92?"M":null;if(end&&end!==s.vend){if(s.vend)s.legs=Math.min(7,(s.legs||0)+1);s.vend=end;}
+    const k=end?(end==="S"?((s.legs||0)===0?"safa1":"safa"):"marwah"):((t>0.26&&t<0.38)?"green":"walk");
+    if(k===s.vkc)s.vkcn=(s.vkcn||0)+1;else{s.vkc=k;s.vkcn=1;}
+    if(s.vkcn===2&&k!==s.vk){s.vk=k;const n=(s.legs||0)+1;if(s.v&&n<=7)vSai(k,end?(n===1?VTX[lang].saiStart+". ":"")+(JT[lang]||JT.bm).trip+" "+n:"",true);}}
+  if(s.seg===1&&z==="mataf"){const a=Math.atan2(xy(p)[1],xy(p)[0]);if(s.ang!=null){let d=a-s.ang;if(d>Math.PI)d-=2*Math.PI;if(d<-Math.PI)d+=2*Math.PI;if(Math.abs(d)<Math.PI/2)s.rot+=d;}s.ang=a;}
+  if(s.seg>=3&&s.home&&hav(p,s.home)<=50&&s.zt>=20&&z==="out"&&!s.done)tFinish(true);}
+function pracStage(){const s=TS,T=KT[kl()],i=s.seg,g=s.gd[i]||0;
+  if(i===1){const n=Math.min(7,Math.floor(g/lapM(s)));if(n>s.laps){s.laps=n;navigator.vibrate&&navigator.vibrate(120);}
+    if(n<7){const k=n!==s.vn?"aswad":segOfDeg(((g%lapM(s))/lapM(s))*360);if(k!==s.vk||n!==s.vn){const head=(n!==s.vn)?(n===0?VTX[lang].tawafStart+". ":"")+(TXT[lang]||TXT.bm).lap+" "+(n+1):"";s.vk=k;s.vn=n;if(s.v)vTawaf(k,head,true);}}}
+  if(i===2){const n=Math.min(7,Math.floor(g/SAI_M));if(n>s.legs){s.legs=n;navigator.vibrate&&navigator.vibrate(120);}
+    if(n<7){const fr=(g%SAI_M)/SAI_M,t=n%2===0?fr:1-fr,k=saiKeyT(fr<0.06?(n%2===0?0:1):t,n);if(k!==s.vk||n!==s.vn){const head=(n!==s.vn)?(n===0?VTX[lang].saiStart+". ":"")+(JT[lang]||JT.bm).trip+" "+(n+1):"";s.vk=k;s.vn=n;if(s.v)vSai(k,head,true);}}}
+  if(i===3){if(segTime(s,3)>=60000)setSeg(4);return;}
+  if(g>=tgt(s,i)){if(i===4)tFinish(true);else setSeg(i+1);}}
+/* GPS */
+function onFix(p){if(!TS||TS.paused||TS.done)return;const c=p.coords;tgps={s:"ok",acc:Math.round(c.accuracy)};
+  const pt=[c.latitude,c.longitude,p.timestamp];
+  if(!TS.home&&c.accuracy<=40)TS.home=[pt[0],pt[1]];
+  if(c.accuracy<=35){const dt=TS.lt?Math.min(30,(pt[2]-TS.lt)/1000):1;TS.lt=pt[2];const pr=TS.mode==="prac";if(!pr)autoStage(pt,dt);if(TS.done)return;
+    const z=pr?"out":TS.zone;
+    if(!tlast){tlast=pt;TS.pts.push([+pt[0].toFixed(6),+pt[1].toFixed(6),TS.seg]);}
+    else{const d=hav(tlast,pt),sp=d/Math.max(0.001,(pt[2]-tlast[2])/1000);
+      if(sp<=3&&d>=Math.max(5,c.accuracy*0.5)){if(z!=="mataf"&&z!=="masa")TS.gd[TS.seg]=(TS.gd[TS.seg]||0)+d;TS.pts.push([+pt[0].toFixed(6),+pt[1].toFixed(6),TS.seg]);tlast=pt;if(pr)pracStage();}
+      else if(sp>3)tlast=pt;}}
+  tsave();tUpdate();updLiveMap();}
+function onFixErr(e){tgps={s:e.code===1?"err":"wait",acc:null};tUpdate();}
+function gpsOn(){if(!navigator.geolocation){tgps={s:"err"};return;}if(twatch!==null)return;twatch=navigator.geolocation.watchPosition(onFix,onFixErr,{enableHighAccuracy:true,maximumAge:0,timeout:20000});}
+function gpsOff(){if(twatch!==null){navigator.geolocation.clearWatch(twatch);twatch=null;}}
+async function lockOn(){try{if("wakeLock"in navigator&&!tlock){tlock=await navigator.wakeLock.request("screen");tlock.addEventListener("release",()=>{tlock=null;tUpdate();});}}catch(e){}tUpdate();}
+function lockOff(){try{tlock&&tlock.release();}catch(e){}tlock=null;}
+/* accelerometer step counter (screen on) */
+let acc={base:9.8,last:0,hi:false,run:0,on:false};
+function onMotion(e){if(!TS||TS.paused||TS.done)return;const a=e.accelerationIncludingGravity;if(!a||a.x==null)return;
+  const m=Math.sqrt(a.x*a.x+a.y*a.y+a.z*a.z);acc.base=acc.base*0.97+m*0.03;const v=m-acc.base,now=Date.now();
+  if(!acc.hi&&v>1.2&&now-acc.last>280){acc.hi=true;acc.run=now-acc.last<1500?acc.run+1:1;acc.last=now;if(acc.run>=5)TS.sens+=acc.run===5?5:1;}
+  else if(acc.hi&&v<0.3)acc.hi=false;}
+async function motionOn(){try{if(typeof DeviceMotionEvent!=="undefined"&&typeof DeviceMotionEvent.requestPermission==="function"){if(await DeviceMotionEvent.requestPermission()!=="granted")return;}window.addEventListener("devicemotion",onMotion);acc.on=true;}catch(e){}}
+function motionOff(){window.removeEventListener("devicemotion",onMotion);acc.on=false;}
+document.addEventListener("visibilitychange",()=>{if(!TS||TS.done)return;
+  if(document.visibilityState==="hidden"){TS.hid=Date.now();tsave();}
+  else{if(TS.hid&&Date.now()-TS.hid>15000)TS.gaps++;TS.hid=0;tlast=null;if($("kbody")&&!TS.paused)lockOn();tsave();tUpdate();}});
+/* pocket mode */
+function pocketOn(){const o=$("kpocket");o.style.display="flex";tUpdate();}
+function pocketOff(){$("kpocket").style.display="none";renderTrk();}
+(function(){let t=null;const o=()=>$("kpocket");
+  document.addEventListener("pointerdown",e=>{if(o()&&o().style.display==="flex"&&o().contains(e.target)){e.preventDefault();o().classList.add("hold");t=setTimeout(()=>{o().classList.remove("hold");pocketOff();},2000);}},true);
+  ["pointerup","pointercancel","pointerleave"].forEach(ev=>document.addEventListener(ev,()=>{clearTimeout(t);o()&&o().classList.remove("hold");},true));})();
+/* actions */
+function tStart(){const o=tprof(),hs=readHotel(),pr={h:Math.max(120,Math.min(210,+$("th").value||165)),g:$("tg").value,f:+$("tf").value,m:o.m,hd:o.hd,v:$("tv").checked?1:0,q:($("tq")&&$("tq").checked)?1:0,hid:hs.hid,hn:hs.hn,hm:hs.hm};try{localStorage.setItem("su-trk-prof",JSON.stringify(pr));}catch(e){}
+  const now=Date.now();if(pr.q)qUnlock();
+  TS={q:pr.q,mode:pr.m===1?"prac":"real",hd:pr.hd,hm:pr.hm,hname:pr.hid==="x"?pr.hn:(hotelAt(pr.hid)||[""])[0],v:pr.v,id:now,start:now,h:pr.h,g:pr.g,floor:pr.f,seg:0,segT:[0,0,0,0,0],segRun:now,run:now,acc:0,paused:false,done:false,laps:0,legs:0,gd:[0,0,0,0,0],pts:[],sens:0,gaps:0,hid:0,home:null,zone:null,zlast:null,zt:0,rot:0,ang:null,lt:0};
+  tlast=null;tsave();gpsOn();lockOn();motionOn();tRun();renderTrk();pocketOn();say(KT[kl()].sayStart);miniPrep();pjFamStart();pjPush(true);}
+function tPause(){if(!TS)return;const now=Date.now();if(TS.paused){TS.paused=false;TS.run=now;TS.segRun=now;tlast=null;gpsOn();lockOn();}else{TS.acc+=now-TS.run;TS.segT[TS.seg]+=now-TS.segRun;TS.paused=true;gpsOff();lockOff();}tsave();renderTrk();}
+function tFinish(auto){if(!TS||TS.done)return;qStop();miniStop();const now=Date.now();if(!TS.paused){TS.acc+=now-TS.run;TS.segT[TS.seg]+=now-TS.segRun;}
+  if(TS.seg>=2&&TS.laps<7)TS.laps=7;if(TS.seg>=3&&TS.legs<7)TS.legs=7;
+  TS.paused=true;TS.done=true;TS.end=now;TS.autoEnd=!!auto;gpsOff();lockOff();motionOff();clearInterval(ttick);
+  const H=thist();H.unshift(TS);hsave(H);try{localStorage.removeItem("su-trk-cur");}catch(e){}
+  say(KT[kl()].sayEnd.replace("{d}",(totDist(TS)/1000).toFixed(1)).replace("{s}",mainSteps(TS)));navigator.vibrate&&navigator.vibrate([200,100,200]);$("kpocket").style.display="none";renderTrk();if($("kcard"))$("kcard").scrollTop=0;pjPush(true);}
+function tEdit(){const H=thist(),i=H.findIndex(x=>x.id===TS.id);if(i>=0){H[i]=TS;hsave(H);}renderTrk();}
+function twice(key,btn,fn){if(tsure[key]){tsure[key]=0;fn();return;}tsure[key]=1;const o=btn.textContent;btn.textContent=KT[kl()].sure;btn.classList.add("ksure");setTimeout(()=>{tsure[key]=0;if(btn.isConnected){btn.textContent=o;btn.classList.remove("ksure");}},4000);}
+function tRun(){clearInterval(ttick);ttick=setInterval(()=>{if(TS&&!TS.done&&!TS.paused&&TS.mode==="prac"&&TS.seg===3)pracStage();tUpdate();},1000);}
+function tUpdate(){if(!TS)return;const T=KT[kl()],q=id=>document.getElementById(id);
+  const tt=fmtT(elapsed(TS)),dd=fmtD(totDist(TS)),ss=mainSteps(TS).toLocaleString();
+  [["kTime",tt],["kDist",dd],["kSteps",ss],["pTime",tt],["pDist",dd],["pSteps",ss]].forEach(([i,v])=>{if(q(i))q(i).textContent=v;});
+  if(q("pSeg"))q("pSeg").textContent=TS.done?"":T.seg[TS.seg];
+  if(q("kSens"))q("kSens").textContent=TS.sens>0&&mainSteps(TS)===TS.sens?T.sensor:T.est;
+  if(q("kSegT"))q("kSegT").textContent=`${T.now}: ${fmtT(segTime(TS,TS.seg))} · ${fmtD(segDist(TS,TS.seg))}`+(TS.mode==="prac"?(TS.seg===3?` · ${Math.max(0,60-Math.floor(segTime(TS,3)/1000))} s`:` · ${T.tgt} ${fmtD(tgt(TS,TS.seg))}`+(TS.seg===1?` · ${T.round||""}${TS.laps}/7`:TS.seg===2?` · ${TS.legs}/7`:"")):(TS.seg===1?` · ≈${Math.min(7,Math.floor(Math.abs(TS.rot)/(2*Math.PI)))} ${T.lapsA}`:""));
+  if(q("kBar")){const t=tgt(TS,TS.seg);q("kBar").style.width=(TS.seg===3?Math.min(100,segTime(TS,3)/600):t?Math.min(100,100*(TS.gd[TS.seg]||0)/t):0)+"%";}
+  if(q("pSeg")&&TS.mode==="prac"&&!TS.done)q("pSeg").textContent=T.seg[TS.seg]+(TS.seg===1?` ${TS.laps}/7`:TS.seg===2?` ${TS.legs}/7`:"");
+  const g=TS.paused?"⏸":(tgps.s==="err"?"⛔ "+T.gpsErr:tgps.s==="ok"?`🛰️ ${T.gpsOk} (${T.acc} ±${tgps.acc} m)`:"🛰️ "+T.gpsWait)+(tlock?" · 🔆 "+T.wl:"");
+  if(q("kGps"))q("kGps").textContent=g;if(q("pGps"))q("pGps").textContent=tgps.s==="err"?"⛔ GPS":tgps.s==="ok"?"🛰️ ±"+tgps.acc+" m":"🛰️ …";}
+function routeSVG(s){const p=s.pts;if(p.length<2)return `<p class="src">${KT[kl()].noRoute}</p>`;
+  const lat0=p[0][0]*Math.PI/180;let xs=p.map(a=>a[1]*Math.cos(lat0)),ys=p.map(a=>-a[0]);
+  const mnx=Math.min(...xs),mxx=Math.max(...xs),mny=Math.min(...ys),mxy=Math.max(...ys),sc=280/Math.max(mxx-mnx,mxy-mny,1e-6);
+  const col=["#2f7de1","#c9a227","#17894f","#c0392b","#8e44ad"],X=v=>((v-mnx)*sc+10).toFixed(1),Y=v=>((v-mny)*sc+10).toFixed(1);let segs="";
+  for(let i=1;i<p.length;i++)segs+=`<line x1="${X(xs[i-1])}" y1="${Y(ys[i-1])}" x2="${X(xs[i])}" y2="${Y(ys[i])}" stroke="${col[p[i][2]]}" stroke-width="3" stroke-linecap="round"/>`;
+  return `<svg class="kroute" viewBox="0 0 ${((mxx-mnx)*sc+20).toFixed(0)} ${((mxy-mny)*sc+20).toFixed(0)}" role="img" aria-label="route">${segs}<circle cx="${X(xs[0])}" cy="${Y(ys[0])}" r="5" fill="#17894f"/><circle cx="${X(xs.at(-1))}" cy="${Y(ys.at(-1))}" r="5" fill="#c0392b"/></svg>`;}
+function sumHTML(s,T,edit){const d=new Date(s.start);
+  return `<h3 class="zh3">${T.sumT}</h3><p class="zsub">${d.toLocaleDateString()} ${d.toLocaleTimeString([],{hour:"2-digit",minute:"2-digit"})}${s.autoEnd?" · "+T.auto:""}${s.hname?"<br>🏨 "+s.hname:""}</p>
+  <div class="kstats"><div><span>${T.time}</span><b>${fmtT(s.acc)}</b></div><div><span>${T.dist}</span><b>${fmtD(totDist(s))}</b></div><div><span>${T.steps}</span><b>${mainSteps(s).toLocaleString()}</b><small>${s.sens>0&&mainSteps(s)===s.sens?T.sensor:T.est}</small></div></div>
+  <h3 class="zh3">${T.per}</h3><table class="ktab">${T.seg.map((n,i)=>`<tr><td>${n}${i===1?` <small>(${s.laps}/7)</small>`:i===2?` <small>(${s.legs}/7)</small>`:""}</td><td>${fmtT(s.segT[i]||0)}</td><td>${fmtD(segDist(s,i))}</td><td>${segSteps(s,i).toLocaleString()}</td></tr>`).join("")}</table>
+  ${edit?`<details class="place kedit"><summary>${T.fix}</summary><div class="kform"><label>${T.tawafN}<select id="ela">${[...Array(8).keys()].map(n=>`<option${n===s.laps?" selected":""}>${n}</option>`).join("")}</select></label><label>${T.saiN}<select id="ele">${[...Array(8).keys()].map(n=>`<option${n===s.legs?" selected":""}>${n}</option>`).join("")}</select></label></div><label class="kfl">${T.where}<select id="efl">${T.floors.map((f,j)=>`<option value="${j}"${s.floor===j?" selected":""}>${f}</option>`).join("")}</select></label></details>`:""}
+  ${s.gaps?`<p class="src">${T.gap} (×${s.gaps})</p>`:""}<h3 class="zh3">${T.route}</h3><div class="kmap" id="${edit?"kmapS":"kmapH"+s.id}">${routeSVG(s)}</div>${legendHTML(T)}${s.pts.length?`<div class="pbtns">${satLink(s.pts[0][0],s.pts[0][1],T)}</div>`:""}`;}
+function shareTxt(s,T){return `${T.sumT}${s.hname?"\n🏨 "+s.hname:""}\n${T.time}: ${fmtT(s.acc)}\n${T.dist}: ${fmtD(totDist(s))}\n${T.steps}: ${mainSteps(s).toLocaleString()}\n`+T.seg.map((n,i)=>`${n}: ${fmtD(segDist(s,i))}, ${fmtT(s.segT[i]||0)}`).join("\n")+"\n— Diari Umrah Isteriku";}
+function doShare(s,T){const t=shareTxt(s,T);if(navigator.share)navigator.share({text:t}).catch(()=>{});else if(navigator.clipboard)navigator.clipboard.writeText(t);}
+function hotelHTML(T,pr){const other=pr.hid==="x",h=hotelAt(pr.hid),dist=other?pr.hm:(pr.hm||(h?h[1]:150));
+  return `<div class="place khotel"><label class="kfl">${T.hotel}<select id="thot">${HOTELS.map(([g,L])=>`<optgroup label="${T.hg[g]}">${L.map(([n,d],i)=>`<option value="${g}.${i}"${pr.hid===g+"."+i?" selected":""}>${n} (±${fmtD(d)})</option>`).join("")}</optgroup>`).join("")}<option value="x"${other?" selected":""}>${T.hOther}</option></select></label>
+  ${other?`<label class="kfl">${T.hName}<input id="thn" type="text" value="${(pr.hn||"").replace(/"/g,"&quot;")}" placeholder="Hotel…"></label>`:""}
+  <label class="kfl">${T.hDist}<input id="thm" type="number" inputmode="numeric" min="0" max="20000" step="10" value="${dist}"></label>
+  ${other?`<div class="pbtns"><button id="thdet">${T.hDetect}</button><a class="pmap" id="thgm" href="${gmDir(pr.hn)}" target="_blank" rel="noopener">${T.hGmap}</a></div><p class="src">${T.hDetHint}</p>`:""}<p class="src">${T.hNote}</p></div>`;}
+function gmDir(n){return "https://www.google.com/maps/dir/?api=1&origin="+encodeURIComponent((n||"Hotel")+", Makkah")+"&destination="+encodeURIComponent("Masjid al-Haram, Makkah")+"&travelmode=walking";}
+function readHotel(){const o=tprof(),sel=document.getElementById("thot");if(!sel)return {hid:o.hid,hn:o.hn,hm:o.hm};const hid=sel.value,hn=document.getElementById("thn")?document.getElementById("thn").value.trim():o.hn;let m=+(document.getElementById("thm")||{}).value;if(!(m>=0))m=(hotelAt(hid)||[0,150])[1];return {hid,hn,hm:Math.round(m)};}
+function saveHotel(){const o=tprof(),r=readHotel();Object.assign(o,r);try{localStorage.setItem("su-trk-prof",JSON.stringify(o));}catch(e){}}
+function locHTML(T){if(!tloc)return `<p class="pdesc">${T.locHint}</p>`;if(tloc.err)return `<p class="pdesc">⛔ ${T.gpsErr}</p>`;if(tloc.wait)return `<p class="pdesc">${T.locWait}</p>`;
+  const dk=hav([tloc.lat,tloc.lon],KAABA);return `<p class="pdesc"><b>${T.locNow}:</b> ${tloc.lat.toFixed(5)}, ${tloc.lon.toFixed(5)} (±${Math.round(tloc.acc)} m)<br>🕋 ${fmtD(dk)} ${T.locFar}</p><div class="kmap" id="kmapLoc"></div>${tprof().m===1?`<p class="src">${T.ringNote}</p>`:""}<div class="pbtns"><a class="pmap" href="https://www.google.com/maps?q=${tloc.lat},${tloc.lon}" target="_blank" rel="noopener">${T.locMap}</a>${satLink(tloc.lat,tloc.lon,T)}</div>`;}
+function getLoc(){const T=KT[kl()];if(!navigator.geolocation){tloc={err:1};renderTrk();return;}tloc={wait:1};const v=document.getElementById("klocv");if(v)v.innerHTML=locHTML(T);
+  navigator.geolocation.getCurrentPosition(p=>{tloc={lat:p.coords.latitude,lon:p.coords.longitude,acc:p.coords.accuracy};const o=tprof();if(!o.ms){o.m=hav([tloc.lat,tloc.lon],KAABA)>50000?1:0;o.ms=1;try{localStorage.setItem("su-trk-prof",JSON.stringify(o));}catch(e){}}renderTrk();},
+   e=>{tloc={err:1};renderTrk();},{enableHighAccuracy:true,timeout:20000,maximumAge:0});}
+/* ---------- V2: Peta sebenar (Leaflet + OpenStreetMap) ---------- */
+const SEGC=["#2f7de1","#c9a227","#17894f","#c0392b","#8e44ad"];let liveMap=null,liveLine=null,liveDot=null,liveN=0;
+function mkMap(el){if(typeof L==="undefined"||!el)return null;if(el._lmap){try{el._lmap.remove();}catch(e){}el._lmap=null;}el.innerHTML="";el.classList.add("on");
+  const m=el._lmap=L.map(el,{zoomControl:true,attributionControl:true,scrollWheelZoom:false,tap:true});
+  L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png",{maxZoom:19,attribution:'© <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">OpenStreetMap</a>'}).addTo(m);
+  setTimeout(()=>m.invalidateSize(),150);return m;}
+function drawRoute(m,pts){if(!m)return;const all=[];let cur=null,seg=-1;
+  pts.forEach(p=>{const ll=[p[0],p[1]];all.push(ll);if(p[2]!==seg){if(cur&&cur.length>1)L.polyline(cur,{color:SEGC[seg]||"#555",weight:5,opacity:.85}).addTo(m);cur=cur&&cur.length?[cur[cur.length-1],ll]:[ll];seg=p[2];}else cur.push(ll);});
+  if(cur&&cur.length>1)L.polyline(cur,{color:SEGC[seg]||"#555",weight:5,opacity:.85}).addTo(m);
+  if(all.length){L.circleMarker(all[0],{radius:7,color:"#fff",weight:2,fillColor:"#17894f",fillOpacity:1}).addTo(m);L.circleMarker(all[all.length-1],{radius:7,color:"#fff",weight:2,fillColor:"#c0392b",fillOpacity:1}).addTo(m);
+    if(all.length>1)m.fitBounds(L.latLngBounds(all).pad(0.15));else m.setView(all[0],17);}else m.setView(KAABA,16);}
+function satLink(lat,lon,T){return `<a class="pmap" href="https://www.google.com/maps/@${lat},${lon},400m/data=!3m1!1e3" target="_blank" rel="noopener">${T.sat}</a>`;}
+function legendHTML(T){return `<div class="klegend">${T.seg.map((n,i)=>`<span><i style="background:${SEGC[i]}"></i>${n}</span>`).join("")}</div>`;}
+function initSumMap(id,s){const el=document.getElementById(id);if(!el||!s)return;const m=mkMap(el);if(m)drawRoute(m,s.pts);}
+function initLocMap(){const el=document.getElementById("kmapLoc");if(!el||!tloc||!tloc.lat)return;const m=mkMap(el);if(!m)return;const c=[tloc.lat,tloc.lon];
+  m.setView(c,16);L.circle(c,{radius:Math.max(5,tloc.acc),color:"#2f7de1",weight:1,fillOpacity:.15}).addTo(m);L.circleMarker(c,{radius:7,color:"#fff",weight:2,fillColor:"#2f7de1",fillOpacity:1}).addTo(m);
+  const pr=tprof();if(pr.m===1){const r=readHotel?readHotel().hm:pr.hm;if(r>0){L.circle(c,{radius:r,color:"#c9a227",weight:2,dashArray:"6 6",fill:false}).addTo(m);m.fitBounds(L.latLng(c).toBounds(r*2.4));}}}
+function initLiveMap(){const el=document.getElementById("kmapL");liveMap=null;liveLine=null;liveDot=null;if(!el||!TS)return;liveMap=mkMap(el);if(!liveMap)return;drawRoute(liveMap,TS.pts);
+  liveLine=L.polyline(TS.pts.map(p=>[p[0],p[1]]),{color:SEGC[TS.seg],weight:0}).addTo(liveMap);liveN=TS.pts.length;
+  const last=TS.pts[TS.pts.length-1];liveDot=L.circleMarker(last?[last[0],last[1]]:KAABA,{radius:8,color:"#fff",weight:3,fillColor:"#2f7de1",fillOpacity:1}).addTo(liveMap);if(last)liveMap.setView([last[0],last[1]],17);}
+function updLiveMap(){if(!liveMap||!TS||!TS.pts.length)return;if(!document.body.contains(liveMap.getContainer())){liveMap=null;return;}
+  const n=TS.pts.length;if(n>liveN){const seg=TS.pts.slice(Math.max(0,liveN-1));L.polyline(seg.map(p=>[p[0],p[1]]),{color:SEGC[TS.seg],weight:5,opacity:.85}).addTo(liveMap);liveN=n;}
+  const p=TS.pts[n-1];liveDot.setLatLng([p[0],p[1]]);liveMap.panTo([p[0],p[1]],{animate:false});}
+
+function renderTrk(){if(!$("kbody"))return;const T=KT[kl()];
+  let h=`<button id="kback">${T.back}</button><h2 class="ztitle">${T.title}</h2><p class="zsub">${T.sub}</p>`;
+  if(!TS){const pr=tprof(),H=thist();
+    h+=`<div class="zinfo"><b>${T.discT}</b><p>${T.discB}</p></div>
+    <div class="place kloc"><div class="pname">${T.locT}</div><div id="klocv">${locHTML(T)}</div><button id="kloc" class="act kbig">${tloc&&tloc.lat?T.locUpd:T.locBtn}</button></div>
+    <label class="kfl">${T.modeT}</label><div class="ztabs kmode">${T.modes.map((m,j)=>`<button data-km="${j}" aria-pressed="${pr.m===j}">${m}</button>`).join("")}</div>
+    ${pr.m===1?`<div class="zinfo"><p>${T.pracInfo}</p></div>`:""}${hotelHTML(T,pr)}
+    <div class="zinfo"><b>${T.howT}</b><p>${T.howB}</p></div>
+    <div class="kform"><label>${T.h}<input id="th" type="number" inputmode="numeric" min="120" max="210" value="${pr.h}"></label>
+    <label>${T.g}<select id="tg"><option value="L"${pr.g==="L"?" selected":""}>${T.L}</option><option value="P"${pr.g==="P"?" selected":""}>${T.P}</option></select></label></div>
+    <label class="kfl">${T.fl}<select id="tf">${T.floors.map((f,j)=>`<option value="${j}"${pr.f===j?" selected":""}>${f}</option>`).join("")}</select></label>
+    <label class="rtr kvo"><input type="checkbox" id="tv" ${pr.v?"checked":""}> ${T.voice}</label>
+    <label class="rtr kvo"><input type="checkbox" id="tq" ${pr.q?"checked":""}> ${qt().trk}</label>
+    <div class="pbtns"><button id="kvtest">${VTEST[kl()].btn}</button></div><p class="src" id="kvout"></p>
+    <button id="kstart" class="act kbig">${T.start}</button>
+    <h3 class="zh3">${T.hist}</h3>`+(H.length?H.map((s,i)=>`<details class="place khist"><summary><b>${new Date(s.start).toLocaleDateString()}</b> · ${fmtD(totDist(s))} · ${mainSteps(s).toLocaleString()} ${T.steps.toLowerCase()} · ${fmtT(s.acc)}</summary>${sumHTML(s,T,false)}<div class="pbtns"><button data-ksh="${i}">${T.share}</button><button data-kdel="${i}">${T.del}</button></div></details>`).join("")+`<button id="kdelall" class="zreset">${T.delAll}</button>`:`<p class="src">${T.none}</p>`)+`<p class="src">${T.note}</p>`;
+  }else if(TS.done){h+=sumHTML(TS,T,true)+`<div class="pbtns"><button id="kshare" class="act">${T.share}</button><button id="knew">${T.newS}</button></div><p class="src">${T.note}</p>`;}
+  else{const i=TS.seg;
+    h+=`<div class="kstats live"><div><span>${T.time}</span><b id="kTime"></b></div><div><span>${T.dist}</span><b id="kDist"></b></div><div><span>${T.steps}</span><b id="kSteps"></b><small id="kSens"></small></div></div>
+    <p class="src">${T.auto} · ${T.tapSeg}</p><ol class="ksegs">${T.seg.map((n,j)=>`<li data-kseg="${j}" class="${j<i?"ok":j===i?"cur":""}">${j<i?"✓ ":""}${n}</li>`).join("")}</ol>
+    <div class="place kcur"><div class="pname">${T.seg[i]}</div><p class="pmeta" id="kSegT"></p>${TS.mode==="prac"?`<div class="kprog"><div id="kBar"></div></div><p class="pdesc">${T.pracInfo}</p>`:`<p class="pdesc">${T.autoEnd}</p>`}</div>
+    <div class="kmap kmapL" id="kmapL"></div>
+    <p class="src" id="kGps"></p>${TS.gaps?`<p class="src">${T.gap} (×${TS.gaps})</p>`:""}
+    <button id="kpk" class="act kbig">${T.pocket}</button>
+    <div class="pbtns kctl"><button id="kmini">${mt().btn}</button><button id="kpause">${TS.paused?T.resume:T.pause}</button><button id="kfin">${T.finish}</button></div>`;}
+  $("kbody").innerHTML=h;
+  const on=(id,f)=>{const e=document.getElementById(id);if(e)e.onclick=f;};
+  on("kback",()=>{go("utama");});
+  on("kstart",tStart);on("kloc",getLoc);on("kvtest",()=>vTest(document.getElementById("kvout")));
+  const hs=document.getElementById("thot");if(hs)hs.onchange=()=>{const o=tprof();o.hid=hs.value;const h=hotelAt(hs.value);if(h)o.hm=h[1];try{localStorage.setItem("su-trk-prof",JSON.stringify(o));}catch(e){}renderTrk();};
+  ["thn","thm"].forEach(id=>{const e=document.getElementById(id);if(e)e.onchange=()=>initLocMap();if(e)e.oninput=()=>{saveHotel();const g=document.getElementById("thgm");if(g&&id==="thn")g.href=gmDir(e.value);};});
+  on("thdet",()=>{const go=()=>{if(!tloc||!tloc.lat)return;const d=hav([tloc.lat,tloc.lon],KAABA),w=Math.max(50,Math.round((d-130)*1.3/10)*10);const e=document.getElementById("thm");if(e){e.value=w;saveHotel();}};if(tloc&&tloc.lat)go();else{getLoc();setTimeout(go,4000);}});
+  document.querySelectorAll("[data-km]").forEach(b=>b.onclick=()=>{const o=tprof();o.m=+b.dataset.km;o.h=+$("th").value||o.h;o.g=$("tg").value;o.f=+$("tf").value;Object.assign(o,readHotel());try{localStorage.setItem("su-trk-prof",JSON.stringify(o));}catch(e){}renderTrk();});on("kpause",tPause);on("kpk",pocketOn);on("kmini",miniOpen);
+  const fb=document.getElementById("kfin");if(fb)fb.onclick=()=>twice("fin",fb,()=>tFinish(false));
+  document.querySelectorAll("[data-kseg]").forEach(b=>b.onclick=()=>{setSeg(+b.dataset.kseg);renderTrk();});
+  const sel=(id,f)=>{const e=document.getElementById(id);if(e)e.onchange=ev=>{f(+ev.target.value);tEdit();};};
+  sel("ela",v=>TS.laps=v);sel("ele",v=>TS.legs=v);sel("efl",v=>TS.floor=v);
+  on("knew",()=>{TS=null;renderTrk();});on("kshare",()=>doShare(TS,T));
+  document.querySelectorAll("[data-ksh]").forEach(b=>b.onclick=()=>doShare(thist()[+b.dataset.ksh],T));
+  document.querySelectorAll("[data-kdel]").forEach(b=>b.onclick=()=>twice("d"+b.dataset.kdel,b,()=>{const H=thist();H.splice(+b.dataset.kdel,1);hsave(H);renderTrk();}));
+  const da=document.getElementById("kdelall");if(da)da.onclick=()=>twice("all",da,()=>{try{localStorage.removeItem("su-trk-hist");}catch(e){}hsave([]);renderTrk();});
+  if(!TS)initLocMap();else if(TS.done)initSumMap("kmapS",TS);else initLiveMap();
+  document.querySelectorAll(".khist").forEach(d=>d.addEventListener("toggle",()=>{if(!d.open)return;const id=d.querySelector("[id^=kmapH]");if(id&&!id.classList.contains("on")){const s=thist().find(x=>"kmapH"+x.id===id.id);initSumMap(id.id,s);}}));
+  tUpdate();}
+function openTrk(){try{navigator.permissions&&navigator.permissions.query({name:"geolocation"}).then(r=>{if(r.state==="granted"&&!tloc&&!TS)getLoc();}).catch(()=>{});}catch(e){}
+  if(!TS){try{const c=JSON.parse(localStorage.getItem("su-trk-cur"));if(c&&!c.done){TS=c;if(!TS.paused){gpsOn();lockOn();motionOn();}tRun();}}catch(e){}}
+  else if(!TS.done&&!TS.paused){gpsOn();lockOn();}
+  renderTrk();}
+
+/* ---------- V2: Skrin mini (Picture-in-Picture) & kawalan media ---------- */
+const MINI={cv:null,vid:null,t:null,ms:0};
+const MTX={bm:{btn:"🗗 Skrin mini",un:"Skrin mini tidak disokong di sini. Gunakan Chrome (Android) atau Safari (iPhone), di luar aplikasi lain.",idle:"Diari Umrah Isteriku",ready:"Sedia"},
+ en:{btn:"🗗 Mini screen",un:"Mini screen is not supported here. Use Chrome (Android) or Safari (iPhone), outside other apps.",idle:"Umrah Wife Diary",ready:"Ready"}};
+function mt(){return MTX[lang==="en"||lang==="ar"?"en":"bm"];}
+function miniInfo(){
+  if(typeof TS!=="undefined"&&TS&&!TS.done){const T=KT[kl()],s=TS.seg;let lap="";
+    if(s===1)lap=` · ${Math.min(7,TS.mode==="prac"?TS.laps+1:Math.max(1,TS.vlap||1))}/7`;if(s===2)lap=` · ${Math.min(7,(TS.legs||0)+1)}/7`;
+    const g=TS.paused?"⏸":(tgps.s==="ok"?"🛰 ±"+tgps.acc+" m":tgps.s==="err"?"⛔ GPS":"🛰 …");
+    return {h:T.seg[s].replace(/^\S+\s/,"")+lap,a:fmtT(elapsed(TS)),b:fmtD(totDist(TS)),c:mainSteps(TS).toLocaleString()+" "+T.steps.toLowerCase(),d:g};}
+  const hud=$("hud");if(hud&&hud.style.display!=="none"){const L=(hud.innerText||"").split("\n").map(x=>x.trim()).filter(Boolean);return {h:L[0]||"",a:L[1]||"",b:"",c:"",d:mt().idle};}
+  return {h:mt().idle,a:mt().ready,b:"",c:"",d:""};}
+function miniFit(x,t,max){while(x.measureText(t).width>max&&t.length>3)t=t.slice(0,-2);return t;}
+function miniDraw(){const c=MINI.cv;if(!c)return;const x=c.getContext("2d"),i=miniInfo(),W=c.width;
+  x.fillStyle="#0f3d2e";x.fillRect(0,0,W,c.height);x.fillStyle="#c9a227";x.fillRect(0,0,W,8);
+  x.fillStyle="#f1d46b";x.font="bold 34px sans-serif";x.fillText(miniFit(x,i.h,W-48),24,62);
+  x.fillStyle="#ffffff";x.font="bold 76px sans-serif";x.fillText(miniFit(x,i.a,W-48),24,158);
+  x.font="bold 42px sans-serif";x.fillText(i.b,24,226);x.fillText(i.c,W/2,226);
+  x.fillStyle="#cfe3d6";x.font="28px sans-serif";x.fillText(miniFit(x,i.d,W-48),24,300);x.fillText("🕋",W-64,300);
+  const now=Date.now();if("mediaSession" in navigator&&now-MINI.ms>5000&&window.MediaMetadata){MINI.ms=now;try{navigator.mediaSession.metadata=new MediaMetadata({title:i.h,artist:[i.a,i.b,i.c].filter(Boolean).join(" · "),album:"Simulasi Umrah V2",artwork:[{src:"icon-192.png",sizes:"192x192",type:"image/png"},{src:"icon-512.png",sizes:"512x512",type:"image/png"}]});}catch(e){}}}
+function miniPrep(){if(MINI.vid)return MINI.vid.play().catch(()=>{});const c=document.createElement("canvas");c.width=640;c.height=340;MINI.cv=c;miniDraw();
+  const v=document.createElement("video");v.muted=true;v.playsInline=true;v.setAttribute("playsinline","");v.setAttribute("autopictureinpicture","");try{v.autoPictureInPicture=true;}catch(e){}
+  v.style.cssText="position:fixed;left:0;bottom:0;width:2px;height:2px;opacity:.01;pointer-events:none;z-index:-1";document.body.appendChild(v);MINI.vid=v;
+  try{v.srcObject=c.captureStream?c.captureStream(2):null;}catch(e){}
+  clearInterval(MINI.t);MINI.t=setInterval(miniDraw,1000);return v.play().catch(()=>{});}
+async function miniOpen(){try{if(document.pictureInPictureElement){await document.exitPictureInPicture();return;}
+  if(!(HTMLCanvasElement.prototype.captureStream)){flash(mt().un);return;}
+  const p=miniPrep();const v=MINI.vid;
+  if(v.requestPictureInPicture&&document.pictureInPictureEnabled){await p;await v.requestPictureInPicture();}
+  else if(v.webkitSupportsPresentationMode&&v.webkitSupportsPresentationMode("picture-in-picture")){v.webkitSetPresentationMode("picture-in-picture");}
+  else flash(mt().un);}catch(e){flash(mt().un);}}
+function miniStop(){clearInterval(MINI.t);MINI.t=null;try{if(document.pictureInPictureElement)document.exitPictureInPicture();}catch(e){}
+  if(MINI.vid){try{MINI.vid.pause();MINI.vid.srcObject=null;MINI.vid.remove();}catch(e){}}MINI.vid=null;MINI.cv=null;}
+document.addEventListener("visibilitychange",()=>{if(document.visibilityState==="hidden"&&MINI.vid&&!document.pictureInPictureElement&&MINI.vid.requestPictureInPicture){MINI.vid.requestPictureInPicture().catch(()=>{});}});
+
+/* ---------- Jambatan: Diari Umrah Isteriku (tab, suami, Firebase) ---------- */
+(function(){if($("kpocket"))return;const d=document.createElement("div");d.id="kpocket";d.style.display="none";
+  d.innerHTML='<div class="pk"><p id="pSeg"></p><b id="pTime"></b><b id="pDist"></b><b id="pSteps"></b><p id="pGps"></p><p class="pkU" id="pUn"></p><div class="pkBar"></div></div>';document.body.appendChild(d);
+  const u=document.getElementById("pUn");if(u)u.textContent=KT.bm.unlock;})();
+function isWife(){return typeof ROLE!=="undefined"&&ROLE==="isteri";}
+function famRef(){return typeof tripRef!=="undefined"?tripRef:null;}
+function pjSum(s){return {id:s.id,start:s.start,end:s.end||0,mode:s.mode,hname:String(s.hname||"").slice(0,80),seg:s.seg,el:Math.round(elapsed(s)),dist:Math.round(totDist(s)),steps:mainSteps(s),
+  laps:s.laps||0,legs:s.legs||0,segT:(s.segT||[]).map(x=>Math.round(x||0)),segD:[0,1,2,3,4].map(i=>Math.round(segDist(s,i))),paused:!!s.paused,done:!!s.done,auto:!!s.autoEnd,gaps:s.gaps||0,ts:Date.now()};}
+let pjLastPush=0;
+function pjPush(force){const r=famRef();if(!r||!isWife()||!TS)return;const n=Date.now();if(!force&&n-pjLastPush<30000)return;pjLastPush=n;const sum=pjSum(TS);
+  const o={pj:sum};if(TS.done&&typeof firebase!=="undefined")o.pjHist=firebase.firestore.FieldValue.arrayUnion(sum);r.set(o,{merge:true}).catch(()=>{});}
+function pjFamStart(){try{if(isWife()&&famRef()&&typeof tracking==="function"&&!tracking()&&typeof startTracking==="function")startTracking(false);}catch(e){}}
+const esc=t=>String(t==null?"":t).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const hhmm=ms=>{try{return new Intl.DateTimeFormat("ms-MY",{timeZone:"Asia/Riyadh",hour:"2-digit",minute:"2-digit",hour12:false}).format(new Date(ms));}catch(e){return "";}};
+function pjRow(x,T){const dd=new Date(x.start);return `<details class="place khist"><summary><b>${dd.toLocaleDateString("ms-MY")}</b> · ${fmtD(+x.dist||0)} · ${(+x.steps||0).toLocaleString()} ${T.steps.toLowerCase()} · ${fmtT(+x.el||0)}</summary>
+  ${x.hname?`<p class="pmeta">🏨 ${esc(x.hname)}</p>`:""}<p class="pmeta">Mula ${hhmm(x.start)}${x.end?" · tamat "+hhmm(x.end):""} (waktu Saudi)${x.auto?" · "+T.auto:""}</p>
+  <table class="ktab">${T.seg.map((n,i)=>`<tr><td>${n}${i===1?` <small>(${+x.laps||0}/7)</small>`:i===2?` <small>(${+x.legs||0}/7)</small>`:""}</td><td>${fmtT((x.segT||[])[i]||0)}</td><td>${fmtD((x.segD||[])[i]||0)}</td></tr>`).join("")}</table></details>`;}
+function pjFamHTML(){const T=KT.bm,box=$("pjFam");if(!box)return;
+  if(isWife()){box.innerHTML=famRef()?`<p class="kfamnote">💞 Kemajuan dan ringkasan penjejak dihantar kepada suami secara automatik. Lokasi keluarga juga dihidupkan apabila anda tekan <b>Setuju &amp; mula</b>.</p>`:`<p class="kfamnote">Untuk kongsi dengan suami, sediakan pautan keluarga di tab <a href="#lokasi" data-go="lokasi">Lokasi</a> dahulu.</p>`;return;}
+  const doc=(typeof LIVE!=="undefined"&&LIVE.doc)||{},p=doc.pj,H=Array.isArray(doc.pjHist)?doc.pjHist.slice().sort((a,b)=>(b.start||0)-(a.start||0)).slice(0,15):[];
+  let h=`<div class="panel kfam"><h3 style="margin:0 0 6px">Penjejak isteri</h3>`;
+  if(!famRef())h+=`<p class="muted">Buka pautan keluarga dan pilih <b>Suami</b> di tab Lokasi untuk melihat penjejak isteri.</p>`;
+  else if(p&&!p.done){const stale=Date.now()-(+p.ts||0)>180000,el=(+p.el||0)+(p.paused||stale?0:Date.now()-(+p.ts||0));
+    h+=`<p class="pmeta">${p.paused?"⏸ Dijeda":"● Sedang merakam"} · dikemas kini ${hhmm(+p.ts)} (Saudi)${stale?" · <b>tiada kemas kini lebih 3 minit</b> (skrin isteri mungkin mati)":""}</p>
+    <div class="kstats"><div><span>${T.time}</span><b>${fmtT(el)}</b></div><div><span>${T.dist}</span><b>${fmtD(+p.dist||0)}</b></div><div><span>${T.steps}</span><b>${(+p.steps||0).toLocaleString()}</b></div></div>
+    <ol class="ksegs">${T.seg.map((n,j)=>`<li class="${j<p.seg?"ok":j===p.seg?"cur":""}">${j<p.seg?"✓ ":""}${n}${j===1&&p.seg>=1?` ${+p.laps||0}/7`:j===2&&p.seg>=2?` ${+p.legs||0}/7`:""}</li>`).join("")}</ol>`;}
+  else h+=`<p class="muted">Tiada rakaman sedang berjalan.</p>`;
+  h+=`<h3 class="zh3">Rekod umrah isteri</h3>`+(H.length?H.map(x=>pjRow(x,T)).join(""):`<p class="src">${T.none}</p>`)+`</div>`;
+  const open=[...box.querySelectorAll("details")].map(d=>d.open);box.innerHTML=h;box.querySelectorAll("details").forEach((d,i)=>{if(open[i])d.open=true;});}
+setInterval(()=>{if(TS&&!TS.done)pjPush(false);if($("pjFam"))pjFamHTML();},5000);
+/* sambung semula rakaman yang belum tamat apabila aplikasi dibuka */
+try{const c=JSON.parse(localStorage.getItem("su-trk-cur"));if(c&&!c.done&&!TS){TS=c;tlast=null;if(!TS.paused){gpsOn();lockOn();motionOn();}tRun();}}catch(e){}
+window.PJ={open(){openTrk();pjFamHTML();},active(){return !!(TS&&!TS.done);}};
+if(typeof current!=="undefined"&&current==="penjejak")window.PJ.open();
+
+})();
+</script>
 </body></html>

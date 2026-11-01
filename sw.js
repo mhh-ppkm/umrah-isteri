@@ -1,5 +1,5 @@
 /* Diari Umrah Isteriku — service worker (offline) */
-const V = 'umrah-v2';
+const V = 'umrah-v4';
 const CORE = ['./', './index.html', './manifest.webmanifest', './icon-192.png', './icon-512.png', './icon-maskable-512.png', './apple-touch-icon.png', './favicon-32.png'];
 const LIBS = ['cdnjs.cloudflare.com', 'www.gstatic.com', 'fonts.googleapis.com', 'fonts.gstatic.com'];
 const TILE_MAX = 400;
@@ -56,4 +56,12 @@ self.addEventListener('fetch', e => {
   if (url.hostname.endsWith('tile.openstreetmap.org')) { e.respondWith(cacheFirst(req, V + '-tiles', TILE_MAX)); return; }
   if (url.hostname === 'drive.google.com' && url.pathname.startsWith('/thumbnail')) { e.respondWith(cacheFirst(req, V + '-tiles', TILE_MAX)); return; }
   /* Firestore, Apps Script dan Open-Meteo tidak dicache di sini (data sentiasa terkini) */
+});
+
+self.addEventListener('notificationclick', e => {
+  e.notification.close();
+  e.waitUntil(self.clients.matchAll({ type: 'window', includeUncontrolled: true }).then(list => {
+    for (const c of list) { if ('focus' in c) return c.focus(); }
+    return self.clients.openWindow('./#lokasi');
+  }));
 });
